@@ -21,4 +21,4 @@ Grid
 ```
 
 ##### Просмотр:
-https://annsyh.github.io/mesto/
+https://annsyh.github.io/mesto/index.html
