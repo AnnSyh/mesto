@@ -1,0 +1,22 @@
+.popup__close {
+    position: absolute;
+    top: -32px;
+    right: -16px;
+    text-align: center;
+    font-size: 30px;
+    line-height: 30px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    z-index: 101;
+}
+
+.popup__close:before {
+    content: '';
+    width: 32px;
+    height: 32px;
+    background-image: url(../../../images/close-icon.svg);
+    background-size: cover;
+    background-position: center center;
+    position: absolute;
+}

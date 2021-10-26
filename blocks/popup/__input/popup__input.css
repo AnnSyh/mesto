@@ -1,0 +1,6 @@
+.popup__input {
+	height: 35px;
+    border: #fff;
+    border-bottom: 1px solid #ccc;
+    outline:none;
+}

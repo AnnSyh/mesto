@@ -1,0 +1,14 @@
+.profile__btn_edit {
+	width: 24px;
+    height: 24px;
+    margin-left: 24px;
+    position: relative;
+}
+.profile__btn_edit::after {
+    content:'';
+    width: 10px;
+    height: 10px;
+    background-image: url(../../../../images/edit.svg);
+    background-size: cover;
+    background-position: center center;
+}
