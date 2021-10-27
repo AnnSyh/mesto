@@ -8,60 +8,48 @@ const popupInputSubtitle = document.querySelector('.popup__input_subtitle');
 
 const profileTitle = document.querySelector('.profile__name');
 const profileSubtitle = document.querySelector('.profile__job');
-const form = document.querySelector('.popup__form');
 
 // const popupBtn = document.querySelector('.popup__btn');
 
 profileBtnEdit.addEventListener("click", function () {
-	popupInputTitle.value = profileTitle.innerText;
-	popupInputSubtitle.value = profileSubtitle.innerText;
-	popup.classList.toggle('popup_opened');
+    popupInputTitle.value = profileTitle.innerText;
+    popupInputSubtitle.value = profileSubtitle.innerText;
+    popup.classList.toggle('popup_opened');
 });
 popupClose.addEventListener("click", function () {
-	popup.classList.toggle('popup_opened');
+    popup.classList.toggle('popup_opened');
 });
+// Находим сам попап
+let popupElement = document.querySelector('.popup');
+// Находим форму в DOM
+let formElement = document.querySelector('.popup__form');
+// Находим поля формы в DOM
+let nameInput = document.querySelector('.popup__input_title');
+let jobInput = document.querySelector('.popup__input_subtitle');
 
-// popupBtn.addEventListener("click", function () {
-// 	console.log('1-click!!!!');
-// });
+// Обработчик «отправки» формы, хотя пока
+// она никуда отправляться не будет
+function formSubmitHandler(evt) {
+    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+    // Так мы можем определить свою логику отправки.
+    // О том, как это делать, расскажем позже.
 
-form.onsubmit = function (e) {
-	e.preventDefault();// Эта строчка отменяет стандартные действия при .onsubmit
-	// Находим сам попап
-	let popupElement = document.querySelector('.popup');
-	// Находим форму в DOM
-	let formElement = document.querySelector('.popup__form');
-	// Находим поля формы в DOM
-	let nameInput = document.querySelector('.popup__input_title');
-	let jobInput = document.querySelector('.popup__input_subtitle');
+    // Получите значение полей jobInput и nameInput из свойства value
+    let nameInputNew = nameInput.value;
+    let jobInputNew = jobInput.value;
 
-	// Обработчик «отправки» формы, хотя пока
-	// она никуда отправляться не будет
-	function formSubmitHandler(evt) { console.log('formSubmitHandler(evt)!!!!');
-		evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-		// Так мы можем определить свою логику отправки.
-		// О том, как это делать, расскажем позже.
+    // Выберите элементы, куда должны быть вставлены значения полей
+    let profileName = document.querySelector('.profile__name');
+    let profileJob = document.querySelector('.profile__job');
 
-		// Получите значение полей jobInput и nameInput из свойства value
-		let nameInputNew = nameInput.value;
-		let jobInputNew = jobInput.value;
+    // Вставьте новые значения с помощью textContent
+    profileName.textContent = nameInputNew;
+    profileJob.textContent = jobInputNew;
 
-		// Выберите элементы, куда должны быть вставлены значения полей
-		let profileName = document.querySelector('.profile__name');
-		let profileJob = document.querySelector('.profile__job');
+    //закрыть popup
+    popupElement.classList.remove('popup_opened');
+}
 
-		// Вставьте новые значения с помощью textContent
-		profileName.textContent = nameInputNew;
-		profileJob.textContent = jobInputNew;
-
-		//закрыть popup
-		console.log('popupElement = ',popupElement);
-		console.log('popupElement.classList = ',popupElement.classList);
-		popupElement.classList.remove('popup_opened');
-	}
-
-	// Прикрепляем обработчик к форме:
-	// он будет следить за событием “submit” - «отправка»
-	// formElement.addEventListener('click', formSubmitHandler);
-	formElement.addEventListener('submit', formSubmitHandler);
-};
+// Прикрепляем обработчик к форме:
+// он будет следить за событием “submit” - «отправка»
+formElement.addEventListener('submit', formSubmitHandler);
