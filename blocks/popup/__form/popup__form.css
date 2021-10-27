@@ -4,10 +4,20 @@
     background-color: #fff;
     padding: 41px 35px;
     border-radius: 20px;
-    margin: 32px;
+    margin: 32px 0;
     position: relative;
-    min-width: 430px;
-    min-height: 330px;
+    /* min-width: 430px;
+    min-height: 330px; */
     box-sizing: border-box;
     justify-content: space-between;
+    width: calc(100% - 40px);
+}
+
+@media screen and (min-width:480px){
+    .popup__form {
+        padding: 41px 35px;
+        min-width: 430px;
+        min-height: 330px;
+        margin: 32px;
+    }
 }

@@ -1,5 +1,14 @@
 .cards__heart {
-	width: 20px;
-	height: 20px;
+	display: flex;
+    width: 22px;
+    min-width: 22px;
+    height: 19px;
     cursor: pointer;
+    background-image: url('../../../images/heart.svg');
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: cover;
+}
+.cards__heart:hover { border: 1px solid red;
+	background-image: url('../../../images/heart-active.svg');
 }

@@ -3,4 +3,11 @@
     border: #fff;
     border-bottom: 1px solid #ccc;
     outline:none;
+    margin: 16px 0;
+}
+
+@media screen and (min-width: 500px){
+    .popup__input {
+        margin: 0;
+    }
 }

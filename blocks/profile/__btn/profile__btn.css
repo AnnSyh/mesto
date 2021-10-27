@@ -9,6 +9,7 @@
     justify-content: center;
 	cursor: pointer;
     position: relative;
+    width: 100%;
 }
 .profile__btn::after {
     content:'';
@@ -17,4 +18,10 @@
     background-image: url(../../../images/plus.svg);
     background-size: cover;
     background-position: center center;
+}
+
+@media screen and (min-width:480px){
+    .profile__btn {
+        width: 150px;
+    }
 }

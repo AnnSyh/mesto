@@ -1,7 +1,7 @@
 .popup__close {
     position: absolute;
     top: -32px;
-    right: -16px;
+    right: 0;
     text-align: center;
     font-size: 30px;
     line-height: 30px;
@@ -12,11 +12,18 @@
 }
 
 .popup__close:before {
-    content: '';
+    content: "";
     width: 32px;
     height: 32px;
-    background-image: url(../../../images/close-icon.svg);
+    background-image: url("../../../images/close-icon.svg");
     background-size: cover;
     background-position: center center;
     position: absolute;
+    left: 0;
+}
+
+@media screen and (min-width: 500px) {
+    .popup__close {
+        right: -32px;
+    }
 }

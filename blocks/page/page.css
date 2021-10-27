@@ -3,14 +3,15 @@
     font-weight: 400;
     font-size: 1rem;
     max-width: 880px;
-    margin: 0 20px;
+    padding: 0 30px;
     background-color: #2A2C2F;
     color: #fff;
-    min-width: 320px;
+    min-width: 280px;
 }
 
-@media screen and (min-width:920px){
+@media screen and (min-width:940px){
     .page {
         margin: 0 auto;
+        padding: 0;
     }
 }
