@@ -1,3 +1,4 @@
-.link-hover:hover { 
-    opacity: 0.5; 
-} 
+.link-hover:hover {
+    /* opacity: 0.5; */
+    border: 1px solid #999999;
+}
