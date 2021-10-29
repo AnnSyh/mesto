@@ -1,22 +1,50 @@
 .profile__btn_edit {
-    width: 19px;
-    height: 19px;
-    margin-left: 15px;
+    width: 20px;
+    height: 20px;
+    margin-left: 20px;
     position: relative;
 }
-.profile__btn_edit::after {
-    content:'';
-    width: 10px;
-    height: 10px;
-    background-image: url(../../../../images/edit.svg);
-    background-size: cover;
-    background-position: center center;
+
+.profile__btn_edit::after,
+.profile__btn_edit::before { 
+    content: "";
+    height: 2px;
+    background: #fff;
+    position: absolute;
 }
 
-@media screen and (min-width:480px) {
+.profile__btn_edit::before { 
+    width: 14px;
+    top: 6px;
+    right: 0px;
+    transform: rotate(-45deg);
+}
+
+.profile__btn_edit::after {
+    width: 3px;
+    height: 3px;
+    bottom: 2px;
+    left: 2px;
+}
+
+@media screen and (min-width: 480px) {
     .profile__btn_edit {
         width: 24px;
         height: 24px;
         margin-left: 24px;
+    }
+    .profile__btn_edit::after,
+    .profile__btn_edit::before {        
+        height: 3px;
+    }
+    .profile__btn_edit::before { 
+        width: 15px;
+        top: 8px;
+        right: 2px;
+        transform: rotate(-45deg);
+    }
+    .profile__btn_edit::after {
+        bottom: 3px;
+        left: 3px;
     }
 }

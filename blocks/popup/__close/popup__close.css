@@ -2,38 +2,40 @@
     position: absolute;
     top: -32px;
     right: 0;
-    text-align: center;
-    font-size: 30px;
-    line-height: 30px;
     width: 32px;
     height: 32px;
     cursor: pointer;
     z-index: 101;
 }
 
-.popup__close:before {
+.popup__close::after,
+.popup__close::before {
     content: "";
     width: 20px;
-    height: 20px;
-    background-image: url("../../../images/close-icon.svg");
-    background-size: cover;
-    background-position: center center;
+    height: 2px;
+    background: #fff;
     position: absolute;
+    top: 45%;
     right: 0;
 }
+.popup__close::after {
+    transform: rotate(45deg);
+}
 
+.popup__close::before {
+    transform: rotate(-45deg);
+}
 
 @media screen and (min-width: 500px) {
     .popup__close {
         right: -32px;
     }
-    .popup__close:before {
+    .popup__close::after,
+    .popup__close::before {
+        height: 4px;
         width: 32px;
-        height: 32px;
     }
     .popup__input {
         font-size: 14px;
     }
-    
 }
-

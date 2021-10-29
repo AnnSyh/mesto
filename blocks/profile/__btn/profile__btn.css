@@ -7,20 +7,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
-	cursor: pointer;
+    cursor: pointer;
     position: relative;
     width: 100%;
 }
-.profile__btn::after {
-    content:'';
+/* .profile__btn::after,
+.profile__btn::before {
+    content: "";
     width: 21px;
-    height: 21px;
+    height: 2px;
     background-image: url(../../../images/plus.svg);
     background-size: cover;
     background-position: center center;
-}
+} */
 
-@media screen and (min-width:480px){
+
+@media screen and (min-width: 480px) {
     .profile__btn {
         width: 150px;
     }
