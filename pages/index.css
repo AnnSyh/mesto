@@ -14,7 +14,7 @@
 @import url(../blocks/profile/__job/profile__job.css);
 
 @import url(../blocks/page-title/page-title.css);
-@import url(../blocks/page-title/__popup/page-title__popup.css);
+@import url(../blocks/popup/__page-title/popup__page-title.css);
 @import url(../blocks/text-overflow/text-overflow.css);
 @import url(../blocks/link-hover/link-hover.css);
 @import url(../blocks/btn-hover/btn-hover.css);

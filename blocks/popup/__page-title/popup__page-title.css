@@ -1,9 +1,9 @@
-.page-title__popup {
+.popup__page-title {
     margin-bottom: 45px;
 }
 
 @media screen and (min-width:480px){
-    .page-title__popup {
+    .popup__page-title {
         margin-bottom: 0;
     }
 }
