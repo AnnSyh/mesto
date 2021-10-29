@@ -1,7 +1,14 @@
 .page-title {
     margin: 0;
-    font-size: 24px;
-    line-height: 29px;
+    font-size: 23px;
+    line-height: 27px;
     font-weight: 900;
     color: #000;
+}
+@media screen and (min-width:480px){
+    .page-title {
+        margin: 0;
+        font-size: 24px;
+        line-height: 29px;
+    }
 }

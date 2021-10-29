@@ -9,6 +9,9 @@
     background-position: 0 0;
     background-size: cover;
 }
-.cards__heart:hover { border: 1px solid red;
-	background-image: url('../../../images/heart-active.svg');
+.cards__heart:hover { 
+	background-image: url('../../../images/heard-hover.svg');
+}
+.cards__heart:active { 
+	background-image: url('../../../images/heard-active.svg');
 }

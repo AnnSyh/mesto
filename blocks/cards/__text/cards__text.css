@@ -1,6 +1,12 @@
 .cards__text {
-    padding: 22px;
+    padding: 26px 19px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+@media screen and (min-width:480px){
+    .cards__text {
+        padding: 22px;
+    }
 }

@@ -1,8 +1,9 @@
 .profile__name {
-    font-size: 32px;
+    font-size: 27px;
     line-height: 32px;
     font-weight: 500;
     margin: 0;
+    letter-spacing: -1px;
 }
 
 @media screen and (min-width:480px) {

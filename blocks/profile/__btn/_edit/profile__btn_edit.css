@@ -1,7 +1,7 @@
 .profile__btn_edit {
-	width: 24px;
-    height: 24px;
-    margin-left: 24px;
+    width: 19px;
+    height: 19px;
+    margin-left: 15px;
     position: relative;
 }
 .profile__btn_edit::after {
@@ -11,4 +11,12 @@
     background-image: url(../../../../images/edit.svg);
     background-size: cover;
     background-position: center center;
+}
+
+@media screen and (min-width:480px) {
+    .profile__btn_edit {
+        width: 24px;
+        height: 24px;
+        margin-left: 24px;
+    }
 }

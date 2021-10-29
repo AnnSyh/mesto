@@ -3,10 +3,11 @@
     font-weight: 400;
     font-size: 1rem;
     max-width: 880px;
-    padding: 0 30px;
+    padding: 0 20px;
     background-color: #2A2C2F;
     color: #fff;
     min-width: 280px;
+    box-sizing: border-box;
 }
 
 @media screen and (min-width:940px){
