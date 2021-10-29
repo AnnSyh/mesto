@@ -7,17 +7,3 @@
         margin: 45px auto 40px auto;
     } 
  }
-
-
- /* -------убрать------------ */
- body {
-     /* background-image: url(../../../images/MOBILE.png); */
-     background-image: url(../../../images/MOBILEEDITFORM.png);
-     background-position: 0 0;
- }
-
- @media screen and (min-width: 321px) {
-    body {
-        background-image: none;
-    }   
- }
