@@ -1,0 +1,4 @@
+.popup__close_hover:hover::after,
+.popup__close_hover:hover::before {
+	background: #999999;
+}
