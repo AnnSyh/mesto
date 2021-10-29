@@ -6,7 +6,7 @@
 }
 
 .profile__btn_edit::after,
-.profile__btn_edit::before { 
+.profile__btn_edit::before {
     content: "";
     width: 2px;
     height: 2px;
@@ -14,7 +14,7 @@
     position: absolute;
 }
 
-.profile__btn_edit::before { 
+.profile__btn_edit::before {
     width: 15px;
     top: 7px;
     right: 0px;
@@ -33,11 +33,11 @@
         margin-left: 24px;
     }
     .profile__btn_edit::after,
-    .profile__btn_edit::before {  
-        width: 3px;      
+    .profile__btn_edit::before {
+        width: 3px;
         height: 3px;
     }
-    .profile__btn_edit::before { 
+    .profile__btn_edit::before {
         width: 15px;
         top: 8px;
         right: 2px;
