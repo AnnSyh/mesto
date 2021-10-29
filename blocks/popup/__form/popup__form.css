@@ -8,7 +8,6 @@
     position: relative;
     box-sizing: border-box;
     justify-content: space-between;
-    /* width: calc(100% - 25px); */
 }
 
 @media screen and (min-width:480px){

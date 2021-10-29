@@ -11,6 +11,10 @@ let formElement = document.querySelector('.popup__form');
 let nameInput = document.querySelector('.popup__input_title');
 let jobInput = document.querySelector('.popup__input_subtitle');
 
+function clearInput() {
+    this.value = '';
+}
+
 function openPopup() {
     const nameInput = document.querySelector('.popup__input_title');
     const jobInput = document.querySelector('.popup__input_subtitle');
@@ -41,6 +45,7 @@ function formSubmitHandler(evt) {
     profileJob.textContent = jobInputValue;
     //закрываем popup
     popupElement.classList.remove('popup_opened');
+
 }
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
@@ -48,3 +53,7 @@ formElement.addEventListener('submit', formSubmitHandler);
 
 profileBtnEdit.addEventListener('click', openPopup);
 popupClose.addEventListener('click', closePopup);
+
+//чистим val при клике по input
+nameInput.addEventListener('focus', clearInput);
+jobInput.addEventListener('focus', clearInput);
