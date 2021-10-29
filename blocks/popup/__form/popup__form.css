@@ -3,20 +3,20 @@
     flex-direction: column;
     background-color: #fff;
     padding: 25px;
-    border-radius: 20px;
+    border-radius: 10px;
     margin: 32px 0;
     position: relative;
     box-sizing: border-box;
     justify-content: space-between;
-    width: calc(100% - 25px);
+    /* width: calc(100% - 25px); */
 }
 
 @media screen and (min-width:480px){
     .popup__form {
-        padding: 41px 35px;
-        min-width: 430px;
+        padding: 35px;
+        min-width: 431px;
         min-height: 330px;
-        margin: 32px;
+        margin: 39px;
         width: calc(100% - 40px);
     }
 }

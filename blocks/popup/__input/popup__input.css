@@ -4,6 +4,7 @@
     border-bottom: 1px solid #ccc;
     outline:none;
     margin: 16px 0;
+    font-size: 14px;
 }
 
 @media screen and (min-width: 500px){

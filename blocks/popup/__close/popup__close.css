@@ -1,7 +1,7 @@
 .popup__close {
     position: absolute;
-    top: -32px;
-    right: 0;
+    top: -39px;
+    right: -4px;
     width: 32px;
     height: 32px;
     cursor: pointer;
@@ -11,8 +11,8 @@
 .popup__close::after,
 .popup__close::before {
     content: "";
-    width: 20px;
-    height: 2px;
+    width: 27px;
+    height:3px;
     background: #fff;
     position: absolute;
     top: 45%;
@@ -28,12 +28,12 @@
 
 @media screen and (min-width: 500px) {
     .popup__close {
-        right: -32px;
+        right: -43px;
     }
     .popup__close::after,
     .popup__close::before {
+        width: 39px;
         height: 4px;
-        width: 32px;
     }
     .popup__input {
         font-size: 14px;

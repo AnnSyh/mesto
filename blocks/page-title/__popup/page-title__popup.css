@@ -1,0 +1,9 @@
+.page-title__popup {
+    margin-bottom: 45px;
+}
+
+@media screen and (min-width:480px){
+    .page-title__popup {
+        margin-bottom: 0;
+    }
+}
