@@ -13,17 +13,27 @@
 
 .popup__close:before {
     content: "";
-    width: 32px;
-    height: 32px;
+    width: 20px;
+    height: 20px;
     background-image: url("../../../images/close-icon.svg");
     background-size: cover;
     background-position: center center;
     position: absolute;
-    left: 0;
+    right: 0;
 }
+
 
 @media screen and (min-width: 500px) {
     .popup__close {
         right: -32px;
     }
+    .popup__close:before {
+        width: 32px;
+        height: 32px;
+    }
+    .popup__input {
+        font-size: 14px;
+    }
+    
 }
+

@@ -11,7 +11,8 @@
 
  /* -------убрать------------ */
  body {
-     background-image: url(../../../images/MOBILE.png);
+     /* background-image: url(../../../images/MOBILE.png); */
+     background-image: url(../../../images/MOBILEEDITFORM.png);
      background-position: 0 0;
  }
 
