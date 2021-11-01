@@ -10,24 +10,12 @@
 </head>
 
 <body class="page">
-    <header class="header page__header">
+    <header class="header section page__header">
         <img class="logo" src="./images/header-logo.svg" alt="логотип Mesto">
     </header>
     <main class="content">
-        <div class="popup">
-            <div class="popup__overlay"></div>
-            <div class="popup__container">
-                <form class="popup__form">
-                    <div class="popup__close popup__close_hover"></div>
-                    <h1  class="page-title popup__page-title  text-overflow">Редактировать профиль</h1>
-                    <input class="popup__input popup__input_title" type="text">
-                    <input class="popup__input popup__input_subtitle" type="text">
-                    <input class="popup__btn btn-hover" type="submit" value="Сохранить">
-                </form>
-            </div>
-        </div>
 
-        <section class="profile">
+        <section class="profile section content__section">
             <div class="profile__user">
                 <img class="profile__img" src="./images/avatar.jpg" alt="аватар">
                 <div class="profile__info">
@@ -42,7 +30,7 @@
             <button class="profile__btn profile__btn_add link-hover"></button>
         </section>
 
-        <section class="cards">
+        <section class="cards section content__section">
             <ul class="cards__list">
                 <li class="cards__item">
                     <img class="cards__img" src="./images/karachaevsk.jpg" alt="Карачаевск-Карачаевск">
@@ -103,9 +91,22 @@
         </section>
 
     </main>
-    <footer class="footer page__footer">
+    <footer class="footer section page__footer">
         <p class="footer__copyright">©&nbsp;2021&nbsp;Mesto&nbsp;Russia</p>
     </footer>
+
+    <div class="popup">
+        <div class="popup__overlay"></div>
+        <div class="popup__container">
+            <form class="popup__form" name="edit-profile">
+                <button class="popup__close popup__close_hover" type="button"></button>
+                <h2  class="page-title popup__page-title  text-overflow">Редактировать профиль</h2>
+                <input class="popup__input popup__input_title"    name="title"      type="text">
+                <input class="popup__input popup__input_subtitle" name="subtitle"   type="text">
+                <input class="popup__btn btn-hover" type="submit" value="Сохранить">
+            </form>
+        </div>
+    </div>    
 
     <script src="./pages/script.js"></script>
 </body>

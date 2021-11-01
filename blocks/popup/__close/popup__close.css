@@ -6,6 +6,8 @@
     height: 32px;
     cursor: pointer;
     z-index: 101;
+    background: transparent;
+    border: none;
 }
 
 .popup__close::after,

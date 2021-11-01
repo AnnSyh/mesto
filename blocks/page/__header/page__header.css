@@ -1,9 +1,15 @@
 .page__header {
     margin: 28px auto 44px auto;
     border-bottom: 1px solid #545454;
+    padding: 0 20px;
 }
  @media screen and (min-width: 480px) {
     .page__header {
         margin: 45px auto 40px auto;
+    } 
+ }
+ @media screen and (min-width: 930px) {
+    .page__header {
+        padding: 0;
     } 
  }

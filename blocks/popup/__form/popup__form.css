@@ -13,9 +13,13 @@
 @media screen and (min-width:480px){
     .popup__form {
         padding: 35px;
-        min-width: 431px;
         min-height: 330px;
         margin: 43px;
         width: calc(100% - 40px);
+    }
+}
+@media screen and (min-width:768px){
+    .popup__form {
+        min-width: 431px;
     }
 }
