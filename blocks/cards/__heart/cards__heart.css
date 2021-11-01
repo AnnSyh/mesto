@@ -8,6 +8,8 @@
     background-repeat: no-repeat;
     background-position: 0 0;
     background-size: cover;
+    background-color: transparent;
+    border: none;
 }
 .cards__heart:hover {
 	background-image: url('../../../images/heart-hover.svg');

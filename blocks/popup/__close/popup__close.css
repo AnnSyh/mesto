@@ -9,6 +9,10 @@
     background: transparent;
     border: none;
 }
+.popup__close:hover::after,
+.popup__close:hover::before {
+	background: #999999;
+}
 
 .popup__close::after,
 .popup__close::before {

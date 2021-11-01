@@ -1,8 +1,7 @@
 "use strict";
-
+//находим кнопки кот вызывают всплытие/закрытие окна редактирования
 let profileBtnEdit = document.querySelector('.profile__btn_edit');
 let popupClose = document.querySelector('.popup__close');
-
 // Находим сам попап
 let popupElement = document.querySelector('.popup');
 // Находим форму в DOM
@@ -10,23 +9,17 @@ let formElement = document.querySelector('.popup__form');
 // Находим поля формы в DOM
 let nameInput = document.querySelector('.popup__input_title');
 let jobInput = document.querySelector('.popup__input_subtitle');
-
-function clearInput() {
-    this.value = '';
-}
+// Находим переменные для функции openPopup()
+const profileName = document.querySelector('.profile__name');
+const profileJob = document.querySelector('.profile__job');
 
 function openPopup() {
-    const nameInput = document.querySelector('.popup__input_title');
-    const jobInput = document.querySelector('.popup__input_subtitle');
-    const profileTitle = document.querySelector('.profile__name');
-    const profileSubtitle = document.querySelector('.profile__job');
-    nameInput.value = profileTitle.innerText;
-    jobInput.value = profileSubtitle.innerText;
+    nameInput.value = profileName.innerText;
+    jobInput.value = profileJob.innerText;
     popupElement.classList.add('popup_opened');
 };
 
 function closePopup() {
-    const popupElement = document.querySelector('.popup');
     popupElement.classList.remove('popup_opened');
 };
 
@@ -38,14 +31,12 @@ function formSubmitHandler(evt) {
     let nameInputValue = nameInput.value;
     let jobInputValue = jobInput.value;
     // Выбераем элементы, куда должны быть вставлены значения полей
-    let profileName = document.querySelector('.profile__name');
-    let profileJob = document.querySelector('.profile__job');
     // Вставляем новые значения с помощью textContent
     profileName.textContent = nameInputValue;
     profileJob.textContent = jobInputValue;
     //закрываем popup
-    popupElement.classList.remove('popup_opened');
-
+    // popupElement.classList.remove('popup_opened');
+    closePopup();
 }
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
@@ -53,7 +44,3 @@ formElement.addEventListener('submit', formSubmitHandler);
 
 profileBtnEdit.addEventListener('click', openPopup);
 popupClose.addEventListener('click', closePopup);
-
-//чистим val при клике по input
-nameInput.addEventListener('focus', clearInput);
-jobInput.addEventListener('focus', clearInput);

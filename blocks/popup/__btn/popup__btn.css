@@ -7,6 +7,9 @@
 	font-size: 14px;
     margin-top: 15px;
 }
+.popup__btn:hover {
+    background-color: #313131;
+}
 
 @media screen and (min-width:480px){
 	.popup__btn {
