@@ -4,6 +4,6 @@
 
 @media screen and (min-width:480px){
     .popup__page-title {
-        margin-bottom: 0;
+        margin-bottom: 25px;
     }
 }

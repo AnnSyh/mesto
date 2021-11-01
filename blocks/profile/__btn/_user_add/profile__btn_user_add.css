@@ -1,5 +1,6 @@
 .profile__btn_user_add {
     position: relative;
+    border-radius: 2px;
 }
 .profile__btn_user_add::after,
 .profile__btn_user_add::before {

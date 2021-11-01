@@ -1,7 +1,7 @@
 .header {
     margin-top: 28px;
     margin-bottom: 44px;
-    border-bottom: 1px solid rgba(84, 84, 84, 1);
+    border-bottom: 1px solid rgba(84, 84, 84, 0.7);
     padding: 0 20px;
 }
  @media screen and (min-width: 480px) {

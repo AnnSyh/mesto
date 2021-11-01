@@ -11,8 +11,7 @@
     border: none;
 }
 .cards__heart:hover {
-	/* background-image: url('../../../images/heart-hover.svg'); rgba(84, 84, 84, 1); */
-	background-image: url('../../../images/heart-hover.svg');
+    opacity: 0.5;
 }
 .cards__heart:active {
 	background-image: url('../../../images/heart-active.svg');
