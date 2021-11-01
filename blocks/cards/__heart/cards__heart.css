@@ -1,5 +1,4 @@
 .cards__heart {
-	display: flex;
     width: 22px;
     min-width: 22px;
     height: 19px;
@@ -12,6 +11,7 @@
     border: none;
 }
 .cards__heart:hover {
+	/* background-image: url('../../../images/heart-hover.svg'); rgba(84, 84, 84, 1); */
 	background-image: url('../../../images/heart-hover.svg');
 }
 .cards__heart:active {

@@ -3,19 +3,18 @@
     line-height: 32px;
     font-weight: 500;
     margin: 0;
-    letter-spacing: -1px;
     max-width: 200px;
 }
 
-@media screen and (min-width:480px) {
-    .profile__name { 
+@media screen and (min-width: 480px) {
+    .profile__name {
         font-size: 42px;
         line-height: 48px;
         max-width: 345px;
-    } 
+    }
 }
-@media screen and (min-width:1200px){
-    .profile__name { 
+@media screen and (min-width: 1200px) {
+    .profile__name {
         max-width: 490px;
-    } 
+    }
 }

@@ -9,6 +9,6 @@
         text-align: left;
         display: flex;
         flex-direction: column;
-        height: 75px;
+        /* height: 75px; */
 	}
 }

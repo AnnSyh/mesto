@@ -1,6 +1,7 @@
 .page__header {
     margin: 28px auto 44px auto;
-    border-bottom: 1px solid #545454;
+    /* border-bottom: 1px solid #545454; */
+    border-bottom: 1px solid rgba(84, 84, 84, 1);
     padding: 0 20px;
 }
  @media screen and (min-width: 480px) {
