@@ -1,8 +1,8 @@
-.profile__btn_add {
+.profile__btn_user_add {
     position: relative;
 }
-.profile__btn_add::after,
-.profile__btn_add::before {
+.profile__btn_user_add::after,
+.profile__btn_user_add::before {
     content: "";
     width: 23px;
     height: 3px;
@@ -10,16 +10,16 @@
 
     position: absolute;
 }
-.profile__btn_add::after {
+.profile__btn_user_add::after {
     transform: rotate(90deg);
 }
 
-.profile__btn_add::before {
+.profile__btn_user_add::before {
     transform: rotate(180deg);
 }
 
 @media screen and (min-width:480px) {
-    /* .profile__btn_add {
+    /* .profile__btn_user_add {
         width: 24px;
         height: 24px;
         margin-left: 24px;

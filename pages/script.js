@@ -1,6 +1,6 @@
 "use strict";
 //находим кнопки кот вызывают всплытие/закрытие окна редактирования
-let profileBtnEdit = document.querySelector('.profile__btn_edit');
+let profileBtnEdit = document.querySelector('.profile__btn_user_edit');
 let popupClose = document.querySelector('.popup__close');
 // Находим сам попап
 let popupElement = document.querySelector('.popup');
