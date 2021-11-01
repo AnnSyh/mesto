@@ -7,8 +7,8 @@ let popupElement = document.querySelector('.popup');
 // Находим форму в DOM
 let formElement = document.querySelector('.popup__form');
 // Находим поля формы в DOM
-let nameInput = document.querySelector('.popup__input_title');
-let jobInput = document.querySelector('.popup__input_subtitle');
+let nameInput = document.querySelector('.popup__input_user_title');
+let jobInput = document.querySelector('.popup__input_user_subtitle');
 // Находим переменные для функции openPopup()
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
