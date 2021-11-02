@@ -9,8 +9,7 @@
 
 @media screen and (min-width: 500px){
     .popup__input {
-        /* margin: 16px 0; */
         height: 40px;
-        margin: 0 0 17px 0;
+        margin: 0 0 19px 0;
     }
 }
