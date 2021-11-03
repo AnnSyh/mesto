@@ -12,9 +12,9 @@
     font-style:  normal;
     font-weight: 500;
     font-display: swap;
-    src: url("fonts/Inter-Bold.woff2?v=3.19") format("woff2"),
-         url("fonts/Inter-Bold.woff?v=3.19") format("woff"),
-         url("fonts/Inter-Bold.ttf?v=3.19") format("truetype");
+    src: url("fonts/Inter-Medium.woff2?v=3.19") format("woff2"),
+         url("fonts/Inter-Medium.woff?v=3.19") format("woff"),
+         url("fonts/Inter-Medium.ttf?v=3.19") format("truetype");
   }
 @font-face {
     font-family: 'Inter';
