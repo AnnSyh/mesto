@@ -1,7 +1,7 @@
 .link-hover:hover {
-    border: 1px solid #999999;
+    opacity: 0.6;
 }
 .link-hover:hover::after,
 .link-hover:hover::before {
-    background: #999999;
+    opacity: 0.6;
 }
