@@ -1,20 +1,22 @@
-.cards__heart {
-    width: 22px;
-    min-width: 22px;
+.cards__trash {
+    width: 18px;
     height: 19px;
     cursor: pointer;
-    background-image: url('../../../images/heart.svg');
+    background-image: url('../../../images/trash.svg');
     background-repeat: no-repeat;
     background-position: 0 0;
     background-size: cover;
     background-color: transparent;
     border: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 
-/* .cards__heart:hover {
+.cards__trash:hover {
     opacity: 0.5;
 }
-.cards__heart:active {
+
+.cards__trash:active {
     opacity: 1;
-	background-image: url('../../../images/heart-active.svg');
-} */
+}

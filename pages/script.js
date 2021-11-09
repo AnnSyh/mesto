@@ -63,20 +63,44 @@ function addCards(data) {
 function addCard(name, src) {
     const cardsLi = document.createElement('li');
     cardsLi.classList.add('cards__item');
+
+    const cardsPic = document.createElement('div');
+    cardsPic.classList.add('cards__pic');
+
+    const trashButton = document.createElement('button');
+    trashButton.classList.add('cards__trash');
+
     const cardsImg = document.createElement('img');
     cardsImg.classList.add('cards__img');
     cardsImg.src = src;
+
     const cardsText = document.createElement('div');
     cardsText.classList.add('cards__text');
+
     const cardsTitle = document.createElement('h2');
     cardsTitle.classList.add('cards__title');
     cardsTitle.classList.add('text-overflow');
     cardsTitle.textContent = name;
+
     const likeButton = document.createElement('button');
     likeButton.classList.add('cards__heart');
+
+    cardsPic.append(cardsImg, trashButton);
     cardsText.append(cardsTitle, likeButton);
-    cardsLi.append(cardsImg, cardsText);
+    cardsLi.append(cardsPic, cardsText);
     cardsList.prepend(cardsLi);
+
+    trashButton.addEventListener('click', dellCard);
+
+    likeButton.addEventListener('click', function () {
+        this.classList.toggle('cards__heart_active');
+    });
+
+}
+
+function dellCard(evt) {
+    const cardCurent = evt.target.parentNode.parentNode;
+    cardCurent.remove();
 }
 
 function openPopup() {
@@ -120,15 +144,6 @@ function formAddPlaceSubmitHandler(evt) {
     closePopup();
 }
 
-function heartClick() {
-    //находим сердечки
-    let cardsHeart = document.querySelectorAll('.cards__heart');
-    for (let i = 0; i < cardsHeart.length; i++) {
-        cardsHeart[i].addEventListener('click', function () {
-            cardsHeart[i].classList.toggle('cards__heart_active');
-        });
-    }
-};
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
@@ -142,8 +157,3 @@ profileBtnAdd.addEventListener('click', openPopupAdd);
 popupCloseAddPlace.addEventListener('click', closePopup);
 
 addCards(initialCards);
-
-heartClick();
-
-
-
