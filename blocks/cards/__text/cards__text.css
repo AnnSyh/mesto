@@ -10,7 +10,7 @@
 
 @media screen and (min-width:480px) {
     .cards__text {
-        padding: 22px;
+        padding: 24px;
         max-width: 100%;
     }
 }
