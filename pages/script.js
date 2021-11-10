@@ -36,6 +36,7 @@ const profileBtnAdd = document.querySelector('.profile__btn_user_add');
 const popupCloseEditProfile = document.querySelector('.popup__close_edit_profile');
 const popupCloseAddPlace = document.querySelector('.popup__close_add_plaсe');
 const popupCloseImg = document.querySelector('.popup__close_img');
+const popupClose = document.querySelector('.popup__close');
 // Находим сам попап
 const popupEditProfile = document.querySelector('.popup_edit_profile');
 const popupAddPlaceElement = document.querySelector('.popup_add_plaсe');
@@ -106,10 +107,26 @@ function dellCard(evt) {
     cardCurent.remove();
 }
 
-function openPopup() {
-    nameInput.value = profileName.innerText;
-    jobInput.value = profileJob.innerText;
-    popupEditProfile.classList.add('popup_opened');
+function openPopup(evt) {
+    const popup = evt.target;
+
+    if (popup.classList.contains('profile__btn_user_edit')) {
+        nameInput.value = profileName.innerText;
+        jobInput.value = profileJob.innerText;
+        popupEditProfile.classList.add('popup_opened')
+    } else if (popup.classList.contains('profile__btn_user_add')) {
+        popupAddPlaceElement.classList.add('popup_opened');
+    }
+    // else if (popup.classList.contains('popup_open_img')) {
+    //     // const cardsText = evt.target.parentNode.parentNode.querySelector('.cards__title').innerText;
+    //     // const popupImg = document.querySelector('.popup__img');
+    //     // const popupCaption = document.querySelector('.popup__caption');
+    //     // popupImg.src = cardsImg.src;
+    //     // popupCaption.innerText = cardsText;
+    //     // popupOpenImg.classList.add('popup_opened');
+
+    //     console.log('!!!!!! popup = ', popup);
+    // }
 };
 
 function openPopupImg(evt) {
@@ -123,14 +140,10 @@ function openPopupImg(evt) {
     popupOpenImg.classList.add('popup_opened');
 };
 
-function openPopupAdd() {
-    popupAddPlaceElement.classList.add('popup_opened');
-};
+function closePopup(evt) {
+    const popupCurent = evt.target.parentNode.parentNode.parentNode;
+    popupCurent.classList.remove('popup_opened');
 
-function closePopup() {
-    popupEditProfile.classList.remove('popup_opened');
-    popupAddPlaceElement.classList.remove('popup_opened');
-    popupOpenImg.classList.remove('popup_opened');
 };
 
 // Обработчик «отправки» формы, хотя пока
@@ -168,7 +181,7 @@ formAddPlaceElement.addEventListener('submit', formAddPlaceSubmitHandler);
 profileBtnEdit.addEventListener('click', openPopup);
 popupCloseEditProfile.addEventListener('click', closePopup);
 
-profileBtnAdd.addEventListener('click', openPopupAdd);
+profileBtnAdd.addEventListener('click', openPopup);
 popupCloseAddPlace.addEventListener('click', closePopup);
 
 addCards(initialCards);
