@@ -37,10 +37,13 @@ let profileBtnAdd = document.querySelector('.profile__btn_user_add');
 
 let popupCloseEditProfile = document.querySelector('.popup__close_edit_profile');
 let popupCloseAddPlace = document.querySelector('.popup__close_add_plaсe');
+let popupCloseImg = document.querySelector('.popup__close_img');
 // Находим сам попап
 // let popupElement = document.querySelector('.popup_edit_profile');
 let popupEditProfile = document.querySelector('.popup_edit_profile');
 let popupAddPlaceElement = document.querySelector('.popup_add_plaсe');
+// let popupImg = document.querySelector('.popup__img');
+let popupOpenImg = document.querySelector('.popup_open_img');
 // Находим форму в DOM
 let formElement = document.querySelector('.popup__form');
 let formAddPlaceElement = document.querySelector('.popup_add_plaсe .popup__form');
@@ -52,6 +55,8 @@ let placeImgInput = document.querySelector('.popup__input_plaсe_img');
 // Находим переменные для функции openPopup()
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
+// const cardsImg = document.querySelector('.cards__img');
+// console.log('cardsImg = ', cardsImg);
 
 
 function addCards(data) {
@@ -96,6 +101,9 @@ function addCard(name, src) {
         this.classList.toggle('cards__heart_active');
     });
 
+    cardsImg.addEventListener('click', openPopupImg);
+    popupCloseImg.addEventListener('click', closePopup);
+
 }
 
 function dellCard(evt) {
@@ -109,6 +117,17 @@ function openPopup() {
     popupEditProfile.classList.add('popup_opened');
 };
 
+function openPopupImg(evt) {
+    const cardsImg = evt.target;
+    const cardsText = evt.target.parentNode.parentNode.querySelector('.cards__title').innerText;
+    const popupImg = document.querySelector('.popup__img');
+    const popupCaption = document.querySelector('.popup__caption');
+    popupImg.src = cardsImg.src;
+    popupCaption.innerText = cardsText;
+
+    popupOpenImg.classList.add('popup_opened');
+};
+
 function openPopupAdd() {
     popupAddPlaceElement.classList.add('popup_opened');
 };
@@ -116,6 +135,7 @@ function openPopupAdd() {
 function closePopup() {
     popupEditProfile.classList.remove('popup_opened');
     popupAddPlaceElement.classList.remove('popup_opened');
+    popupOpenImg.classList.remove('popup_opened');
 };
 
 // Обработчик «отправки» формы, хотя пока

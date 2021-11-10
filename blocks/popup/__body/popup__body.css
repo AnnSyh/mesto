@@ -1,0 +1,21 @@
+.popup__body {
+	display: flex;
+    flex-direction: column;
+    padding: 25px;
+    margin: 32px 0;
+    position: relative;
+    box-sizing: border-box;
+    justify-content: space-between;
+}
+
+@media screen and (min-width:480px){
+    .popup__body {
+        padding: 0;
+        margin: 43px;
+    }
+}
+@media screen and (min-width:768px){
+    .popup__body {
+        min-width: 431px;
+    }
+}
