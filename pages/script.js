@@ -142,7 +142,11 @@ function openPopupImg(evt) {
 
 function closePopup(evt) {
     const popupCurent = evt.target.parentNode.parentNode.parentNode;
+    const popupForm = evt.target.parentNode.parentNode;
+    // console.log('popupCurent = ', popupCurent);
+    // console.log('popupForm = ', popupForm);
     popupCurent.classList.remove('popup_opened');
+    popupForm.classList.remove('popup_opened');
 
 };
 
@@ -159,7 +163,7 @@ function formSubmitHandler(evt) {
     profileJob.textContent = jobInputValue;
     //закрываем popup
     // popupElement.classList.remove('popup_opened');
-    closePopup();
+    closePopup(evt);
 }
 function formAddPlaceSubmitHandler(evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
@@ -169,7 +173,7 @@ function formAddPlaceSubmitHandler(evt) {
     // Предаем их в создаваймую карточку
     addCard(placeNameInputValue, placeImgInputValue);
     //закрываем popup
-    closePopup();
+    closePopup(evt);
 }
 
 
