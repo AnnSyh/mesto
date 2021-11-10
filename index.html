@@ -39,6 +39,19 @@
         <p class="footer__copyright">©&nbsp;2021&nbsp;Mesto&nbsp;Russia</p>
     </footer>
 
+    <div class="popup popup_add_plaсe">
+        <div class="popup__overlay"></div>
+        <div class="popup__container">
+            <form class="popup__form" name="add-place">
+                <button class="popup__close popup__close_add_plaсe" type="button"></button>
+                <h2 class="page-title popup__page-title  text-overflow">Новое место</h2>
+                <input placeholder="название" class="popup__input popup__input_plaсe_title"    name="title"    type="text">
+                <input placeholder="ссылка на картинку" class="popup__input popup__input_plaсe_img" name="subtitle" type="text">
+                <input class="popup__btn" name="btn" type="submit" value="Сохранить">
+            </form>
+        </div>
+    </div>
+
     <div class="popup popup_edit_profile">
         <div class="popup__overlay"></div>
         <div class="popup__container">
@@ -63,19 +76,6 @@
                     type="submit" 
                     value="Сохранить"
                 >
-            </form>
-        </div>
-    </div>
-
-    <div class="popup popup_add_plaсe">
-        <div class="popup__overlay"></div>
-        <div class="popup__container">
-            <form class="popup__form" name="add-place">
-                <button class="popup__close popup__close_add_plaсe" type="button"></button>
-                <h2 class="page-title popup__page-title  text-overflow">Новое место</h2>
-                <input placeholder="название" class="popup__input popup__input_plaсe_title"    name="title"    type="text">
-                <input placeholder="ссылка на картинку" class="popup__input popup__input_plaсe_img" name="subtitle" type="text">
-                <input class="popup__btn" name="btn" type="submit" value="Сохранить">
             </form>
         </div>
     </div>

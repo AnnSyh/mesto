@@ -1,4 +1,5 @@
 "use strict";
+
 const initialCards = [
     {
         name: 'Архыз',
@@ -26,37 +27,30 @@ const initialCards = [
     }
 ];
 
-
-
 //находим список в кот надо встаивть карточки
 const cardsList = document.querySelector('.cards__list');
 //находим кнопки кот вызывают всплытие/закрытие окна редактирования
-let profileBtnEdit = document.querySelector('.profile__btn_user_edit');
+const profileBtnEdit = document.querySelector('.profile__btn_user_edit');
 //находим кнопки кот вызывают всплытие/закрытие окна добавления карточки
-let profileBtnAdd = document.querySelector('.profile__btn_user_add');
-
-let popupCloseEditProfile = document.querySelector('.popup__close_edit_profile');
-let popupCloseAddPlace = document.querySelector('.popup__close_add_plaсe');
-let popupCloseImg = document.querySelector('.popup__close_img');
+const profileBtnAdd = document.querySelector('.profile__btn_user_add');
+const popupCloseEditProfile = document.querySelector('.popup__close_edit_profile');
+const popupCloseAddPlace = document.querySelector('.popup__close_add_plaсe');
+const popupCloseImg = document.querySelector('.popup__close_img');
 // Находим сам попап
-// let popupElement = document.querySelector('.popup_edit_profile');
-let popupEditProfile = document.querySelector('.popup_edit_profile');
-let popupAddPlaceElement = document.querySelector('.popup_add_plaсe');
-// let popupImg = document.querySelector('.popup__img');
-let popupOpenImg = document.querySelector('.popup_open_img');
+const popupEditProfile = document.querySelector('.popup_edit_profile');
+const popupAddPlaceElement = document.querySelector('.popup_add_plaсe');
+const popupOpenImg = document.querySelector('.popup_open_img');
 // Находим форму в DOM
-let formElement = document.querySelector('.popup__form');
-let formAddPlaceElement = document.querySelector('.popup_add_plaсe .popup__form');
+const formEditPlaceElement = document.querySelector('.popup_edit_profile .popup__form');
+const formAddPlaceElement = document.querySelector('.popup_add_plaсe .popup__form');
 // Находим поля формы в DOM
 let nameInput = document.querySelector('.popup__input_user_title');
 let jobInput = document.querySelector('.popup__input_user_subtitle');
-let placeNameInput = document.querySelector('.popup__input_plaсe_title');
-let placeImgInput = document.querySelector('.popup__input_plaсe_img');
+const placeNameInput = document.querySelector('.popup__input_plaсe_title');
+const placeImgInput = document.querySelector('.popup__input_plaсe_img');
 // Находим переменные для функции openPopup()
-const profileName = document.querySelector('.profile__name');
-const profileJob = document.querySelector('.profile__job');
-// const cardsImg = document.querySelector('.cards__img');
-// console.log('cardsImg = ', cardsImg);
+let profileName = document.querySelector('.profile__name');
+let profileJob = document.querySelector('.profile__job');
 
 
 function addCards(data) {
@@ -78,6 +72,7 @@ function addCard(name, src) {
     const cardsImg = document.createElement('img');
     cardsImg.classList.add('cards__img');
     cardsImg.src = src;
+    cardsImg.alt = name;
 
     const cardsText = document.createElement('div');
     cardsText.classList.add('cards__text');
@@ -167,7 +162,7 @@ function formAddPlaceSubmitHandler(evt) {
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', formSubmitHandler);
+formEditPlaceElement.addEventListener('submit', formSubmitHandler);
 formAddPlaceElement.addEventListener('submit', formAddPlaceSubmitHandler);
 
 profileBtnEdit.addEventListener('click', openPopup);

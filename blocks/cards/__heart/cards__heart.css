@@ -11,10 +11,10 @@
     border: none;
 }
 
-/* .cards__heart:hover {
+.cards__heart:hover {
     opacity: 0.5;
 }
 .cards__heart:active {
     opacity: 1;
 	background-image: url('../../../images/heart-active.svg');
-} */
+}
