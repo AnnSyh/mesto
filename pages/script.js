@@ -97,7 +97,7 @@ function addCard(name, src) {
         this.classList.toggle('cards__heart_active');
     });
 
-    cardsImg.addEventListener('click', openPopupImg);
+    cardsImg.addEventListener('click', openPopup);
     popupCloseImg.addEventListener('click', closePopup);
 
 }
@@ -108,46 +108,28 @@ function dellCard(evt) {
 }
 
 function openPopup(evt) {
-    const popup = evt.target;
+    const openPopupElement = evt.target;
 
-    if (popup.classList.contains('profile__btn_user_edit')) {
+    if (openPopupElement.classList.contains('profile__btn_user_edit')) {
         nameInput.value = profileName.innerText;
         jobInput.value = profileJob.innerText;
         popupEditProfile.classList.add('popup_opened')
-    } else if (popup.classList.contains('profile__btn_user_add')) {
+    } else if (openPopupElement.classList.contains('profile__btn_user_add')) {
         popupAddPlaceElement.classList.add('popup_opened');
+    } else if (openPopupElement.classList.contains('cards__img')) {
+        const cardsImg = evt.target;
+        const cardsText = evt.target.parentNode.parentNode.querySelector('.cards__title').innerText;
+        const popupImg = document.querySelector('.popup__img');
+        const popupCaption = document.querySelector('.popup__caption');
+        popupImg.src = cardsImg.src;
+        popupCaption.innerText = cardsText;
+        popupOpenImg.classList.add('popup_opened');
     }
-    // else if (popup.classList.contains('popup_open_img')) {
-    //     // const cardsText = evt.target.parentNode.parentNode.querySelector('.cards__title').innerText;
-    //     // const popupImg = document.querySelector('.popup__img');
-    //     // const popupCaption = document.querySelector('.popup__caption');
-    //     // popupImg.src = cardsImg.src;
-    //     // popupCaption.innerText = cardsText;
-    //     // popupOpenImg.classList.add('popup_opened');
-
-    //     console.log('!!!!!! popup = ', popup);
-    // }
-};
-
-function openPopupImg(evt) {
-    const cardsImg = evt.target;
-    const cardsText = evt.target.parentNode.parentNode.querySelector('.cards__title').innerText;
-    const popupImg = document.querySelector('.popup__img');
-    const popupCaption = document.querySelector('.popup__caption');
-    popupImg.src = cardsImg.src;
-    popupCaption.innerText = cardsText;
-
-    popupOpenImg.classList.add('popup_opened');
 };
 
 function closePopup(evt) {
     const popupCurent = evt.target.parentNode.parentNode.parentNode;
-    const popupForm = evt.target.parentNode.parentNode;
-    // console.log('popupCurent = ', popupCurent);
-    // console.log('popupForm = ', popupForm);
     popupCurent.classList.remove('popup_opened');
-    popupForm.classList.remove('popup_opened');
-
 };
 
 // Обработчик «отправки» формы, хотя пока
@@ -162,7 +144,6 @@ function formSubmitHandler(evt) {
     profileName.textContent = nameInputValue;
     profileJob.textContent = jobInputValue;
     //закрываем popup
-    // popupElement.classList.remove('popup_opened');
     closePopup(evt);
 }
 function formAddPlaceSubmitHandler(evt) {
