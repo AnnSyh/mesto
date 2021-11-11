@@ -129,6 +129,8 @@ function openPopup(evt) {
 
 function closePopup(evt) {
     const popupCurent = evt.target.parentNode.parentNode.parentNode;
+    const popupCurentOne = evt.target.parentNode.parentNode;
+    popupCurentOne.classList.remove('popup_opened');
     popupCurent.classList.remove('popup_opened');
 };
 
