@@ -52,54 +52,37 @@ const placeImgInput = document.querySelector('.popup__input_plaсe_img');
 // Находим переменные для функции openPopup()
 let profileName = document.querySelector('.profile__name');
 let profileJob = document.querySelector('.profile__job');
+const template = document.querySelector('.template');
 
 
 function addCards(data) {
     for (let i = 0; i < data.length; i++) {
-        addCard(data[i].name, data[i].link)
+        createCard(data[i].name, data[i].link);
     }
 }
 
-function addCard(name, src) {
-    const cardsLi = document.createElement('li');
-    cardsLi.classList.add('cards__item');
+function createCard(name, src) {
+    const itemCardTemplate = template.content.querySelector('.cards__item').cloneNode(true);
+    const imgTemplate = itemCardTemplate.querySelector('.cards__img');
+    const titleTemplate = itemCardTemplate.querySelector('.cards__title');
+    const trashTemplate = itemCardTemplate.querySelector('.cards__trash');
+    const heartTemplate = itemCardTemplate.querySelector('.cards__heart');
 
-    const cardsPic = document.createElement('div');
-    cardsPic.classList.add('cards__pic');
+    imgTemplate.src = src;
+    imgTemplate.alt = name;
+    titleTemplate.textContent = name;
 
-    const trashButton = document.createElement('button');
-    trashButton.classList.add('cards__trash');
+    cardsList.prepend(itemCardTemplate);
 
-    const cardsImg = document.createElement('img');
-    cardsImg.classList.add('cards__img');
-    cardsImg.src = src;
-    cardsImg.alt = name;
-
-    const cardsText = document.createElement('div');
-    cardsText.classList.add('cards__text');
-
-    const cardsTitle = document.createElement('h2');
-    cardsTitle.classList.add('cards__title');
-    cardsTitle.classList.add('text-overflow');
-    cardsTitle.textContent = name;
-
-    const likeButton = document.createElement('button');
-    likeButton.classList.add('cards__heart');
-
-    cardsPic.append(cardsImg, trashButton);
-    cardsText.append(cardsTitle, likeButton);
-    cardsLi.append(cardsPic, cardsText);
-    cardsList.prepend(cardsLi);
-
-    trashButton.addEventListener('click', dellCard);
-
-    likeButton.addEventListener('click', function () {
+    trashTemplate.addEventListener('click', dellCard);
+    heartTemplate.addEventListener('click', function () {
         this.classList.toggle('cards__heart_active');
     });
 
-    cardsImg.addEventListener('click', openPopup);
+    imgTemplate.addEventListener('click', openPopup);
     popupCloseImg.addEventListener('click', closePopup);
 
+    return itemCardTemplate;
 }
 
 function dellCard(evt) {
@@ -154,7 +137,7 @@ function formAddPlaceSubmitHandler(evt) {
     let placeNameInputValue = placeNameInput.value;
     let placeImgInputValue = placeImgInput.value;
     // Предаем их в создаваймую карточку
-    addCard(placeNameInputValue, placeImgInputValue);
+    createCard(placeNameInputValue, placeImgInputValue);
     //закрываем popup
     closePopup(evt);
 }

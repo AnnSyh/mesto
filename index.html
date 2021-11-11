@@ -45,8 +45,9 @@
             <form class="popup__form" name="add-place">
                 <button class="popup__close popup__close_add_plaсe" type="button"></button>
                 <h2 class="page-title popup__page-title  text-overflow">Новое место</h2>
-                <input placeholder="название" class="popup__input popup__input_plaсe_title"    name="title"    type="text">
-                <input placeholder="ссылка на картинку" class="popup__input popup__input_plaсe_img" name="subtitle" type="text">
+                <input placeholder="название" class="popup__input popup__input_plaсe_title" name="title" type="text">
+                <input placeholder="ссылка на картинку" class="popup__input popup__input_plaсe_img" name="subtitle"
+                    type="text">
                 <input class="popup__btn" name="btn" type="submit" value="Сохранить">
             </form>
         </div>
@@ -58,24 +59,10 @@
             <form class="popup__form" name="edit-profile">
                 <button class="popup__close popup__close_edit_profile" type="button"></button>
                 <h2 class="page-title popup__page-title  text-overflow">Редактировать профиль</h2>
-                <input 
-                    placeholder="имя"  
-                    class="popup__input popup__input_user_title" 
-                    name="title" 
-                    type="text"
-                >
-                <input 
-                    placeholder="род деятельности"  
-                    class="popup__input popup__input_user_subtitle" 
-                    name="subtitle" 
-                    type="text"
-                >
-                <input 
-                    class="popup__btn" 
-                    name="btn" 
-                    type="submit" 
-                    value="Сохранить"
-                >
+                <input placeholder="имя" class="popup__input popup__input_user_title" name="title" type="text">
+                <input placeholder="род деятельности" class="popup__input popup__input_user_subtitle" name="subtitle"
+                    type="text">
+                <input class="popup__btn" name="btn" type="submit" value="Сохранить">
             </form>
         </div>
     </div>
@@ -86,12 +73,29 @@
             <div class="popup__body">
                 <button class="popup__close popup__close_img" type="button"></button>
                 <figure class="popup__figure">
-                    <img class="popup__img" src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" alt="Путешествия по России">
+                    <img class="popup__img"
+                        src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg"
+                        alt="Путешествия по России">
                     <figcaption class="popup__caption">картинка не загрузилась</figcaption>
                 </figure>
             </div>
         </div>
     </div>
+
+
+    <template class="template">
+        <li class="cards__item">
+            <div class="cards__pic">
+                <img class="cards__img" src="" alt="">
+                <button class="cards__trash"></button>
+            </div>
+            <div class="cards__text">
+                <h2 class="cards__title text-overflow"></h2>
+                <button class="cards__heart"></button>
+            </div>
+        </li>
+    </template>
+
 
     <script src="./pages/script.js"></script>
 </body>
