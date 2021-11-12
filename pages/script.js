@@ -45,13 +45,13 @@ const popupOpenImg = document.querySelector('.popup_open_img');
 const formEditPlaceElement = document.querySelector('.popup_edit_profile .popup__form');
 const formAddPlaceElement = document.querySelector('.popup_add_plaсe .popup__form');
 // Находим поля формы в DOM
-let nameInput = document.querySelector('.popup__input_user_title');
-let jobInput = document.querySelector('.popup__input_user_subtitle');
+const nameInput = document.querySelector('.popup__input_user_title');
+const jobInput = document.querySelector('.popup__input_user_subtitle');
 const placeNameInput = document.querySelector('.popup__input_plaсe_title');
 const placeImgInput = document.querySelector('.popup__input_plaсe_img');
 // Находим переменные для функции openPopup()
-let profileName = document.querySelector('.profile__name');
-let profileJob = document.querySelector('.profile__job');
+const profileName = document.querySelector('.profile__name');
+const profileJob = document.querySelector('.profile__job');
 const template = document.querySelector('.template');
 
 
@@ -61,18 +61,10 @@ function addCards(data) {
     }
 }
 
-function createCard(name, src) {
-    const itemCardTemplate = template.content.querySelector('.cards__item').cloneNode(true);
+function addListenersToCard(itemCardTemplate) {
     const imgTemplate = itemCardTemplate.querySelector('.cards__img');
-    const titleTemplate = itemCardTemplate.querySelector('.cards__title');
     const trashTemplate = itemCardTemplate.querySelector('.cards__trash');
     const heartTemplate = itemCardTemplate.querySelector('.cards__heart');
-
-    imgTemplate.src = src;
-    imgTemplate.alt = name;
-    titleTemplate.textContent = name;
-
-    cardsList.prepend(itemCardTemplate);
 
     trashTemplate.addEventListener('click', dellCard);
     heartTemplate.addEventListener('click', function () {
@@ -81,6 +73,20 @@ function createCard(name, src) {
 
     imgTemplate.addEventListener('click', openPopup);
     popupCloseImg.addEventListener('click', closePopup);
+}
+
+function createCard(name, src) {
+    const itemCardTemplate = template.content.querySelector('.cards__item').cloneNode(true);
+    const imgTemplate = itemCardTemplate.querySelector('.cards__img');
+    const titleTemplate = itemCardTemplate.querySelector('.cards__title');
+
+    imgTemplate.src = src;
+    imgTemplate.alt = name;
+    titleTemplate.textContent = name;
+
+    addListenersToCard(itemCardTemplate);
+
+    cardsList.prepend(itemCardTemplate);
 
     return itemCardTemplate;
 }
@@ -122,8 +128,8 @@ function closePopup(evt) {
 function formSubmitHandler(evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     // Получаем значение полей jobInput и nameInput из свойства value
-    let nameInputValue = nameInput.value;
-    let jobInputValue = jobInput.value;
+    const nameInputValue = nameInput.value;
+    const jobInputValue = jobInput.value;
     // Выбераем элементы, куда должны быть вставлены значения полей
     // Вставляем новые значения с помощью textContent
     profileName.textContent = nameInputValue;
@@ -134,8 +140,8 @@ function formSubmitHandler(evt) {
 function formAddPlaceSubmitHandler(evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     // Получаем значение полей jobInput и nameInput из свойства value
-    let placeNameInputValue = placeNameInput.value;
-    let placeImgInputValue = placeImgInput.value;
+    const placeNameInputValue = placeNameInput.value;
+    const placeImgInputValue = placeImgInput.value;
     // Предаем их в создаваймую карточку
     createCard(placeNameInputValue, placeImgInputValue);
     //закрываем popup
