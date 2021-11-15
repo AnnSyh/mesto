@@ -107,6 +107,7 @@ function openPopup(evt) {
     if (curentsPopup[0].querySelector('.popup__img')) {
         // console.log('попап для карточек')
         curentsPopup[0].querySelector('.popup__img').src = curentElement.src
+        curentsPopup[0].querySelector('.popup__caption').innerText = curentElement.parentElement.parentElement.querySelector('.cards__title').innerText
     }
     //попап для профиля
     if (curentsPopup[0].querySelector('.popup__input_user_title')) {
