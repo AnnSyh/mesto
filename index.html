@@ -21,13 +21,15 @@
                 <div class="profile__info">
                     <div class="profile__edit">
                         <h1 class="profile__name text-overflow">Жак-Ив Кусто</h1>
-                        <button type="button" class="profile__btn profile__btn_user_edit link-hover" data-popup="profile__btn_user_edit"></button>
+                        <button type="button" class="profile__btn profile__btn_user_edit link-hover"
+                            data-popup="popup_edit_profile"></button>
                     </div>
                     <p class="profile__job text-overflow">Исследователь океана</p>
                 </div>
 
             </div>
-            <button type="button" class="profile__btn profile__btn_user_add link-hover"></button>
+            <button type="button" class="profile__btn profile__btn_user_add link-hover"
+                data-popup="popup_add_plaсe"></button>
         </section>
 
         <section class="cards section content__section">
@@ -86,7 +88,7 @@
     <template class="template">
         <li class="cards__item">
             <div class="cards__pic">
-                <img class="cards__img"
+                <img class="cards__img" data-popup="popup_open_img"
                     src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg"
                     alt="картинка шаблона">
                 <button class="cards__trash"></button>
