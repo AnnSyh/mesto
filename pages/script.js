@@ -47,8 +47,8 @@ const formAddPlaceElement = document.querySelector('.popup_add_plaсe .popup__fo
 // Находим поля формы в DOM
 const nameInput = document.querySelector('.popup__input_user_title')
 const jobInput = document.querySelector('.popup__input_user_subtitle')
-const placeNameInput = document.querySelector('.popup__input_plaсe_title')
-const placeImgInput = document.querySelector('.popup__input_plaсe_img')
+const placeNameInput = document.querySelector('.popup__input_plaсe-title')
+const placeImgInput = document.querySelector('.popup__input_plaсe-img')
 // Находим переменные для функции openPopup()
 const profileName = document.querySelector('.profile__name')
 const profileJob = document.querySelector('.profile__job')
