@@ -21,15 +21,15 @@
                 <div class="profile__info">
                     <div class="profile__edit">
                         <h1 class="profile__name text-overflow">Жак-Ив Кусто</h1>
-                        <button type="button" class="profile__btn profile__btn_user_edit link-hover"
-                            data-popup="popup_edit_profile"></button>
+                        <button type="button" class="profile__btn profile__btn_user-edit link-hover"
+                            data-popup="popup__edit_profile"></button>
                     </div>
                     <p class="profile__job text-overflow">Исследователь океана</p>
                 </div>
 
             </div>
-            <button type="button" class="profile__btn profile__btn_user_add link-hover"
-                data-popup="popup_add_plaсe"></button>
+            <button type="button" class="profile__btn profile__btn_user-add link-hover"
+                data-popup="popup__add-plaсe"></button>
         </section>
 
         <section class="cards section content__section">
@@ -41,11 +41,11 @@
         <p class="footer__copyright">©&nbsp;2021&nbsp;Mesto&nbsp;Russia</p>
     </footer>
 
-    <div class="popup popup_add_plaсe">
+    <div class="popup popup__add-plaсe">
         <div class="popup__overlay"></div>
         <div class="popup__container">
             <form class="popup__form" name="add-place">
-                <button class="popup__close popup__close_add_plaсe" type="button"></button>
+                <button class="popup__close popup__close_add-plaсe" type="button"></button>
                 <h2 class="page-title popup__page-title  text-overflow">Новое место</h2>
                 <input placeholder="название" class="popup__input popup__input_plaсe-title" name="title" type="text">
                 <input placeholder="ссылка на картинку" class="popup__input popup__input_plaсe-img" name="subtitle"
@@ -55,14 +55,14 @@
         </div>
     </div>
 
-    <div class="popup popup_edit_profile">
+    <div class="popup popup__edit_profile">
         <div class="popup__overlay"></div>
         <div class="popup__container">
             <form class="popup__form" name="edit-profile">
-                <button class="popup__close popup__close_edit_profile" type="button"></button>
+                <button class="popup__close popup__close_edit-profile" type="button"></button>
                 <h2 class="page-title popup__page-title  text-overflow">Редактировать профиль</h2>
-                <input placeholder="имя" class="popup__input popup__input_user_title" name="title" type="text">
-                <input placeholder="род деятельности" class="popup__input popup__input_user_subtitle" name="subtitle"
+                <input placeholder="имя" class="popup__input popup__input_user-title" name="title" type="text">
+                <input placeholder="род деятельности" class="popup__input popup__input_user-subtitle" name="subtitle"
                     type="text">
                 <input class="popup__btn" name="btn" type="submit" value="Сохранить">
             </form>
