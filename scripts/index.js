@@ -56,10 +56,7 @@ function createCard(name, src) {
     imgTemplate.src = src
     imgTemplate.alt = name
     titleTemplate.textContent = name
-
     addListenersToCard(itemCardTemplate)
-
-    // addCard(itemCardTemplate)
 
     return itemCardTemplate
 }
