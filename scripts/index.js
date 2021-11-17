@@ -11,11 +11,11 @@ const popupCloseAddPlace = document.querySelector('.popup__close_add-plaсe')
 const popupCloseImg = document.querySelector('.popup__close_img')
 const popupClose = document.querySelector('.popup__close')
 // Находим сам попап
-const popupEditProfile = document.querySelector('.popup__edit_profile')
+const popupEditProfile = document.querySelector('.popup__edit-profile')
 const popupAddPlaceElement = document.querySelector('.popup__add-plaсe')
 const popupOpenImg = document.querySelector('.popup_open_img')
 // Находим форму в DOM
-const formEditPlaceElement = document.querySelector('.popup__edit_profile .popup__form')
+const formEditPlaceElement = document.querySelector('.popup__edit-profile .popup__form')
 const formAddPlaceElement = document.querySelector('.popup__add-plaсe .popup__form')
 // Находим поля формы в DOM
 const nameInput = document.querySelector('.popup__input_user-title')
