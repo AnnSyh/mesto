@@ -1,31 +1,6 @@
 'use strict'
 
-const initialCards = [
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-]
+// import {initialCards} from './initialCards'
 
 // находим список в кот надо встаивть карточки
 const cardsList = document.querySelector('.cards__list')
@@ -55,9 +30,15 @@ const profileJob = document.querySelector('.profile__job')
 const template = document.querySelector('.template')
 
 function addCards(data) {
-    for (let i = 0; i < data.length; i++) {
-        createCard(data[i].name, data[i].link)
-    }
+
+    data.forEach(function(item, index, data){
+        // console.log(`${item} имеет позицию ${index} в ${data}`)
+        createCard(data[index].name, data[index].link)
+    });
+
+    // for (let i = 0; i < data.length; i++) {
+    //     createCard(data[i].name, data[i].link)
+    // }
 }
 
 function addListenersToCard(itemCardTemplate) {
