@@ -1,7 +1,5 @@
 'use strict'
 
-// import {initialCards} from './initialCards'
-
 // находим список в кот надо встаивть карточки
 const cardsList = document.querySelector('.cards__list')
 // находим кнопки кот вызывают всплытие/закрытие окна редактирования
@@ -29,16 +27,11 @@ const profileName = document.querySelector('.profile__name')
 const profileJob = document.querySelector('.profile__job')
 const template = document.querySelector('.template')
 
-function addCards(data) {
-
-    data.forEach(function(item, index, data){
-        // console.log(`${item} имеет позицию ${index} в ${data}`)
-        createCard(data[index].name, data[index].link)
+function addCardsFromArray(data) {
+    data.forEach(function (item, index, data) {
+        const currentCard = createCard(data[index].name, data[index].link);
+        addCard(currentCard)
     });
-
-    // for (let i = 0; i < data.length; i++) {
-    //     createCard(data[i].name, data[i].link)
-    // }
 }
 
 function addListenersToCard(itemCardTemplate) {
@@ -46,12 +39,12 @@ function addListenersToCard(itemCardTemplate) {
     const trashTemplate = itemCardTemplate.querySelector('.cards__trash')
     const heartTemplate = itemCardTemplate.querySelector('.cards__heart')
 
-    trashTemplate.addEventListener('click', dellCard)
+    trashTemplate.addEventListener('click', deleteCard)
     heartTemplate.addEventListener('click', function () {
         this.classList.toggle('cards__heart_active')
     })
 
-    imgTemplate.addEventListener('click', openPopup)
+    imgTemplate.addEventListener('click', openPopupImage)
     popupCloseImg.addEventListener('click', closePopup)
 }
 
@@ -66,47 +59,49 @@ function createCard(name, src) {
 
     addListenersToCard(itemCardTemplate)
 
-    cardsList.prepend(itemCardTemplate)
+    // addCard(itemCardTemplate)
 
     return itemCardTemplate
 }
 
-function dellCard(evt) {
+function addCard(itemCardTemplate) {
+    cardsList.prepend(itemCardTemplate)
+}
+
+function deleteCard(evt) {
     const cardCurent = evt.target.parentNode.parentNode
     cardCurent.remove()
 }
-
+//ф-я открытия любово попапа
 function openPopup(evt) {
     const curentElement = evt.target
     const curentAttribute = evt.target.getAttribute('data-popup')
     const curentsPopup = document.getElementsByClassName(curentAttribute);
-
     // popup_opened
     curentsPopup[0].classList.add('popup_opened');
-
-    //попап для карточек
-    if (curentsPopup[0].querySelector('.popup__img')) {
-        // console.log('попап для карточек')
-        curentsPopup[0].querySelector('.popup__img').src = curentElement.src
-        curentsPopup[0].querySelector('.popup__caption').innerText = curentElement.parentElement.parentElement.querySelector('.cards__title').innerText
-    }
-    //попап для профиля
-    if (curentsPopup[0].querySelector('.popup__input_user-title')) {
-        // console.log('попап для профиля')
-        nameInput.value = profileName.innerText;
-
-        console.log('jobInput = ', jobInput);
-
-        jobInput.value = profileJob.innerText;
-    }
-
+}
+//попап для карточек
+function openPopupImage(evt) {
+    const curentElement = evt.target
+    const curentAttribute = evt.target.getAttribute('data-popup')
+    const curentsPopup = document.getElementsByClassName(curentAttribute);
+    curentsPopup[0].querySelector('.popup__img').src = curentElement.src
+    curentsPopup[0].querySelector('.popup__caption').innerText = curentElement.parentElement.parentElement.querySelector('.cards__title').innerText
+    openPopup(evt)
+}
+//попап для редактирования  профиля
+function openPopupProfileEdit(evt) {
+    nameInput.value = profileName.innerText;
+    jobInput.value = profileJob.innerText;
+    openPopup(evt)
+}
+function openPopupProfileAdd(evt) {
+    openPopup(evt)
 }
 
 function closePopup(evt) {
-    const popupCurent = evt.target.parentNode.parentNode.parentNode
-    const popupCurentOne = evt.target.parentNode.parentNode
-    popupCurentOne.classList.remove('popup_opened')
-    popupCurent.classList.remove('popup_opened')
+    const popup = document.querySelector('.popup_opened')
+    popup.classList.remove('popup_opened')
 };
 
 // Обработчик «отправки» формы, хотя пока
@@ -129,7 +124,9 @@ function formAddPlaceSubmitHandler(evt) {
     const placeNameInputValue = placeNameInput.value
     const placeImgInputValue = placeImgInput.value
     // Предаем их в создаваймую карточку
-    createCard(placeNameInputValue, placeImgInputValue)
+    const currentCreateCard = createCard(placeNameInputValue, placeImgInputValue)
+    // Добавляем карточку в разметку
+    addCard(currentCreateCard)
     // закрываем popup
     closePopup(evt)
 }
@@ -139,10 +136,10 @@ function formAddPlaceSubmitHandler(evt) {
 formEditPlaceElement.addEventListener('submit', formSubmitHandler)
 formAddPlaceElement.addEventListener('submit', formAddPlaceSubmitHandler)
 
-profileBtnEdit.addEventListener('click', openPopup)
+profileBtnEdit.addEventListener('click', openPopupProfileEdit)
 popupCloseEditProfile.addEventListener('click', closePopup)
 
-profileBtnAdd.addEventListener('click', openPopup)
+profileBtnAdd.addEventListener('click', openPopupProfileAdd)
 popupCloseAddPlace.addEventListener('click', closePopup)
 
-addCards(initialCards)
+addCardsFromArray(initialCards)

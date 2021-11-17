@@ -1,4 +1,4 @@
-// export {initialCards} from './index.js'; 
+'use strict'
 
 var initialCards = [
     {
