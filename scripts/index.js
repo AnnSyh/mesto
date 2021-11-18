@@ -1,5 +1,7 @@
 'use strict'
 
+import { initialCards } from "./initialCards.js";
+
 // находим список в кот надо встаивть карточки
 const cardsList = document.querySelector('.cards__list')
 // находим кнопки кот вызывают всплытие/закрытие окна редактирования
