@@ -6,14 +6,12 @@ const cardsList = document.querySelector('.cards__list')
 const profileBtnEdit = document.querySelector('.profile__btn_user-edit')
 // находим кнопки кот вызывают всплытие/закрытие окна добавления карточки
 const profileBtnAdd = document.querySelector('.profile__btn_user-add')
-const popupCloseEditProfile = document.querySelector('.popup__close_edit-profile')
-const popupCloseAddPlace = document.querySelector('.popup__close_add-plaсe')
-const popupCloseImg = document.querySelector('.popup__close_img')
-const popupClose = document.querySelector('.popup__close')
+// находим все кнопки закрывающие попапы
+const popupClose = document.querySelectorAll('.popup__close')
 // Находим сам попап
 const popupEditProfile = document.querySelector('.popup__edit-profile')
 const popupAddPlaceElement = document.querySelector('.popup__add-plaсe')
-const popupOpenImg = document.querySelector('.popup_open_img')
+const popupOpenImg = document.querySelector('.popup__open-img')
 // Находим форму в DOM
 const formEditPlaceElement = document.querySelector('.popup__edit-profile .popup__form')
 const formAddPlaceElement = document.querySelector('.popup__add-plaсe .popup__form')
@@ -45,7 +43,9 @@ function addListenersToCard(itemCardTemplate) {
     })
 
     imgTemplate.addEventListener('click', openPopupImage)
-    popupCloseImg.addEventListener('click', closePopup)
+    popupClose.forEach((element) => {
+        element.addEventListener('click', closePopup)
+    });
 }
 
 function createCard(name, src) {
@@ -82,6 +82,7 @@ function openPopupImage(evt) {
     const curentElement = evt.target
     const curentAttribute = evt.target.getAttribute('data-popup')
     const curentsPopup = document.getElementsByClassName(curentAttribute);
+
     curentsPopup[0].querySelector('.popup__img').src = curentElement.src
     curentsPopup[0].querySelector('.popup__caption').innerText = curentElement.parentElement.parentElement.querySelector('.cards__title').innerText
     openPopup(evt)
@@ -134,9 +135,9 @@ formEditPlaceElement.addEventListener('submit', formSubmitHandler)
 formAddPlaceElement.addEventListener('submit', formAddPlaceSubmitHandler)
 
 profileBtnEdit.addEventListener('click', openPopupProfileEdit)
-popupCloseEditProfile.addEventListener('click', closePopup)
-
 profileBtnAdd.addEventListener('click', openPopupProfileAdd)
-popupCloseAddPlace.addEventListener('click', closePopup)
+popupClose.forEach((element) => {
+    element.addEventListener('click', closePopup)
+});
 
 addCardsFromArray(initialCards)
