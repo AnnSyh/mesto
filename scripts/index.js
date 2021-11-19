@@ -14,6 +14,8 @@ const popupClose = document.querySelectorAll('.popup__close')
 const popupEditProfile = document.querySelector('.popup__edit-profile')
 const popupAddPlaceElement = document.querySelector('.popup__add-plaсe')
 const popupOpenImg = document.querySelector('.popup__open-img')
+const popup = document.querySelector('.popup')
+const popups = document.querySelectorAll('.popup')
 // Находим форму в DOM
 const formEditPlaceElement = document.querySelector('.popup__edit-profile .popup__form')
 const formAddPlaceElement = document.querySelector('.popup__add-plaсe .popup__form')
@@ -28,8 +30,8 @@ const profileJob = document.querySelector('.profile__job')
 const template = document.querySelector('.template')
 
 function addCardsFromArray(data) {
-    data.forEach(function (item, index, data) {
-        const currentCard = createCard(data[index].name, data[index].link);
+    data.forEach(function (item) {
+        const currentCard = createCard(item.name, item.link);
         addCard(currentCard)
     });
 }
@@ -71,13 +73,9 @@ function deleteCard(evt) {
     const cardCurent = evt.target.parentNode.parentNode
     cardCurent.remove()
 }
-//ф-я открытия любово попапа
-function openPopup(evt) {
-    const curentElement = evt.target
-    const curentAttribute = evt.target.getAttribute('data-popup')
-    const curentsPopup = document.getElementsByClassName(curentAttribute);
-    // popup_opened
-    curentsPopup[0].classList.add('popup_opened');
+//ф-я открытия любого попапа
+function openPopup(popup) {
+    popup.classList.add('popup_opened');
 }
 //попап для карточек
 function openPopupImage(evt) {
@@ -87,16 +85,16 @@ function openPopupImage(evt) {
 
     curentsPopup[0].querySelector('.popup__img').src = curentElement.src
     curentsPopup[0].querySelector('.popup__caption').innerText = curentElement.parentElement.parentElement.querySelector('.cards__title').innerText
-    openPopup(evt)
+    openPopup(curentsPopup[0])
 }
 //попап для редактирования  профиля
-function openPopupProfileEdit(evt) {
+function openPopupProfileEdit() {
     nameInput.value = profileName.innerText;
     jobInput.value = profileJob.innerText;
-    openPopup(evt)
+    openPopup(popupEditProfile)
 }
-function openPopupProfileAdd(evt) {
-    openPopup(evt)
+function openPopupProfileAdd() {
+    openPopup(popupAddPlaceElement)
 }
 
 function closePopup(evt) {
@@ -135,9 +133,17 @@ function formAddPlaceSubmitHandler(evt) {
 // он будет следить за событием “submit” - «отправка»
 formEditPlaceElement.addEventListener('submit', formSubmitHandler)
 formAddPlaceElement.addEventListener('submit', formAddPlaceSubmitHandler)
-
+//вешаем событие на кнопки
 profileBtnEdit.addEventListener('click', openPopupProfileEdit)
 profileBtnAdd.addEventListener('click', openPopupProfileAdd)
+
+
+//закрываем попапы
+popups.forEach((element) => {
+    element.classList.remove('popup_opened')
+});
+
+//вешаем событие на крестики у попапов
 popupClose.forEach((element) => {
     element.addEventListener('click', closePopup)
 });
