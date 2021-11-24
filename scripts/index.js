@@ -13,10 +13,6 @@ const popupClose = document.querySelectorAll('.popup__close')
 // Находим сам попап
 const popupEditProfile = document.querySelector('.edit-profile__popup')
 const popupAddPlaceElement = document.querySelector('.add-plaсe__popup')
-//находим оверлай
-const popupOverlay = document.querySelectorAll('.popup__overlay')
-// const popupOpenImg = document.querySelector('.open-img__popup')
-// const popup = document.querySelector('.popup')
 const popups = document.querySelectorAll('.popup')
 // Находим форму в DOM
 const formEditPlaceElement = document.querySelector('.edit-profile__popup .popup__form')
@@ -100,17 +96,32 @@ function openPopupProfileAdd() {
 }
 
 function closePopup(evt) {
-    const popup = document.querySelector('.popup_opened')
-    popup.classList.remove('popup_opened')
+    const popup = document.querySelector('.popup_opened');
+    if (popup) {
+        popup.classList.remove('popup_opened')
+    }
 };
 //закрытие попапа при клике на Overlay
 function clickOverlay(evt) {
+    //находим оверлай
+    const popupOverlay = document.querySelectorAll('.popup__overlay')
+
     popupOverlay.forEach((element) => {
-        element.addEventListener('click', function () {
-            console.log('click overlay')
-            element.parentNode.classList.remove('popup_opened')
+        element.addEventListener('click', function (evt) {
+            closePopup()
         })
     })
+}
+//закрытие попапа при клике на кнопку Escape
+function clickEsc() {
+    document.addEventListener('keydown', function (evt) {
+        if (evt.key == 'Escape') {
+            console.log('нажали на Esc');
+            closePopup()
+        }
+    });
+
+
 
 }
 
@@ -148,20 +159,14 @@ formAddPlaceElement.addEventListener('submit', formAddPlaceSubmitHandler)
 //вешаем событие на кнопки
 profileBtnEdit.addEventListener('click', openPopupProfileEdit)
 profileBtnAdd.addEventListener('click', openPopupProfileAdd)
-//вешаем событие на оверлай
-profileBtnAdd.addEventListener('click', clickOverlay)
-
-//закрываем попапы
-popups.forEach((element) => {
-    element.classList.remove('popup_opened')
-});
 
 //вешаем событие на крестики у попапов
 popupClose.forEach((element) => {
     element.addEventListener('click', closePopup)
 });
 
-//вешаем событие на кнопку Esc
-// clickOverlay()
+//вешаем событие на Overlay и кнопку Esc
+clickOverlay()
+clickEsc()
 
 addCardsFromArray(initialCards)
