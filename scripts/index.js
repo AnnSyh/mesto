@@ -11,14 +11,14 @@ const profileBtnAdd = document.querySelector('.profile__btn_user-add')
 // находим все кнопки закрывающие попапы
 const popupClose = document.querySelectorAll('.popup__close')
 // Находим сам попап
-const popupEditProfile = document.querySelector('.popup__edit-profile')
-const popupAddPlaceElement = document.querySelector('.popup__add-plaсe')
-const popupOpenImg = document.querySelector('.popup__open-img')
+const popupEditProfile = document.querySelector('.edit-profile__popup')
+const popupAddPlaceElement = document.querySelector('.add-plaсe__popup')
+const popupOpenImg = document.querySelector('.open-img__popup')
 const popup = document.querySelector('.popup')
 const popups = document.querySelectorAll('.popup')
 // Находим форму в DOM
-const formEditPlaceElement = document.querySelector('.popup__edit-profile .popup__form')
-const formAddPlaceElement = document.querySelector('.popup__add-plaсe .popup__form')
+const formEditPlaceElement = document.querySelector('.edit-profile__popup .popup__form')
+const formAddPlaceElement = document.querySelector('.add-plaсe__popup .popup__form')
 // Находим поля формы в DOM
 const nameInput = document.querySelector('.popup__input_user-title')
 const jobInput = document.querySelector('.popup__input_user-subtitle')

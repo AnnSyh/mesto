@@ -1,15 +1,8 @@
 .popup__input {
-	height: 35px;
+    height: 35px;
     border: #fff;
     border-bottom: 1px solid #ccc;
-    outline:none;
-    margin: 0 0 16px 0;
+    outline: none;
+    margin: 0;
     font-size: 14px;
-}
-
-@media screen and (min-width: 500px){
-    .popup__input {
-        height: 40px;
-        margin: 0 0 19px 0;
-    }
 }
