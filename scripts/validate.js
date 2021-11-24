@@ -52,32 +52,31 @@ const enableValidation = () => {
 
 const hasInvalidInput = (inputList) => {
 	return inputList.some((inputElement) => {
-		console.log('!inputElement.validity.valid = ', !inputElement.validity.valid)
+		// console.log('!inputElement.validity.valid = ', !inputElement.validity.valid)
 
 		return !inputElement.validity.valid;
 	})
 };
 
-// const hasEmptyInput = (inputList) => {
-// 	console.log('111hasEmptyInput111')
-// 	return inputList.some((inputElement) => {
-// 		console.log('inputElement.validity.valueMissing = ', inputElement.validity.valueMissing)
-// 		return inputElement.validity.valueMissing;
-// 	})
-// };
+const hasEmptyInput = (inputList) => {
+
+	return inputList.some((inputElement) => {
+		// console.log('inputElement.validity.valueMissing = ', inputElement.validity.valueMissing)
+		return inputElement.validity.valueMissing;
+	})
+};
 
 const toggleButtonState = (inputList, buttonElement) => {
-
-	console.log('toggleButtonState hasInvalidInput(inputList) = ', hasInvalidInput(inputList))
-	console.log('inputList = ', inputList)
-
 	if (hasInvalidInput(inputList)) {
+		// console.log('hasInvalidInput')
 		buttonElement.classList.add('form__submit_inactive');
 		buttonElement.setAttribute('disabled', 'disabled')
 	} else {
+		// console.log('not hasInvalidInput')
 		buttonElement.classList.remove('form__submit_inactive');
 		buttonElement.removeAttribute('disabled')
 	}
+	// console.log('after if hasInvalidInput')
 };
 
 enableValidation();
