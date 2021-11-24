@@ -74,6 +74,11 @@ function deleteCard(evt) {
 //ф-я открытия любого попапа
 function openPopup(popup) {
     popup.classList.add('popup_opened');
+
+    //вешаем событие на Overlay и кнопку Esc
+    clickOverlay()
+    clickEsc()
+
 }
 //попап для карточек
 function openPopupImage(evt) {
@@ -100,6 +105,9 @@ function closePopup(evt) {
     if (popup) {
         popup.classList.remove('popup_opened')
     }
+    //снять слушательскнопки Esc
+    // popup.removeEventListener('click', clickEsc);
+
 };
 //закрытие попапа при клике на Overlay
 function clickOverlay(evt) {
@@ -112,7 +120,7 @@ function clickOverlay(evt) {
         })
     })
 }
-//закрытие попапа при клике на кнопку Escape
+//Слушатель событий, закрывающий модальное окно по нажатию на Escape
 function clickEsc() {
     document.addEventListener('keydown', function (evt) {
         if (evt.key == 'Escape') {
@@ -120,9 +128,6 @@ function clickEsc() {
             closePopup()
         }
     });
-
-
-
 }
 
 // Обработчик «отправки» формы, хотя пока
@@ -156,6 +161,7 @@ function formAddPlaceSubmitHandler(evt) {
 // он будет следить за событием “submit” - «отправка»
 formEditPlaceElement.addEventListener('submit', formSubmitHandler)
 formAddPlaceElement.addEventListener('submit', formAddPlaceSubmitHandler)
+
 //вешаем событие на кнопки
 profileBtnEdit.addEventListener('click', openPopupProfileEdit)
 profileBtnAdd.addEventListener('click', openPopupProfileAdd)
@@ -165,8 +171,8 @@ popupClose.forEach((element) => {
     element.addEventListener('click', closePopup)
 });
 
-//вешаем событие на Overlay и кнопку Esc
-clickOverlay()
-clickEsc()
+// //вешаем событие на Overlay и кнопку Esc
+// clickOverlay()
+// clickEsc()
 
 addCardsFromArray(initialCards)
