@@ -14,6 +14,8 @@ const popupClose = document.querySelectorAll('.popup__close')
 const popupEditProfile = document.querySelector('.edit-profile__popup')
 const popupAddPlaceElement = document.querySelector('.add-plaсe__popup')
 const popups = document.querySelectorAll('.popup')
+// Находим overlay
+const popupOverlay = document.querySelectorAll('.popup__overlay')
 // Находим форму в DOM
 const formEditPlaceElement = document.querySelector('.edit-profile__popup .popup__form')
 const formAddPlaceElement = document.querySelector('.add-plaсe__popup .popup__form')
@@ -74,10 +76,15 @@ function deleteCard(evt) {
 //ф-я открытия любого попапа
 function openPopup(popup) {
     popup.classList.add('popup_opened');
-
     //вешаем событие на Overlay и кнопку Esc
-    clickOverlay()
-    clickEsc()
+    //находим оверлай
+    const popupOverlay = document.querySelectorAll('.popup__overlay')
+
+    popupOverlay.forEach((element) => {
+        element.addEventListener('click', closePopup)
+    })
+    //вешаем событие на кнопку Esc
+    document.addEventListener('keydown', clickEsc)
 
 }
 //попап для карточек
@@ -104,30 +111,18 @@ function closePopup(evt) {
     const popup = document.querySelector('.popup_opened');
     if (popup) {
         popup.classList.remove('popup_opened')
+        //снять слушатель с кнопки Esc
+        document.removeEventListener('keydown', clickEsc)
     }
-    //снять слушательскнопки Esc
-    // popup.removeEventListener('click', clickEsc);
-
 };
-//закрытие попапа при клике на Overlay
-function clickOverlay(evt) {
-    //находим оверлай
-    const popupOverlay = document.querySelectorAll('.popup__overlay')
 
-    popupOverlay.forEach((element) => {
-        element.addEventListener('click', function (evt) {
-            closePopup()
-        })
-    })
-}
 //Слушатель событий, закрывающий модальное окно по нажатию на Escape
-function clickEsc() {
-    document.addEventListener('keydown', function (evt) {
-        if (evt.key == 'Escape') {
-            console.log('нажали на Esc');
-            closePopup()
-        }
-    });
+function clickEsc(evt) {
+    // console.log('keydown')
+    if (evt.key == 'Escape') {
+        console.log('нажали на Esc');
+        closePopup()
+    }
 }
 
 // Обработчик «отправки» формы, хотя пока
@@ -170,9 +165,5 @@ profileBtnAdd.addEventListener('click', openPopupProfileAdd)
 popupClose.forEach((element) => {
     element.addEventListener('click', closePopup)
 });
-
-// //вешаем событие на Overlay и кнопку Esc
-// clickOverlay()
-// clickEsc()
 
 addCardsFromArray(initialCards)
