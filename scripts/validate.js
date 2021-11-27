@@ -19,7 +19,6 @@ const hideInputError = (inputElement, { inputErrorClass, errorClass }) => {
 };
 
 const checkInputValidity = (inputElement, { inputErrorClass, errorClass }) => {
-	console.log('inputElement.validity.valid = ', inputElement.validity.valid)
 	if (!inputElement.validity.valid) {
 		showInputError(inputElement, { inputErrorClass, errorClass });
 	} else {
@@ -51,15 +50,15 @@ const enableValidation = (configData) => {
 	} = configData
 	const formList = Array.from(document.querySelectorAll(formSelector));
 
-	formList.forEach((inputElement) => {
-		inputElement.closest('form').addEventListener('submit', function (evt) {
+	formList.forEach((formElement) => {
+		formElement.addEventListener('submit', function (evt) {
 			evt.preventDefault();
 		});
 		const newObj = {
 			inputSelector, submitButtonSelector,
 			inactiveButtonClass, inputErrorClass, errorClass
 		}
-		setEventListeners(inputElement.closest('form'), newObj)
+		setEventListeners(formElement, newObj)
 	});
 };
 

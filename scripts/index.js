@@ -8,14 +8,10 @@ const cardsList = document.querySelector('.cards__list')
 const profileBtnEdit = document.querySelector('.profile__btn_user-edit')
 // находим кнопки кот вызывают всплытие/закрытие окна добавления карточки
 const profileBtnAdd = document.querySelector('.profile__btn_user-add')
-// находим все кнопки закрывающие попапы
-const popupClose = document.querySelectorAll('.popup__close')
+// const popupClose = document.querySelector('.popup__close')
 // Находим сам попап
 const popupEditProfile = document.querySelector('.edit-profile__popup')
 const popupAddPlaceElement = document.querySelector('.add-plaсe__popup')
-const popups = document.querySelectorAll('.popup')
-// Находим overlay
-const popupOverlay = document.querySelectorAll('.popup__overlay')
 // Находим форму в DOM
 const formEditPlaceElement = document.querySelector('.edit-profile__popup .popup__form')
 const formAddPlaceElement = document.querySelector('.add-plaсe__popup .popup__form')
@@ -28,6 +24,8 @@ const placeImgInput = document.querySelector('.popup__input_plaсe-img')
 const profileName = document.querySelector('.profile__name')
 const profileJob = document.querySelector('.profile__job')
 const template = document.querySelector('.template')
+//Находим кнопку 'Сохранить' в форме 
+const popupBtn = document.querySelector('.popup__btn')
 
 function addCardsFromArray(data) {
     data.forEach(function (item) {
@@ -45,11 +43,7 @@ function addListenersToCard(itemCardTemplate) {
     heartTemplate.addEventListener('click', function () {
         this.classList.toggle('cards__heart_active')
     })
-
     imgTemplate.addEventListener('click', openPopupImage)
-    popupClose.forEach((element) => {
-        element.addEventListener('click', closePopup)
-    });
 }
 
 function createCard(name, src) {
@@ -70,39 +64,36 @@ function addCard(itemCardTemplate) {
 }
 
 function deleteCard(evt) {
-    const cardCurent = evt.target.parentNode.parentNode
+    const cardCurent = evt.target.closest('.cards__item')
     cardCurent.remove()
 }
 //ф-я открытия любого попапа
 function openPopup(popup) {
     popup.classList.add('popup_opened');
-    //вешаем событие на Overlay и кнопку Esc
-    //находим оверлай
-    const popupOverlay = document.querySelectorAll('.popup__overlay')
-
-    popupOverlay.forEach((element) => {
-        element.addEventListener('click', closePopup)
-    })
+    //вешаем событие на Overlay, кнопку Esc и крестик
+    //находим оверлай и вешаем событие
+    popup.querySelector('.popup__overlay').addEventListener('click', closePopup)
+    //находим крестик и вешаем событие закрытие попапа на крестик
+    popup.querySelector('.popup__close').addEventListener('click', closePopup)
     //вешаем событие на кнопку Esc
     document.addEventListener('keydown', clickEsc)
-
 }
 //попап для карточек
 function openPopupImage(evt) {
     const curentElement = evt.target
-    const curentAttribute = evt.target.getAttribute('data-popup')
-    const curentsPopup = document.getElementsByClassName(curentAttribute);
+    const curentPopup = document.querySelector('.open-img__popup')
 
-    curentsPopup[0].querySelector('.popup__img').src = curentElement.src
-    curentsPopup[0].querySelector('.popup__caption').innerText = curentElement.parentElement.parentElement.querySelector('.cards__title').innerText
-    openPopup(curentsPopup[0])
+    curentPopup.querySelector('.popup__img').src = curentElement.src
+    curentPopup.querySelector('.popup__img').alt = curentElement.alt
+    curentPopup.querySelector('.popup__caption').innerText = curentElement.alt
+    openPopup(curentPopup)
 }
 //попап для редактирования  профиля
 function openPopupProfileEdit() {
     nameInput.value = profileName.innerText;
     jobInput.value = profileJob.innerText;
     openPopup(popupEditProfile)
-}
+}//попап для добавления нового места
 function openPopupProfileAdd() {
     openPopup(popupAddPlaceElement)
 }
@@ -113,14 +104,16 @@ function closePopup(evt) {
         popup.classList.remove('popup_opened')
         //снять слушатель с кнопки Esc
         document.removeEventListener('keydown', clickEsc)
+        //снять слушатель с оверлея
+        popup.querySelector('.popup__overlay').removeEventListener('click', closePopup)
+        //снять слушатель с крестика
+        popup.querySelector('.popup__close').removeEventListener('click', closePopup)
     }
 };
 
 //Слушатель событий, закрывающий модальное окно по нажатию на Escape
 function clickEsc(evt) {
-    // console.log('keydown')
     if (evt.key == 'Escape') {
-        console.log('нажали на Esc');
         closePopup()
     }
 }
@@ -148,6 +141,11 @@ function formAddPlaceSubmitHandler(evt) {
     const currentCreateCard = createCard(placeNameInputValue, placeImgInputValue)
     // Добавляем карточку в разметку
     addCard(currentCreateCard)
+    //Деактивирую кнопку сабмита и очищать инпуты
+    placeNameInput.value = '';
+    placeImgInput.value = '';
+    popupBtn.classList.add('form__submit_inactive')
+
     // закрываем popup
     closePopup(evt)
 }
@@ -160,10 +158,5 @@ formAddPlaceElement.addEventListener('submit', formAddPlaceSubmitHandler)
 //вешаем событие на кнопки
 profileBtnEdit.addEventListener('click', openPopupProfileEdit)
 profileBtnAdd.addEventListener('click', openPopupProfileAdd)
-
-//вешаем событие на крестики у попапов
-popupClose.forEach((element) => {
-    element.addEventListener('click', closePopup)
-});
 
 addCardsFromArray(initialCards)
