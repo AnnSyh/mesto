@@ -25,6 +25,8 @@ const profileJob = document.querySelector('.profile__job')
 const template = document.querySelector('.template')
 //Находим кнопку 'Сохранить' в форме 
 const popupBtn = document.querySelector('.popup__btn')
+// находим все попапы 
+const popups = document.querySelectorAll('.popup')
 
 function addCardsFromArray(data) {
     data.forEach(function (item) {
@@ -70,11 +72,6 @@ function deleteCard(evt) {
 //ф-я открытия любого попапа
 function openPopup(popup) {
     popup.classList.add('popup_opened');
-    //вешаем событие на Overlay, кнопку Esc и крестик
-    //находим оверлай и вешаем событие
-    popup.querySelector('.popup__overlay').addEventListener('click', closePopup)
-    //находим крестик и вешаем событие закрытие попапа на крестик
-    popup.querySelector('.popup__close').addEventListener('click', closePopup)
     //вешаем событие на кнопку Esc
     document.addEventListener('keydown', clickEsc)
 }
@@ -93,7 +90,8 @@ function openPopupProfileEdit() {
     nameInput.value = profileName.innerText;
     jobInput.value = profileJob.innerText;
     openPopup(popupEditProfile)
-}//попап для добавления нового места
+}
+//попап для добавления нового места
 function openPopupProfileAdd() {
     openPopup(popupAddPlaceElement)
 }
@@ -102,12 +100,6 @@ function closePopup(evt) {
     const popup = document.querySelector('.popup_opened');
     if (popup) {
         popup.classList.remove('popup_opened')
-        //снять слушатель с кнопки Esc
-        document.removeEventListener('keydown', clickEsc)
-        //снять слушатель с оверлея
-        popup.querySelector('.popup__overlay').removeEventListener('click', closePopup)
-        //снять слушатель с крестика
-        popup.querySelector('.popup__close').removeEventListener('click', closePopup)
     }
 };
 
@@ -144,7 +136,8 @@ function formAddPlaceSubmitHandler(evt) {
     //Деактивирую кнопку сабмита и очищать инпуты
     placeNameInput.value = '';
     placeImgInput.value = '';
-    popupBtn.classList.add('form__submit_inactive')
+    popupBtn.classList.add('form__submit_inactive');
+    popupBtn.disabled = true;
     // закрываем popup
     closePopup(evt)
 }
@@ -157,5 +150,13 @@ formAddPlaceElement.addEventListener('submit', formAddPlaceSubmitHandler)
 //вешаем событие на кнопки
 profileBtnEdit.addEventListener('click', openPopupProfileEdit)
 profileBtnAdd.addEventListener('click', openPopupProfileAdd)
+
+popups.forEach((popup) => {
+    popup.addEventListener('click', (evt) => {
+        if (evt.target.classList.contains('popup__close') || evt.target.classList.contains('popup__overlay')) {
+            closePopup(popup)
+        }
+    })
+})
 
 addCardsFromArray(initialCards)

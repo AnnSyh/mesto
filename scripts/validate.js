@@ -28,16 +28,16 @@ const checkInputValidity = (inputElement, { inputErrorClass, errorClass }) => {
 
 
 
-const setEventListeners = (inputElement, { inputSelector, submitButtonSelector,
+const setEventListeners = (formElement, { inputSelector, submitButtonSelector,
 	inactiveButtonClass, inputErrorClass, errorClass }) => {
-	const inputList = Array.from(inputElement.closest('form').querySelectorAll(inputSelector));
-	const buttonElement = inputElement.closest('form').querySelector(submitButtonSelector);
+	const inputList = Array.from(formElement.querySelectorAll(inputSelector));
+	const buttonElement = formElement.querySelector(submitButtonSelector);
 	// чтобы проверить состояние кнопки в самом начале
 	toggleButtonState(inputList, buttonElement, inactiveButtonClass);
 
-	inputList.forEach((inputElement) => {
-		inputElement.addEventListener('input', function () {
-			checkInputValidity(inputElement, { inputErrorClass, errorClass });
+	inputList.forEach((formElement) => {
+		formElement.addEventListener('input', function () {
+			checkInputValidity(formElement, { inputErrorClass, errorClass });
 			// чтобы проверять его при изменении любого из полей
 			toggleButtonState(inputList, buttonElement, inactiveButtonClass);
 		});
