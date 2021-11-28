@@ -8,7 +8,6 @@ const cardsList = document.querySelector('.cards__list')
 const profileBtnEdit = document.querySelector('.profile__btn_user-edit')
 // находим кнопки кот вызывают всплытие/закрытие окна добавления карточки
 const profileBtnAdd = document.querySelector('.profile__btn_user-add')
-// const popupClose = document.querySelector('.popup__close')
 // Находим сам попап
 const popupEditProfile = document.querySelector('.edit-profile__popup')
 const popupAddPlaceElement = document.querySelector('.add-plaсe__popup')
@@ -64,6 +63,7 @@ function addCard(itemCardTemplate) {
 }
 
 function deleteCard(evt) {
+    console.log('deleteCard(evt) evt.target = ', evt.target)
     const cardCurent = evt.target.closest('.cards__item')
     cardCurent.remove()
 }
@@ -145,7 +145,6 @@ function formAddPlaceSubmitHandler(evt) {
     placeNameInput.value = '';
     placeImgInput.value = '';
     popupBtn.classList.add('form__submit_inactive')
-
     // закрываем popup
     closePopup(evt)
 }
