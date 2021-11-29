@@ -2,27 +2,30 @@
 
 import { configData } from "./configData.js";
 
-const showInputError = (inputElement, { inputErrorClass, errorClass }) => {
-	const errorElement = inputElement.closest('form').querySelector(`.${inputElement.id}-error`);
+const showInputError = (formElement, { inputErrorClass, errorClass }) => {
+	const errorElement = formElement.closest('form').querySelector(`.${formElement.id}-error`);
 
-	inputElement.classList.add(inputErrorClass);
-	errorElement.textContent = inputElement.validationMessage;
+	formElement.classList.add(inputErrorClass);
+	errorElement.textContent = formElement.validationMessage;
 	errorElement.classList.add(errorClass);
 };
 
-const hideInputError = (inputElement, { inputErrorClass, errorClass }) => {
-	const errorElement = inputElement.closest('form').querySelector(`.${inputElement.id}-error`);
+const hideInputError = (formElement, { inputErrorClass, errorClass }) => {
+	const errorElement = formElement.closest('form').querySelector(`.${formElement.id}-error`);
 
-	inputElement.classList.remove(inputErrorClass);
+	formElement.classList.remove(inputErrorClass);
 	errorElement.classList.remove(errorClass);
 	errorElement.textContent = '';
 };
 
-const checkInputValidity = (inputElement, { inputErrorClass, errorClass }) => {
-	if (!inputElement.validity.valid) {
-		showInputError(inputElement, { inputErrorClass, errorClass });
+const checkInputValidity = (formElement, { inputErrorClass, errorClass }) => {
+
+	console.log('formElement = ', formElement)
+
+	if (!formElement.validity.valid) {
+		showInputError(formElement, { inputErrorClass, errorClass });
 	} else {
-		hideInputError(inputElement, { inputErrorClass, errorClass });
+		hideInputError(formElement, { inputErrorClass, errorClass });
 	}
 };
 
