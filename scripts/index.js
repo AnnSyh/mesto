@@ -99,9 +99,9 @@ function openPopupProfileAdd() {
 function closePopup(evt) {
     const popup = document.querySelector('.popup_opened');
     if (popup) {
-        popup.classList.remove('popup_opened')
+        popup.classList.remove('popup_opened');
         //снять слушатель с кнопки Esc 
-        document.removeEventListener('keydown', clickEsc)
+        document.removeEventListener('keydown', clickEsc);
     }
 };
 
