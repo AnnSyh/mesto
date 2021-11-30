@@ -65,7 +65,7 @@ function addCard(itemCardTemplate) {
 }
 
 function deleteCard(evt) {
-    console.log('deleteCard(evt) evt.target = ', evt.target)
+    // console.log('deleteCard(evt) evt.target = ', evt.target)
     const cardCurent = evt.target.closest('.cards__item')
     cardCurent.remove()
 }
