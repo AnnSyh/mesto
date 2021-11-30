@@ -2,27 +2,27 @@
 
 import { configData } from "./configData.js";
 
-const showInputError = (formElement, { inputErrorClass, errorClass }) => {
-	const errorElement = formElement.closest('form').querySelector(`.${formElement.id}-error`);
+const showInputError = (inputElement, { inputErrorClass, errorClass }) => {
+	const errorElement = inputElement.closest('form').querySelector(`.${inputElement.id}-error`);
 
-	formElement.classList.add(inputErrorClass);
-	errorElement.textContent = formElement.validationMessage;
+	inputElement.classList.add(inputErrorClass);
+	errorElement.textContent = inputElement.validationMessage;
 	errorElement.classList.add(errorClass);
 };
 
-const hideInputError = (formElement, { inputErrorClass, errorClass }) => {
-	const errorElement = formElement.closest('form').querySelector(`.${formElement.id}-error`);
+const hideInputError = (inputElement, { inputErrorClass, errorClass }) => {
+	const errorElement = inputElement.closest('form').querySelector(`.${inputElement.id}-error`);
 
-	formElement.classList.remove(inputErrorClass);
+	inputElement.classList.remove(inputErrorClass);
 	errorElement.classList.remove(errorClass);
 	errorElement.textContent = '';
 };
 
-const checkInputValidity = (formElement, { inputErrorClass, errorClass }) => {
-	if (!formElement.validity.valid) {
-		showInputError(formElement, { inputErrorClass, errorClass });
+const checkInputValidity = (inputElement, { inputErrorClass, errorClass }) => {
+	if (!inputElement.validity.valid) {
+		showInputError(inputElement, { inputErrorClass, errorClass });
 	} else {
-		hideInputError(formElement, { inputErrorClass, errorClass });
+		hideInputError(inputElement, { inputErrorClass, errorClass });
 	}
 };
 
@@ -35,9 +35,9 @@ const setEventListeners = (formElement, { inputSelector, submitButtonSelector,
 	// чтобы проверить состояние кнопки в самом начале
 	toggleButtonState(inputList, buttonElement, inactiveButtonClass);
 
-	inputList.forEach((formElement) => {
-		formElement.addEventListener('input', function () {
-			checkInputValidity(formElement, { inputErrorClass, errorClass });
+	inputList.forEach((inputElement) => {
+		inputElement.addEventListener('input', function () {
+			checkInputValidity(inputElement, { inputErrorClass, errorClass });
 			// чтобы проверять его при изменении любого из полей
 			toggleButtonState(inputList, buttonElement, inactiveButtonClass);
 		});
