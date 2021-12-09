@@ -1,6 +1,80 @@
 'use strict'
 
 import { initialCards } from "./initialCards.js";
+// import { Card } from "./Card.js";
+// import { FormValidator } from "./FormValidator.js";
+
+
+class Card {
+    constructor(name, link, selector) {
+        // this._selector = selector;
+        this._name = name;
+        this._link = link;
+    }
+
+    _getTemplate() {
+        // забираем разметку из HTML и клонируем элемент
+        const cardElement = document
+            .querySelector('.card-template')
+            .content
+            .querySelector('.cards__item')
+            .cloneNode(true);
+
+        // вернём DOM-элемент карточки
+        return cardElement;
+    }
+
+    createCard(name, link) {
+        this._element = this._getTemplate();
+
+        // console.log('this._name = ', this._name);
+        // console.log('this._link = ', this._link);
+        // console.log('this = ', this);
+
+        // console.log('this._element.querySelector(".cards__image") = ', this._element.querySelector('.cards__image'));
+
+        // this._element.querySelector('.cards__image').src = this._link;
+        this._element.querySelector('.cards__title').textContent = this._name;
+
+        return this._element;
+
+
+
+        // const itemCardTemplate = template.content.querySelector('.cards__item').cloneNode(true)
+        // const imgTemplate = itemCardTemplate.querySelector('.cards__img')
+        // const titleTemplate = itemCardTemplate.querySelector('.cards__title')
+
+        // imgTemplate.src = src
+        // imgTemplate.alt = name
+        // titleTemplate.textContent = name
+        // addListenersToCard(itemCardTemplate)
+
+        // return itemCardTemplate
+    }
+
+
+
+
+
+    addCardsFromArray(data) {
+        data.forEach(function (item) {
+            const currentCard = createCard(item.name, item.link);
+            addCard(currentCard)
+        });
+    }
+
+
+    _addCard(itemCardTemplate) {
+        cardsList.prepend(itemCardTemplate)
+    }
+
+    _deleteCard(evt) {
+        // console.log('deleteCard(evt) evt.target = ', evt.target)
+        const cardCurent = evt.target.closest('.cards__item')
+        cardCurent.remove()
+    }
+}
+
 
 // находим список в кот надо встаивть карточки
 const cardsList = document.querySelector('.cards__list')
@@ -28,47 +102,47 @@ const popupBtn = document.querySelector('.popup__btn')
 // находим все попапы 
 const popups = document.querySelectorAll('.popup')
 
-function addCardsFromArray(data) {
-    data.forEach(function (item) {
-        const currentCard = createCard(item.name, item.link);
-        addCard(currentCard)
-    });
-}
+// function addCardsFromArray(data) {
+//     data.forEach(function (item) {
+//         const currentCard = createCard(item.name, item.link);
+//         addCard(currentCard)
+//     });
+// }
 
-function addListenersToCard(itemCardTemplate) {
-    const imgTemplate = itemCardTemplate.querySelector('.cards__img')
-    const trashTemplate = itemCardTemplate.querySelector('.cards__trash')
-    const heartTemplate = itemCardTemplate.querySelector('.cards__heart')
+// function addListenersToCard(itemCardTemplate) {
+//     const imgTemplate = itemCardTemplate.querySelector('.cards__img')
+//     const trashTemplate = itemCardTemplate.querySelector('.cards__trash')
+//     const heartTemplate = itemCardTemplate.querySelector('.cards__heart')
 
-    trashTemplate.addEventListener('click', deleteCard)
-    heartTemplate.addEventListener('click', function () {
-        this.classList.toggle('cards__heart_active')
-    })
-    imgTemplate.addEventListener('click', openPopupImage)
-}
+//     trashTemplate.addEventListener('click', deleteCard)
+//     heartTemplate.addEventListener('click', function () {
+//         this.classList.toggle('cards__heart_active')
+//     })
+//     imgTemplate.addEventListener('click', openPopupImage)
+// }
 
-function createCard(name, src) {
-    const itemCardTemplate = template.content.querySelector('.cards__item').cloneNode(true)
-    const imgTemplate = itemCardTemplate.querySelector('.cards__img')
-    const titleTemplate = itemCardTemplate.querySelector('.cards__title')
+// function createCard(name, src) {
+//     const itemCardTemplate = template.content.querySelector('.cards__item').cloneNode(true)
+//     const imgTemplate = itemCardTemplate.querySelector('.cards__img')
+//     const titleTemplate = itemCardTemplate.querySelector('.cards__title')
 
-    imgTemplate.src = src
-    imgTemplate.alt = name
-    titleTemplate.textContent = name
-    addListenersToCard(itemCardTemplate)
+//     imgTemplate.src = src
+//     imgTemplate.alt = name
+//     titleTemplate.textContent = name
+//     addListenersToCard(itemCardTemplate)
 
-    return itemCardTemplate
-}
+//     return itemCardTemplate
+// }
 
-function addCard(itemCardTemplate) {
-    cardsList.prepend(itemCardTemplate)
-}
+// function addCard(itemCardTemplate) {
+//     cardsList.prepend(itemCardTemplate)
+// }
 
-function deleteCard(evt) {
-    // console.log('deleteCard(evt) evt.target = ', evt.target)
-    const cardCurent = evt.target.closest('.cards__item')
-    cardCurent.remove()
-}
+// function deleteCard(evt) {
+//     // console.log('deleteCard(evt) evt.target = ', evt.target)
+//     const cardCurent = evt.target.closest('.cards__item')
+//     cardCurent.remove()
+// }
 //ф-я открытия любого попапа
 function openPopup(popup) {
     popup.classList.add('popup_opened');
@@ -161,4 +235,19 @@ popups.forEach((popup) => {
     })
 })
 
-addCardsFromArray(initialCards)
+// addCardsFromArray(initialCards)
+// Card.addCardsFromArray(initialCards)
+
+
+initialCards.forEach((item) => {
+    const card = new Card(item.name, item.link);
+
+    console.log('card = ', card);
+
+    const cardElement = card.createCard();
+
+    // Добавляем в DOM
+    document.querySelector('.cards__list').append(cardElement);
+});
+
+
