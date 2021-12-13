@@ -1,8 +1,5 @@
 'use strict'
 
-import { initialCards } from "./initialCards.js";
-import { Card } from "./Card.js";
-import { Form } from "./Form.js";
 
 export class CardsList {
 	constructor(items, template, createForm, createCard) {

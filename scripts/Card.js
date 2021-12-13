@@ -6,11 +6,20 @@ export class Card {
 	constructor(text, link) {
 		this._text = text;
 		this._link = link;
+		// this._removeCard = this._removeCard.bind(this);
 	}
 
 	_createView() {
 		// this._view = this._template.cloneNode(true);
-		this._view = Card.template.cloneNode(true);
+		this._view = Card.template.querySelector('.cards__item').cloneNode(true);
+	}
+
+	_removeCard = () => {
+		this._view.remove();
+	}
+
+	_addEventListeners() {
+		this._view.querySelector('.cards__trash').addEventListener('click', this._removeCard);
 	}
 
 
@@ -18,6 +27,9 @@ export class Card {
 		this._createView();
 		this._view.querySelector('.cards__title').innerText = this._text;
 		this._view.querySelector('.cards__img').src = this._link;
+
+		this._addEventListeners();
+
 		container.append(this._view);
 
 	}
@@ -74,13 +86,6 @@ export class Card {
 // 			// imgTemplate.addEventListener('click', this._openPopupImage);
 // 		});
 
-// 	}
-
-// 	addCardsFromArray(data) {
-// 		data.forEach(function (item) {
-// 			const currentCard = createCard(item.name, item.link);
-// 			addCard(currentCard)
-// 		});
 // 	}
 
 
