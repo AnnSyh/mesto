@@ -42,9 +42,10 @@
                     data-popup="add-plaсe__popup"></button>
         </section>
 
-        <section class="cards section content__section">
-            <ul class="cards__list"></ul>
+        <section class="cards section content__section list-template-place">
+
         </section>
+
 
     </main>
     <footer class="footer section page__footer">
@@ -55,7 +56,8 @@
         <div class="popup add-plaсe__popup">
             <div class="popup__overlay"></div>
             <div class="popup__container">
-                <form class="form popup__form"
+                <div class="form-place"></div>
+                <!-- <form class="form popup__form"
                       name="add-place"
                       novalidate>
                     <button class="popup__close popup__close_add-plaсe"
@@ -85,7 +87,7 @@
                            name="btn"
                            type="submit"
                            value="Сохранить">
-                </form>
+                </form> -->
             </div>
         </div>
     </div>
@@ -94,7 +96,8 @@
         <div class="popup edit-profile__popup">
             <div class="popup__overlay"></div>
             <div class="popup__container">
-                <form class="form popup__form"
+                <div class="form-place"></div>
+                <!-- <form class="form popup__form"
                       name="edit-profile"
                       novalidate>
                     <button class="popup__close popup__close_edit-profile"
@@ -126,7 +129,7 @@
                            name="btn"
                            type="submit"
                            value="Сохранить">
-                </form>
+                </form> -->
             </div>
         </div>
     </div>
@@ -150,6 +153,11 @@
         </div>
     </div>
 
+    <template class="list-template">
+        <h1>Список карточек</h1>
+        <ul class="cards__list"></ul>
+    </template>
+
 
     <template class="card-template">
         <li class="cards__item">
@@ -165,6 +173,41 @@
                 <button class="cards__heart"></button>
             </div>
         </li>
+    </template>
+
+    <template class="form-template">
+        <form class="form popup__form"
+              name="add-place"
+              novalidate>
+            <button class="popup__close popup__close_add-plaсe"
+                    type="button"></button>
+            <h1>шаблон формы</h1>
+            <h2 class="page-title popup__page-title  text-overflow">Новое место</h2>
+            <div class="form__field">
+                <input placeholder="название"
+                       id="place-title-input"
+                       class="popup__input popup__input_plaсe-title"
+                       name="title"
+                       type="text"
+                       required
+                       minlength="2"
+                       maxlength="30">
+                <span class="popup__input-error place-title-input-error"></span>
+            </div>
+            <div class="form__field">
+                <input placeholder="ссылка на картинку"
+                       id="plaсe-img-input"
+                       class="popup__input popup__input_plaсe-img"
+                       name="subtitle"
+                       required
+                       type="url">
+                <span class="popup__input-error plaсe-img-input-error"></span>
+            </div>
+            <input class="popup__btn"
+                   name="btn"
+                   type="submit"
+                   value="Сохранить">
+        </form>
     </template>
 
     <script type="module"
