@@ -14,9 +14,14 @@ export class Card {
 		this._view = Card.template.querySelector('.cards__item').cloneNode(true);
 	}
 
+	_addCard(CardTemplate) {
+		cardsList.prepend(CardTemplate);
+	}
+
 	_removeCard = () => {
 		this._view.remove();
 	}
+
 	//Слушатель событий, закрывающий модальное окно по нажатию на Escape
 	_clickEsc(evt) {
 		const curentPopup = document.querySelector('.open-img__popup');
@@ -67,9 +72,3 @@ export class Card {
 
 }
 // Card.template
-
-// 	_addCard(itemCardTemplate) {
-// 		cardsList.prepend(itemCardTemplate)
-// 	}
-
-// }
