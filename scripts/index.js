@@ -30,9 +30,6 @@ editFormValidator.enableValidation(configData);
 cardFormValidator.enableValidation(configData);
 
 // -----------------------------------------------------------
-// Находим форму в DOM
-// const formEditPlaceElement = document.querySelector('.edit-profile__popup .popup__form');
-// const formAddPlaceElement = document.querySelector('.add-plaсe__popup .popup__form');
 // Находим поля формы в DOM
 const nameInput = document.querySelector('.popup__input_user-title');
 const jobInput = document.querySelector('.popup__input_user-subtitle');
@@ -172,7 +169,7 @@ function formAddPlaceSubmitHandler(evt) {
 formEditPlaceElement.addEventListener('submit', formSubmitHandler);
 formAddPlaceElement.addEventListener('submit', formAddPlaceSubmitHandler);
 
-//вешаем событие на кнопки(открываем попапы с формами)
+//вешаем событие на кнопки(открывющие попапы с формами)
 profileBtnEdit.addEventListener('click', openPopupProfileEdit);
 profileBtnAdd.addEventListener('click', openPopupProfileAdd);
 

@@ -18,6 +18,10 @@ export class CardsList {
 		this._createView();
 
 		this._items.forEach(item => {
+			console.log('add default Card:  item = ', item);
+			console.log('add default Card:  item.name = ', item.name);
+			console.log('add default Card:  item.link = ', item.link);
+
 			const newItem = this._createCard(item.name, item.link);
 			newItem.render(this._view.querySelector('.cards__list'));
 		});

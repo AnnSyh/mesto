@@ -30,13 +30,13 @@ export class Card {
 		}
 	}
 
-	_openPopupImage(evt, src) {
-		const curentElement = evt.target;
+	_openPopupImage(evt, link) {
+		// const curentElement = evt.target;
 		const curentPopup = document.querySelector('.open-img__popup');
 
-		curentPopup.querySelector('.popup__img').src = curentElement.src;
-		curentPopup.querySelector('.popup__img').alt = curentElement.alt;
-		curentPopup.querySelector('.popup__caption').innerText = curentElement.alt;
+		curentPopup.querySelector('.popup__img').src = this._link;
+		curentPopup.querySelector('.popup__img').alt = this._text;
+		curentPopup.querySelector('.popup__caption').textContent = this._text;
 
 		curentPopup.classList.add('popup_opened');
 		//вешаем событие на кнопку Esc
