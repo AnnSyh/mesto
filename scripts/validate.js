@@ -1,7 +1,5 @@
 'use strict'
 
-import { configData } from "./configData.js";
-
 // Находим форму в DOM
 const formEditPlaceElement = document.querySelector('.edit-profile__popup .popup__form');
 const formAddPlaceElement = document.querySelector('.add-plaсe__popup .popup__form');
@@ -21,6 +19,13 @@ const cardsList = document.querySelector('.cards__list');
 const popupBtn = document.querySelector('.popup__btn');
 // находим все попапы 
 const popups = document.querySelectorAll('.popup');
+// находим кнопки кот вызывают всплытие/закрытие окна-редактирования
+const profileBtnEdit = document.querySelector('.profile__btn_user-edit');
+// находим кнопки кот вызывают всплытие/закрытие окна-добавления карточки
+const profileBtnAdd = document.querySelector('.profile__btn_user-add');
+// Находим сам попап
+const popupEditProfile = document.querySelector('.edit-profile__popup');
+const popupAddPlaceElement = document.querySelector('.add-plaсe__popup');
 
 //попап для редактирования  профиля
 function openPopupProfileEdit() {
@@ -40,8 +45,8 @@ function closePopup(evt) {
 		//снять слушатель с кнопки Esc 
 		document.removeEventListener('keydown', clickEsc);
 	}
-};
-
+}
+//навешиваем события на эл-ты карточки
 function addListenersToCard(itemCardTemplate) {
 	const imgTemplate = itemCardTemplate.querySelector('.cards__img');
 	const trashTemplate = itemCardTemplate.querySelector('.cards__trash');
@@ -55,7 +60,6 @@ function addListenersToCard(itemCardTemplate) {
 }
 
 function createCard(name, src) {
-	debugger
 	const itemCardTemplate = template.content.querySelector('.cards__item').cloneNode(true);
 	const imgTemplate = itemCardTemplate.querySelector('.cards__img');
 	const titleTemplate = itemCardTemplate.querySelector('.cards__title');
@@ -85,7 +89,7 @@ function openPopup(popup) {
 }
 //попап для карточек
 function openPopupImage(evt) {
-	const curentElement = evt.target
+	const curentElement = evt.target;
 	const curentPopup = document.querySelector('.open-img__popup');
 
 	curentPopup.querySelector('.popup__img').src = curentElement.src;
@@ -138,26 +142,15 @@ function formAddPlaceSubmitHandler(evt) {
 formEditPlaceElement.addEventListener('submit', formSubmitHandler);
 formAddPlaceElement.addEventListener('submit', formAddPlaceSubmitHandler);
 
+//вешаем событие на кнопки(открываем попапы с формами)
+profileBtnEdit.addEventListener('click', openPopupProfileEdit);
+profileBtnAdd.addEventListener('click', openPopupProfileAdd);
 
-// ---------------index.js--------------------------------
-
-// находим кнопки кот вызывают всплытие/закрытие окна редактирования
-const profileBtnEdit = document.querySelector('.profile__btn_user-edit')
-// находим кнопки кот вызывают всплытие/закрытие окна добавления карточки
-const profileBtnAdd = document.querySelector('.profile__btn_user-add')
-// Находим сам попап
-const popupEditProfile = document.querySelector('.edit-profile__popup')
-const popupAddPlaceElement = document.querySelector('.add-plaсe__popup')
-
-
-//вешаем событие на кнопки
-profileBtnEdit.addEventListener('click', openPopupProfileEdit)
-profileBtnAdd.addEventListener('click', openPopupProfileAdd)
-//закрытие всехпопапов при клике на крестик или оверлай
+//закрытие всех попапов при клике на крестик или оверлай
 popups.forEach((popup) => {
 	popup.addEventListener('click', (evt) => {
 		if (evt.target.classList.contains('popup__close') || evt.target.classList.contains('popup__overlay')) {
-			closePopup(popup)
+			closePopup(popup);
 		}
-	})
-})
+	});
+});
