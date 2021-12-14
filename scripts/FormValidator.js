@@ -83,8 +83,4 @@ export class FormValidator {
 		buttonElement.classList.toggle(inactiveButtonClass, isFormValid);
 		buttonElement.disabled = isFormValid;
 	};
-
-
-	// enableValidation(configData);
-
 }
