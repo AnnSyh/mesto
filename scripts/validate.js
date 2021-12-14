@@ -137,3 +137,27 @@ function formAddPlaceSubmitHandler(evt) {
 // он будет следить за событием “submit” - «отправка»
 formEditPlaceElement.addEventListener('submit', formSubmitHandler);
 formAddPlaceElement.addEventListener('submit', formAddPlaceSubmitHandler);
+
+
+// ---------------index.js--------------------------------
+
+// находим кнопки кот вызывают всплытие/закрытие окна редактирования
+const profileBtnEdit = document.querySelector('.profile__btn_user-edit')
+// находим кнопки кот вызывают всплытие/закрытие окна добавления карточки
+const profileBtnAdd = document.querySelector('.profile__btn_user-add')
+// Находим сам попап
+const popupEditProfile = document.querySelector('.edit-profile__popup')
+const popupAddPlaceElement = document.querySelector('.add-plaсe__popup')
+
+
+//вешаем событие на кнопки
+profileBtnEdit.addEventListener('click', openPopupProfileEdit)
+profileBtnAdd.addEventListener('click', openPopupProfileAdd)
+//закрытие всехпопапов при клике на крестик или оверлай
+popups.forEach((popup) => {
+	popup.addEventListener('click', (evt) => {
+		if (evt.target.classList.contains('popup__close') || evt.target.classList.contains('popup__overlay')) {
+			closePopup(popup)
+		}
+	})
+})
