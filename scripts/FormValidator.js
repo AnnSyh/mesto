@@ -1,13 +1,10 @@
 'use strict'
 
-console.log('FormValidator = ', FormValidator);
-
-export default class FormValidator {
-	constructor(selector) {
-		this._selector = selector;
+export class FormValidator {
+	constructor(configData, formElement) {
+		this._configData = configData;
+		this._formElement = formElement;
 	}
-
-	// -------------validate.js--------------------------------
 
 	_showInputError = (inputElement, { inputErrorClass, errorClass }) => {
 		const errorElement = inputElement.closest('form').querySelector(`.${inputElement.id}-error`);
@@ -27,9 +24,9 @@ export default class FormValidator {
 
 	_checkInputValidity = (inputElement, { inputErrorClass, errorClass }) => {
 		if (!inputElement.validity.valid) {
-			showInputError(inputElement, { inputErrorClass, errorClass });
+			this._showInputError(inputElement, { inputErrorClass, errorClass });
 		} else {
-			hideInputError(inputElement, { inputErrorClass, errorClass });
+			this._hideInputError(inputElement, { inputErrorClass, errorClass });
 		}
 	};
 
@@ -38,18 +35,18 @@ export default class FormValidator {
 		const inputList = Array.from(formElement.querySelectorAll(inputSelector));
 		const buttonElement = formElement.querySelector(submitButtonSelector);
 		// чтобы проверить состояние кнопки в самом начале
-		toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+		this._toggleButtonState(inputList, buttonElement, inactiveButtonClass);
 
 		inputList.forEach((inputElement) => {
-			inputElement.addEventListener('input', function () {
-				checkInputValidity(inputElement, { inputErrorClass, errorClass });
+			inputElement.addEventListener('input', () => {
+				this._checkInputValidity(inputElement, { inputErrorClass, errorClass });
 				// чтобы проверять его при изменении любого из полей
-				toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+				this._toggleButtonState(inputList, buttonElement, inactiveButtonClass);
 			});
 		});
 	};
 
-	_enableValidation = (configData) => {
+	enableValidation = (configData) => {
 		const { formSelector, inputSelector, submitButtonSelector,
 			inactiveButtonClass, inputErrorClass, errorClass
 		} = configData
@@ -63,7 +60,9 @@ export default class FormValidator {
 				inputSelector, submitButtonSelector,
 				inactiveButtonClass, inputErrorClass, errorClass
 			}
-			setEventListeners(formElement, newObj)
+
+
+			this._setEventListeners(formElement, newObj)
 		});
 	};
 
@@ -80,14 +79,12 @@ export default class FormValidator {
 	};
 
 	_toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
-		const isFormValid = hasInvalidInput(inputList);
+		const isFormValid = this._hasInvalidInput(inputList);
 		buttonElement.classList.toggle(inactiveButtonClass, isFormValid);
 		buttonElement.disabled = isFormValid;
 	};
 
-	render() {
 
-		enableValidation(configData);
-	}
+	// enableValidation(configData);
 
 }

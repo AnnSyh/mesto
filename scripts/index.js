@@ -1,9 +1,10 @@
 'use strict'
 
 import { initialCards } from "./initialCards.js";
+import { configData } from "./configData.js";
 import { Card } from "./Card.js";
 import { CardsList } from "./CardsList.js";
-// import { FormValidator } from "./FormValidator.js";
+import { FormValidator } from "./FormValidator.js";
 
 const cardsListTemplate = document.querySelector('.list-template').content;
 const cardsListContainer = document.querySelector('.list-template-place');
@@ -21,9 +22,16 @@ cardsList.render(cardsListContainer);
 // Находим формы в DOM
 const formEditPlaceElement = document.querySelector('.edit-profile__popup .popup__form');
 const formAddPlaceElement = document.querySelector('.add-plaсe__popup .popup__form');
+//вызываем конструктор с валидацией форм
+// new FormValidator(configData, formEditPlaceElement);
+// new FormValidator(configData, formAddPlaceElement);
 
-// const formValidator = new FormValidator(...args);
-// formValidator.render(formEditPlaceElement);
+
+const editFormValidator = new FormValidator(configData, formEditPlaceElement);
+const cardFormValidator = new FormValidator(configData, formAddPlaceElement);
+
+editFormValidator.enableValidation(configData);
+cardFormValidator.enableValidation(configData);
 
 
 // находим кнопки кот вызывают всплытие/закрытие окна редактирования
@@ -37,10 +45,10 @@ const popupAddPlaceElement = document.querySelector('.add-plaсe__popup')
 // const formEditPlaceElement = document.querySelector('.edit-profile__popup .popup__form');
 // const formAddPlaceElement = document.querySelector('.add-plaсe__popup .popup__form');
 // Находим поля формы в DOM
-const nameInput = document.querySelector('.popup__input_user-title')
-const jobInput = document.querySelector('.popup__input_user-subtitle')
-const placeNameInput = document.querySelector('.popup__input_plaсe-title')
-const placeImgInput = document.querySelector('.popup__input_plaсe-img')
+const nameInput = document.querySelector('.popup__input_user-title');
+const jobInput = document.querySelector('.popup__input_user-subtitle');
+const placeNameInput = document.querySelector('.popup__input_plaсe-title');
+const placeImgInput = document.querySelector('.popup__input_plaсe-img');
 // Находим переменные для функции openPopup()
 const profileName = document.querySelector('.profile__name')
 const profileJob = document.querySelector('.profile__job')
