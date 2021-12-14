@@ -3,24 +3,29 @@
 import { initialCards } from "./initialCards.js";
 import { Card } from "./Card.js";
 import { CardsList } from "./CardsList.js";
-import { Form } from "./Form.js";
 // import { FormValidator } from "./FormValidator.js";
 
 const cardsListTemplate = document.querySelector('.list-template').content;
 const cardsListContainer = document.querySelector('.list-template-place');
 
+
+//создаем инструкции для формы
 const createForm = (...args) => new Form(...args);
+//создаем инструкции для списка
 const createCard = (...args) => new Card(...args);
 
 const cardsList = new CardsList(initialCards, cardsListTemplate, createForm, createCard);
 cardsList.render(cardsListContainer);
 
+//Валидация форм
+// Находим формы в DOM
+const formEditPlaceElement = document.querySelector('.edit-profile__popup .popup__form');
+const formAddPlaceElement = document.querySelector('.add-plaсe__popup .popup__form');
+
+// const formValidator = new FormValidator(...args);
+// formValidator.render(formEditPlaceElement);
 
 
-
-
-// находим список в кот надо встаивть карточки
-// const cardsList = document.querySelector('.cards__list')
 // находим кнопки кот вызывают всплытие/закрытие окна редактирования
 const profileBtnEdit = document.querySelector('.profile__btn_user-edit')
 // находим кнопки кот вызывают всплытие/закрытие окна добавления карточки
@@ -28,9 +33,9 @@ const profileBtnAdd = document.querySelector('.profile__btn_user-add')
 // Находим сам попап
 const popupEditProfile = document.querySelector('.edit-profile__popup')
 const popupAddPlaceElement = document.querySelector('.add-plaсe__popup')
-// Находим форму в DOM
-const formEditPlaceElement = document.querySelector('.edit-profile__popup .popup__form')
-const formAddPlaceElement = document.querySelector('.add-plaсe__popup .popup__form')
+// // Находим форму в DOM
+// const formEditPlaceElement = document.querySelector('.edit-profile__popup .popup__form');
+// const formAddPlaceElement = document.querySelector('.add-plaсe__popup .popup__form');
 // Находим поля формы в DOM
 const nameInput = document.querySelector('.popup__input_user-title')
 const jobInput = document.querySelector('.popup__input_user-subtitle')
@@ -92,7 +97,7 @@ function clickEsc(evt) {
 //вешаем событие на кнопки
 profileBtnEdit.addEventListener('click', openPopupProfileEdit)
 profileBtnAdd.addEventListener('click', openPopupProfileAdd)
-
+//закрытие всехпопапов при клике на крестик или оверлай
 popups.forEach((popup) => {
     popup.addEventListener('click', (evt) => {
         if (evt.target.classList.contains('popup__close') || evt.target.classList.contains('popup__overlay')) {
@@ -100,11 +105,3 @@ popups.forEach((popup) => {
         }
     })
 })
-
-// addCardsFromArray(initialCards)
-// Card.addCardsFromArray(initialCards)
-
-
-
-
-

@@ -17,14 +17,6 @@ export class CardsList {
 	render(container) {
 		this._createView();
 
-
-		const form = this._createForm();
-		const forms = document.querySelectorAll('.form-place');
-		forms.forEach(element => {
-			form.render(element)
-		});
-
-
 		this._items.forEach(item => {
 			const newItem = this._createCard(item.name, item.link);
 			newItem.render(this._view.querySelector('.cards__list'));
