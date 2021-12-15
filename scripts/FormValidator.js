@@ -60,8 +60,6 @@ export class FormValidator {
 				inputSelector, submitButtonSelector,
 				inactiveButtonClass, inputErrorClass, errorClass
 			}
-
-
 			this._setEventListeners(formElement, newObj)
 		});
 	};

@@ -1,36 +1,34 @@
 'use strict'
 
 export class Card {
-	static template = document.querySelector('.card-template').content;
 
-	constructor(text, link) {
+	constructor(template, text, link) {
 		this._text = text;
 		this._link = link;
-		// this._removeCard = this._removeCard.bind(this);
+		this._template = template;
 	}
 
 	_createView() {
-		// this._view = this._template.cloneNode(true);
-		this._view = Card.template.querySelector('.cards__item').cloneNode(true);
+		this._view = this._template.content.querySelector('.cards__item').cloneNode(true);
 	}
 
-	_addCard(CardTemplate) {
-		cardsList.prepend(CardTemplate);
-	}
+	// _addCard(CardTemplate) {
+	// 	cardsList.prepend(CardTemplate);
+	// }
 
 	_removeCard = () => {
 		this._view.remove();
 	}
 
 	//Слушатель событий, закрывающий модальное окно по нажатию на Escape
-	_clickEsc(evt) {
-		const curentPopup = document.querySelector('.open-img__popup');
-		if (evt.key == 'Escape') {
-			curentPopup.classList.remove('popup_opened');
-		}
-	}
+	// _clickEsc(evt) {
+	// 	const curentPopup = document.querySelector('.open-img__popup');
+	// 	if (evt.key == 'Escape') {
+	// 		curentPopup.classList.remove('popup_opened');
+	// 	}
+	// }
 
-	_openPopupImage(evt, link) {
+	_openPopupImage(evt) {
 		// const curentElement = evt.target;
 		const curentPopup = document.querySelector('.open-img__popup');
 
@@ -40,7 +38,7 @@ export class Card {
 
 		curentPopup.classList.add('popup_opened');
 		//вешаем событие на кнопку Esc
-		document.addEventListener('keydown', this._clickEsc);
+		document.addEventListener('keydown', this.clickEsc);
 
 	}
 
@@ -59,7 +57,6 @@ export class Card {
 		});
 	}
 
-
 	render(container) {
 		this._createView();
 		this._view.querySelector('.cards__title').innerText = this._text;
@@ -71,4 +68,3 @@ export class Card {
 	}
 
 }
-// Card.template

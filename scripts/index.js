@@ -9,14 +9,26 @@ import { FormValidator } from "./FormValidator.js";
 const cardsListTemplate = document.querySelector('.list-template').content;
 const cardsListContainer = document.querySelector('.list-template-place');
 
+const cardTemplate = document.querySelector('.card-template');
 
 //создаем инструкции для формы
 const createForm = (...args) => new Form(...args);
 //создаем инструкции для списка
-const createCard = (...args) => new Card(...args);
+const createCard = (...args) => new Card(cardTemplate, ...args);
 
 const cardsList = new CardsList(initialCards, cardsListTemplate, createForm, createCard);
 cardsList.render(cardsListContainer);
+
+//мягкое связывание
+function handleCardClick(name, link) {
+    console.log('handleCardClick');
+    // устанавливаем ссылку
+    // устанавливаем подпись картинке
+    // открываем попап универсальной функцией, которая навешивает обработчик Escape внутри себя
+}
+
+
+
 
 //Валидация форм
 // Находим формы в DOM
@@ -39,7 +51,8 @@ const placeImgInput = document.querySelector('.popup__input_plaсe-img');
 // Находим переменные для функции openPopup()
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
-const template = document.querySelector('.card-template');
+
+
 // находим список в кот надо встаивть карточки
 const cardsListElement = document.querySelector('.cards__list');
 //Находим кнопку 'Сохранить' в форме 
@@ -87,7 +100,7 @@ function addListenersToCard(itemCardTemplate) {
 }
 
 function createCardFunction(name, src) {
-    const itemCardTemplate = template.content.querySelector('.cards__item').cloneNode(true);
+    const itemCardTemplate = cardTemplate.content.querySelector('.cards__item').cloneNode(true);
     const imgTemplate = itemCardTemplate.querySelector('.cards__img');
     const titleTemplate = itemCardTemplate.querySelector('.cards__title');
 
@@ -127,10 +140,20 @@ function openPopupImage(evt) {
 
 //Слушатель событий, закрывающий модальное окно по нажатию на Escape
 function clickEsc(evt) {
+    console.log('clickEsc');
     if (evt.key == 'Escape') {
         closePopup();
     }
 }
+
+
+//Слушатель событий, закрывающий модальное окно по нажатию на Escape
+// _clickEsc(evt) {
+// 	const curentPopup = document.querySelector('.open-img__popup');
+// 	if (evt.key == 'Escape') {
+// 		curentPopup.classList.remove('popup_opened');
+// 	}
+// }
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
