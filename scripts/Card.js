@@ -2,10 +2,20 @@
 
 export class Card {
 
-	constructor(template, text, link) {
+	constructor(template, handleCardClick, text, link) {
 		this._text = text;
 		this._link = link;
 		this._template = template;
+		this._handleCardClick = handleCardClick;
+		// debugger
+		this._cardImage = this._template.content.querySelector('.cards__item').querySelector('.cards__img');
+		this._trashTemplate = this._template.content.querySelector('.cards__item').querySelector('.cards__trash');
+		this._heartTemplate = this._template.content.querySelector('.cards__item').querySelector('.cards__heart');
+
+		// console.log('переменные конструктора img');
+		// console.log('constructor: this._cardImage = ', this._cardImage);
+		// console.log('/ переменные конструктора img');
+
 	}
 
 	_createView() {
@@ -14,52 +24,35 @@ export class Card {
 
 	// _addCard(CardTemplate) {
 	// 	cardsList.prepend(CardTemplate);
+
 	// }
 
 	_removeCard = () => {
 		this._view.remove();
 	}
 
-	//Слушатель событий, закрывающий модальное окно по нажатию на Escape
-	// _clickEsc(evt) {
-	// 	const curentPopup = document.querySelector('.open-img__popup');
-	// 	if (evt.key == 'Escape') {
-	// 		curentPopup.classList.remove('popup_opened');
-	// 	}
-	// }
-
-	_openPopupImage(evt) {
-		// const curentElement = evt.target;
-		const curentPopup = document.querySelector('.open-img__popup');
-
-		curentPopup.querySelector('.popup__img').src = this._link;
-		curentPopup.querySelector('.popup__img').alt = this._text;
-		curentPopup.querySelector('.popup__caption').textContent = this._text;
-
-		curentPopup.classList.add('popup_opened');
-		//вешаем событие на кнопку Esc
-		document.addEventListener('keydown', this.clickEsc);
-
-	}
 
 	_addEventListeners(evt) {
-		this._view.addEventListener('click', (evt) => {
-			const imgTemplate = this._view.querySelector('.cards__img');
-			const trashTemplate = this._view.querySelector('.cards__trash');
-			const heartTemplate = this._view.querySelector('.cards__heart');
+		// debugger
+		const imgTemplate = this._view.querySelector('.cards__img');
+		const trashTemplate = this._view.querySelector('.cards__trash');
+		const heartTemplate = this._view.querySelector('.cards__heart');
 
-			if (evt.target == trashTemplate) { this._removeCard(evt) };
-			if (evt.target == heartTemplate) { heartTemplate.classList.toggle('cards__heart_active') };
-			if (evt.target == imgTemplate) {
-				const imgTemplateSrc = imgTemplate.getAttribute('src');
-				this._openPopupImage(evt, imgTemplateSrc);
-			}
-		});
+		// console.log('imgTemplate = ', imgTemplate);
+		// console.log('_addEventListeners:  this._cardImage = ', this._cardImage);
+
+		// this._cardImage.addEventListener('click', () => this._handleCardClick(this._text, this._link));
+
+		imgTemplate.addEventListener('click', () => this._handleCardClick(this._text, this._link));
+		trashTemplate.addEventListener('click', (evt) => this._removeCard(evt));
+		heartTemplate.addEventListener('click', (evt) => { heartTemplate.classList.toggle('cards__heart_active') });
+
 	}
 
 	render(container) {
 		this._createView();
 		this._view.querySelector('.cards__title').innerText = this._text;
+		this._view.querySelector('.cards__img').alt = this._text;
 		this._view.querySelector('.cards__img').src = this._link;
 
 		this._addEventListeners();

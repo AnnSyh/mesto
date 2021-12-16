@@ -6,6 +6,7 @@ import { Card } from "./Card.js";
 import { CardsList } from "./CardsList.js";
 import { FormValidator } from "./FormValidator.js";
 
+const curentPopup = document.querySelector('.open-img__popup');
 const cardsListTemplate = document.querySelector('.list-template').content;
 const cardsListContainer = document.querySelector('.list-template-place');
 
@@ -14,21 +15,26 @@ const cardTemplate = document.querySelector('.card-template');
 //создаем инструкции для формы
 const createForm = (...args) => new Form(...args);
 //создаем инструкции для списка
-const createCard = (...args) => new Card(cardTemplate, ...args);
+const createCard = (...args) => new Card(cardTemplate, handleCardClick, ...args);
 
 const cardsList = new CardsList(initialCards, cardsListTemplate, createForm, createCard);
 cardsList.render(cardsListContainer);
 
 //мягкое связывание
-function handleCardClick(name, link) {
+function handleCardClick(text, link) {
     console.log('handleCardClick');
     // устанавливаем ссылку
     // устанавливаем подпись картинке
-    // открываем попап универсальной функцией, которая навешивает обработчик Escape внутри себя
+    //открываем попап универсальной функцией, которая навешивает обработчик Escape внутри себя
+
+    console.log('curentPopup = ', curentPopup);
+
+    curentPopup.querySelector('.popup__img').src = link;
+    curentPopup.querySelector('.popup__img').alt = text;
+    curentPopup.querySelector('.popup__caption').textContent = text;
+
+    openPopup(curentPopup);
 }
-
-
-
 
 //Валидация форм
 // Находим формы в DOM
@@ -130,7 +136,6 @@ function openPopup(popup) {
 //попап для карточек
 function openPopupImage(evt) {
     const curentElement = evt.target;
-    const curentPopup = document.querySelector('.open-img__popup');
 
     curentPopup.querySelector('.popup__img').src = curentElement.src;
     curentPopup.querySelector('.popup__img').alt = curentElement.alt;
@@ -145,15 +150,6 @@ function clickEsc(evt) {
         closePopup();
     }
 }
-
-
-//Слушатель событий, закрывающий модальное окно по нажатию на Escape
-// _clickEsc(evt) {
-// 	const curentPopup = document.querySelector('.open-img__popup');
-// 	if (evt.key == 'Escape') {
-// 		curentPopup.classList.remove('popup_opened');
-// 	}
-// }
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
