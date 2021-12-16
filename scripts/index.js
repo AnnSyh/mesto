@@ -17,8 +17,28 @@ const createForm = (...args) => new Form(...args);
 //создаем инструкции для списка
 const createCard = (...args) => new Card(cardTemplate, handleCardClick, ...args);
 
+// debugger
+
 const cardsList = new CardsList(initialCards, cardsListTemplate, createForm, createCard);
 cardsList.render(cardsListContainer);
+
+
+cardsList._items.forEach(item => {
+    console.log('item!!!! = ', item);
+})
+
+console.log('cardsList = ', cardsList);
+console.log('cardsList = ', cardsList._template.querySelector('.list-template-inner'));
+console.log('cardsList = ', cardsList._items[0].name);
+
+cardsListContainer.append(cardsList._template.querySelector('.list-template-inner'));
+
+console.log('createCard = ', createCard._view);
+
+cardsListContainer.append(cardsList._items[0].name);
+
+
+
 
 //мягкое связывание
 function handleCardClick(text, link) {
@@ -36,6 +56,9 @@ function handleCardClick(text, link) {
     openPopup(curentPopup);
 }
 
+
+
+
 //Валидация форм
 // Находим формы в DOM
 const formEditPlaceElement = document.querySelector('.edit-profile__popup .popup__form');
@@ -44,8 +67,8 @@ const formAddPlaceElement = document.querySelector('.add-plaсe__popup .popup__f
 const editFormValidator = new FormValidator(configData, formEditPlaceElement);
 const cardFormValidator = new FormValidator(configData, formAddPlaceElement);
 
-editFormValidator.enableValidation(configData);
-cardFormValidator.enableValidation(configData);
+editFormValidator.enableValidation();
+cardFormValidator.enableValidation();
 
 // -----------------------------------------------------------
 // Находим поля формы в DOM
@@ -145,7 +168,6 @@ function openPopupImage(evt) {
 
 //Слушатель событий, закрывающий модальное окно по нажатию на Escape
 function clickEsc(evt) {
-    console.log('clickEsc');
     if (evt.key == 'Escape') {
         closePopup();
     }
@@ -153,7 +175,7 @@ function clickEsc(evt) {
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
-function formSubmitHandler(evt) {
+function handleProfileFormSubmit(evt) {
     evt.preventDefault() // Эта строчка отменяет стандартную отправку формы.
     // Получаем значение полей jobInput и nameInput из свойства value
     const nameInputValue = nameInput.value;
@@ -185,7 +207,7 @@ function formAddPlaceSubmitHandler(evt) {
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formEditPlaceElement.addEventListener('submit', formSubmitHandler);
+formEditPlaceElement.addEventListener('submit', handleProfileFormSubmit);
 formAddPlaceElement.addEventListener('submit', formAddPlaceSubmitHandler);
 
 //вешаем событие на кнопки(открывющие попапы с формами)

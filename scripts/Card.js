@@ -57,7 +57,9 @@ export class Card {
 
 		this._addEventListeners();
 
-		container.append(this._view);
+		return this._view;
+
+		// container.append(this._view);
 	}
 
 }
