@@ -108,12 +108,6 @@ function addCard(itemCardTemplate) {
     cardsListElement.prepend(itemCardTemplate);
 }
 
-function deleteCard(evt) {
-    // console.log('deleteCard(evt) evt.target = ', evt.target)
-    const cardCurent = evt.target.closest('.cards__item');
-    cardCurent.remove();
-}
-
 //ф-я открытия любого попапа
 function openPopup(popup) {
     popup.classList.add('popup_opened');
