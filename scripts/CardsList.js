@@ -23,5 +23,6 @@ export class CardsList {
 		});
 
 		container.append(this._view);
+		// return this._view;
 	}
 }

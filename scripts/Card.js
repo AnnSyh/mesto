@@ -14,6 +14,8 @@ export class Card {
 
 		// console.log('переменные конструктора img');
 		// console.log('constructor: this._cardImage = ', this._cardImage);
+		// console.log('constructor: this._trashTemplatee = ', this._trashTemplate);
+		// console.log('constructor: this._heartTemplate = ', this._heartTemplate);
 		// console.log('/ переменные конструктора img');
 
 	}
@@ -55,11 +57,13 @@ export class Card {
 		this._view.querySelector('.cards__img').alt = this._text;
 		this._view.querySelector('.cards__img').src = this._link;
 
+		// console.log('Card.js :  this._view = ', this._view);
+
 		this._addEventListeners();
 
+		// container.append(this._view);
 		return this._view;
 
-		// container.append(this._view);
 	}
 
 }

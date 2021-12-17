@@ -9,36 +9,24 @@ import { FormValidator } from "./FormValidator.js";
 const curentPopup = document.querySelector('.open-img__popup');
 const cardsListTemplate = document.querySelector('.list-template').content;
 const cardsListContainer = document.querySelector('.list-template-place');
-
 const cardTemplate = document.querySelector('.card-template');
-
 //создаем инструкции для формы
 const createForm = (...args) => new Form(...args);
 //создаем инструкции для списка
 const createCard = (...args) => new Card(cardTemplate, handleCardClick, ...args);
-
-// debugger
-
+//создаем список
 const cardsList = new CardsList(initialCards, cardsListTemplate, createForm, createCard);
 cardsList.render(cardsListContainer);
 
+const cardContainer = document.querySelector('.cards__list');
+initialCards.forEach(item => {
+    const newCardInitial = new Card(cardTemplate, handleCardClick, item.name, item.link);
+    // newCardInitial.render(cardsListContainer);
+    // debugger
+    // cardContainer.append(newCardInitial._view.cloneNode(true));
+    cardContainer.append(newCardInitial.render(cardsListContainer));
 
-cardsList._items.forEach(item => {
-    console.log('item!!!! = ', item);
-})
-
-console.log('cardsList = ', cardsList);
-console.log('cardsList = ', cardsList._template.querySelector('.list-template-inner'));
-console.log('cardsList = ', cardsList._items[0].name);
-
-cardsListContainer.append(cardsList._template.querySelector('.list-template-inner'));
-
-console.log('createCard = ', createCard._view);
-
-cardsListContainer.append(cardsList._items[0].name);
-
-
-
+});
 
 //мягкое связывание
 function handleCardClick(text, link) {
@@ -82,7 +70,7 @@ const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 
 
-// находим список в кот надо встаивть карточки
+// // находим список в кот надо встаивть карточки
 const cardsListElement = document.querySelector('.cards__list');
 //Находим кнопку 'Сохранить' в форме 
 const popupBtn = document.querySelector('.popup__btn');
@@ -117,6 +105,9 @@ function closePopup(evt) {
 }
 //навешиваем события на эл-ты карточки
 function addListenersToCard(itemCardTemplate) {
+
+    debugger
+
     const imgTemplate = itemCardTemplate.querySelector('.cards__img');
     const trashTemplate = itemCardTemplate.querySelector('.cards__trash');
     const heartTemplate = itemCardTemplate.querySelector('.cards__heart');
@@ -129,16 +120,22 @@ function addListenersToCard(itemCardTemplate) {
 }
 
 function createCardFunction(name, src) {
-    const itemCardTemplate = cardTemplate.content.querySelector('.cards__item').cloneNode(true);
-    const imgTemplate = itemCardTemplate.querySelector('.cards__img');
-    const titleTemplate = itemCardTemplate.querySelector('.cards__title');
+    debugger
+    const newCardAdd = new Card(cardTemplate, handleCardClick, name, src);
+    newCardAdd.render();
+    console.log('newCardAdd = ', newCardAdd);
 
-    imgTemplate.src = src;
-    imgTemplate.alt = name;
-    titleTemplate.textContent = name;
-    addListenersToCard(itemCardTemplate);
+    // const itemCardTemplate = cardTemplate.content.querySelector('.cards__item').cloneNode(true);
+    // const imgTemplate = itemCardTemplate.querySelector('.cards__img');
+    // const titleTemplate = itemCardTemplate.querySelector('.cards__title');
 
-    return itemCardTemplate;
+    // imgTemplate.src = src;
+    // imgTemplate.alt = name;
+    // titleTemplate.textContent = name;
+    // addListenersToCard(itemCardTemplate);
+
+    // return itemCardTemplate;
+    return newCardAdd;
 }
 function addCard(itemCardTemplate) {
     cardsListElement.prepend(itemCardTemplate);
