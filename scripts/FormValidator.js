@@ -21,16 +21,12 @@ export class FormValidator {
 		this._inputErrorClass = inputErrorClass;
 		this._errorClass = errorClass;
 
-		this._inputList = Array.from(this._formElement.querySelectorAll('input'));
+		this._inputList = this._formElement.querySelectorAll('input');
 		// console.log('this._submitButtonSelector  = ', this._submitButtonSelector);
-
-		console.log('inputErrorClass =', this._inputErrorClass);
-		console.log('errorClass =', this._errorClass);
 	}
 
 	_showInputError = (inputElement) => {
-		const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
-
+		const errorElement = this._formElement.querySelector(`.${this._inputElement.id}-error`);
 		inputElement.classList.add(this._inputErrorClass);
 		errorElement.textContent = inputElement.validationMessage;
 		errorElement.classList.add(this._errorClass);
@@ -38,20 +34,18 @@ export class FormValidator {
 
 	_hideInputError = (inputElement) => {
 		const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
-		console.log('errorElement = ', errorElement);
-		console.log('errorClass = ', this._errorClass);
-		debugger
 		inputElement.classList.remove(this._inputErrorClass);
 		errorElement.classList.remove(this._errorClass);
 		errorElement.textContent = '';
 	};
 
-	_checkInputValidity = (inputElement, { inputErrorClass, errorClass }) => {
+	_checkInputValidity = (inputElement) => {
 
-		if (!inputElement.validity.valid) {
-			this._showInputError(inputElement);
+		if (!this._inputElement.validity.valid) {
+			console.log('_checkInputValidity: inputElement = ', this._inputElement);
+			this._showInputError(this._inputElement);
 		} else {
-			this._hideInputError(inputElement);
+			this._hideInputError(this._inputElement);
 		}
 	};
 
@@ -69,14 +63,11 @@ export class FormValidator {
 		// чтобы проверить состояние кнопки в самом начале
 		this.toggleButtonState(this._inputList, this._buttonElement, this._inactiveButtonClass);
 
+
 		this._inputList.forEach((inputElement) => {
 			inputElement.addEventListener('input', () => {
-
-				console.log('inputErrorClass = ', inputErrorClass);
-				console.log('errorClass = ', errorClass);
-
-				this._checkInputValidity(inputElement, { inputErrorClass, errorClass });
-				// чтобы проверять его при изменении любого из полей
+				this._checkInputValidity(inputElement);
+				// чтобы проверять его при изменении любого из 
 				this.toggleButtonState(inputList, buttonElement, inactiveButtonClass);
 			});
 		});
@@ -87,10 +78,11 @@ export class FormValidator {
 	}
 
 	_hasInvalidInput = (inputList) => {
-		// console.log('_hasInvalidInput: inputList = ', inputList);
-		return inputList.some((inputElement) => {
+		return Array.from(inputList).some((inputElement) => {
 			return !inputElement.validity.valid;
-		});
+		}
+
+		);
 	};
 
 	_hasEmptyInput = (inputList) => {
@@ -105,21 +97,13 @@ export class FormValidator {
 		this.toggleButtonState(this._inputList, this._submitButtonSelector, this._inactiveButtonClass); // <== управляем кнопкой ==
 
 		this._inputList.forEach((inputElement) => {
-			// debugger
-			console.log('inputErrorClass =', this._inputErrorClass);
-			console.log('errorClass =', this._errorClass);
-
 			this._hideInputError(inputElement); // <==очищаем ошибки ==
 		});
 	}
 
 	toggleButtonState = (inputList, submitButtonSelector, inactiveButtonClass) => {
-		console.log('this._submitButtonSelector  = ', this._submitButtonSelector);
-		// debugger
 		const isFormValid = this._hasInvalidInput(inputList);
-		console.log('isFormValid = ', isFormValid);
 		this._submitButtonSelector.classList.toggle(this._inactiveButtonClass, isFormValid);
-		// console.log('inactiveButtonClass = ', inactiveButtonClass);
 		this._submitButtonSelector.disabled = isFormValid;
 	};
 
