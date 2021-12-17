@@ -145,7 +145,7 @@ function handleProfileFormSubmit(evt) {
     // закрываем popup
     closePopup(evt);
 }
-function formAddPlaceSubmitHandler(evt) {
+function hanldeAddPlaceSubmit(evt) {
     evt.preventDefault() // Эта строчка отменяет стандартную отправку формы.
     // Получаем значение полей jobInput и nameInput из свойства value
     const placeNameInputValue = placeNameInput.value;
@@ -166,7 +166,7 @@ function formAddPlaceSubmitHandler(evt) {
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formEditPlaceElement.addEventListener('submit', handleProfileFormSubmit);
-formAddPlaceElement.addEventListener('submit', formAddPlaceSubmitHandler);
+formAddPlaceElement.addEventListener('submit', hanldeAddPlaceSubmit);
 
 //вешаем событие на кнопки(открывющие попапы с формами)
 profileBtnEdit.addEventListener('click', openPopupProfileEdit);
