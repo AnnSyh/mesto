@@ -98,7 +98,7 @@ function closePopup(evt) {
         document.removeEventListener('keydown', clickEsc);
     }
 }
-
+//рендерим нов карточку из формы  (через класс new Card)
 function createCardFunction(name, src) {
     const newCardAdd = new Card(cardTemplate, handleCardClick, name, src);
     return newCardAdd.render();
