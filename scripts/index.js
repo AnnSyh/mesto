@@ -28,14 +28,13 @@ initialCards.forEach(item => {
 
 });
 
-//мягкое связывание
+//мягкое связывание,открытие попапа с картинкой для карточки
 function handleCardClick(text, link) {
     console.log('handleCardClick');
     // устанавливаем ссылку
     // устанавливаем подпись картинке
     //открываем попап универсальной функцией, которая навешивает обработчик Escape внутри себя
-
-    console.log('curentPopup = ', curentPopup);
+    // console.log('curentPopup = ', curentPopup);
 
     curentPopup.querySelector('.popup__img').src = link;
     curentPopup.querySelector('.popup__img').alt = text;
@@ -43,9 +42,6 @@ function handleCardClick(text, link) {
 
     openPopup(curentPopup);
 }
-
-
-
 
 //Валидация форм
 // Находим формы в DOM
@@ -68,7 +64,6 @@ const placeImgInput = document.querySelector('.popup__input_plaсe-img');
 // Находим переменные для функции openPopup()
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
-
 
 // // находим список в кот надо встаивть карточки
 const cardsListElement = document.querySelector('.cards__list');
@@ -94,7 +89,7 @@ function openPopupProfileEdit() {
 function openPopupProfileAdd() {
     openPopup(popupAddPlaceElement);
 }
-
+//закрываем открытый попап еслион есть
 function closePopup(evt) {
     const popup = document.querySelector('.popup_opened');
     if (popup) {
@@ -103,40 +98,12 @@ function closePopup(evt) {
         document.removeEventListener('keydown', clickEsc);
     }
 }
-//навешиваем события на эл-ты карточки
-function addListenersToCard(itemCardTemplate) {
-
-    debugger
-
-    const imgTemplate = itemCardTemplate.querySelector('.cards__img');
-    const trashTemplate = itemCardTemplate.querySelector('.cards__trash');
-    const heartTemplate = itemCardTemplate.querySelector('.cards__heart');
-
-    trashTemplate.addEventListener('click', deleteCard);
-    heartTemplate.addEventListener('click', function () {
-        this.classList.toggle('cards__heart_active');
-    });
-    imgTemplate.addEventListener('click', openPopupImage);
-}
 
 function createCardFunction(name, src) {
-    debugger
     const newCardAdd = new Card(cardTemplate, handleCardClick, name, src);
-    newCardAdd.render();
-    console.log('newCardAdd = ', newCardAdd);
-
-    // const itemCardTemplate = cardTemplate.content.querySelector('.cards__item').cloneNode(true);
-    // const imgTemplate = itemCardTemplate.querySelector('.cards__img');
-    // const titleTemplate = itemCardTemplate.querySelector('.cards__title');
-
-    // imgTemplate.src = src;
-    // imgTemplate.alt = name;
-    // titleTemplate.textContent = name;
-    // addListenersToCard(itemCardTemplate);
-
-    // return itemCardTemplate;
-    return newCardAdd;
+    return newCardAdd.render();
 }
+
 function addCard(itemCardTemplate) {
     cardsListElement.prepend(itemCardTemplate);
 }
