@@ -24,7 +24,7 @@ initialCards.forEach(item => {
     // newCardInitial.render(cardsListContainer);
     // debugger
     // cardContainer.append(newCardInitial._view.cloneNode(true));
-    cardContainer.append(newCardInitial.render(cardsListContainer));
+    cardContainer.append(newCardInitial.render());
 
 });
 
@@ -53,6 +53,9 @@ const cardFormValidator = new FormValidator(configData, formAddPlaceElement);
 
 editFormValidator.enableValidation();
 cardFormValidator.enableValidation();
+
+editFormValidator.resetValidation();
+cardFormValidator.resetValidation();
 
 // -----------------------------------------------------------
 // Находим поля формы в DOM
@@ -87,6 +90,8 @@ function openPopupProfileEdit() {
 }
 //попап для добавления нового места
 function openPopupProfileAdd() {
+    // console.log('открыли попап с формой ProfileAdd');
+    cardFormValidator.resetValidation();
     openPopup(popupAddPlaceElement);
 }
 //закрываем открытый попап еслион есть
@@ -154,11 +159,15 @@ function hanldeAddPlaceSubmit(evt) {
     const currentCreateCard = createCardFunction(placeNameInputValue, placeImgInputValue);
     // Добавляем карточку в разметку
     addCard(currentCreateCard);
+
+    //надо переместить в FormValidator.js
     //Деактивирую кнопку сабмита и очищать инпуты
-    placeNameInput.value = '';
-    placeImgInput.value = '';
-    popupBtn.classList.add('form__submit_inactive');
-    popupBtn.disabled = true;
+    // placeNameInput.value = '';
+    // placeImgInput.value = '';
+
+    // popupBtn.classList.add('form__submit_inactive');
+    // popupBtn.disabled = true;
+
     // закрываем popup
     closePopup(evt);
 }
