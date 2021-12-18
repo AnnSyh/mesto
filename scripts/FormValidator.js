@@ -81,13 +81,18 @@ export class FormValidator {
 
 	//В нем Вы будете пробегаться по  this._inputList и очищать ошибки с инпутов.
 	resetValidation = (inputList) => {
-		this._formElement.reset(); // <==очищаем форму ==
+		this._formElement.reset(); // <==очищаем форму ==		
 		this.toggleButtonState(this._inputList); // <== управляем кнопкой ==
-
+		//Очищаем ошибки
+		this._inputList.forEach((inputElement) => {
+			this._hideInputError(inputElement);
+		});
+		//заполняем поля
 		if (inputList) {
+			console.log('resetValidation: inputList = ', inputList);
 			this._inputList[0].value = inputList.nameInputValue; // <== заполняем поля ==
 			this._inputList[1].value = inputList.jobInputValue;// <== заполняем поля ==
-		}
+		};
 	};
 
 	toggleButtonState = (inputList) => {
