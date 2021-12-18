@@ -89,8 +89,10 @@ export class FormValidator {
 			// debugger
 			console.log('inputElement = ', inputElement);
 			console.log('inputElement.val = ', inputElement.value);
-			inputElement.value = " ";            // <==очищаем ошибки ==
-			this._hideInputError(inputElement);  // <==очищаем ошибки ==
+			console.log('inputElement.val = ', inputElement.value);
+			inputElement.value = "";                // <==очищаем ошибки ==
+			this._hideInputError(inputElement);      // <==очищаем ошибки ==
+			this.toggleButtonState(this._inputList); // <== управляем кнопкой ==
 		});
 
 	}
