@@ -80,26 +80,26 @@ export class FormValidator {
 	};
 
 	//В нем Вы будете пробегаться по  this._inputList и очищать ошибки с инпутов.
-	resetValidation = () => {
-		// console.log('resetValidation');
-		// console.log('this._inputList = ', this._inputList);
-		// debugger
+	resetValidation = (inputList) => {
+		this._formElement.reset(); // <==очищаем форму ==
+		this.toggleButtonState(this._inputList); // <== управляем кнопкой ==
 
-		this._inputList.forEach((inputElement) => {
-			// debugger
-			console.log('inputElement = ', inputElement);
-			console.log('inputElement.val = ', inputElement.value);
-			console.log('inputElement.val = ', inputElement.value);
-			inputElement.value = "";                // <==очищаем ошибки ==
-			this._hideInputError(inputElement);      // <==очищаем ошибки ==
-			this.toggleButtonState(this._inputList); // <== управляем кнопкой ==
-		});
-
-	}
+		if (inputList) {
+			this._inputList[0].value = inputList.nameInputValue; // <== заполняем поля ==
+			this._inputList[1].value = inputList.jobInputValue;// <== заполняем поля ==
+		}
+	};
 
 	toggleButtonState = (inputList) => {
+		// debugger
+		console.log('toggleButtonState: inputList = ', inputList);
+
 		const isFormValid = this._hasInvalidInput(inputList);
+		console.log('isFormValid = ', isFormValid);
+
 		this._submitButtonSelector.classList.toggle(this._inactiveButtonClass, isFormValid);
+		console.log('this._submitButtonSelector.classList = ', this._submitButtonSelector.classList);
+
 		this._submitButtonSelector.disabled = isFormValid;
 	};
 

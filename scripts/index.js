@@ -54,9 +54,6 @@ const cardFormValidator = new FormValidator(configData, formAddPlaceElement);
 editFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 
-// editFormValidator.resetValidation();
-// cardFormValidator.resetValidation();
-
 // -----------------------------------------------------------
 // Находим поля формы в DOM
 const nameInput = document.querySelector('.popup__input_user-title');
@@ -82,15 +79,29 @@ const profileBtnAdd = document.querySelector('.profile__btn_user-add');
 const popupEditProfile = document.querySelector('.edit-profile__popup');
 const popupAddPlaceElement = document.querySelector('.add-plaсe__popup');
 
-//попап для редактирования  профиля
+//открываем попап для редактирования  профиля
 function openPopupProfileEdit() {
-    nameInput.value = profileName.innerText;
-    jobInput.value = profileJob.innerText;
+    nameInput.value = profileName.innerText; // <== передаем значение из формы ==
+    jobInput.value = profileJob.innerText;   // <== передаем значение из формы ==
+
+    const nameInputValue = nameInput.value;
+    const jobInputValue = jobInput.value;
+
+
+    const formInputsList = { nameInputValue, jobInputValue };
+
+    console.log(' openPopupProfileEdit(): formInputsLis = ', formInputsList);
+
+    editFormValidator.resetValidation(formInputsList);
+
+    // debugger
+    // editFormValidator.toggleButtonState(formInputsList); // <== управляем кнопкой ==
+
     openPopup(popupEditProfile);
 }
-//попап для добавления нового места
+//открываем попап для добавления нового места
 function openPopupProfileAdd() {
-    console.log('открыли попап с формой ProfileAdd');
+    // console.log('открыли попап с формой ProfileAdd');
     cardFormValidator.resetValidation();
     openPopup(popupAddPlaceElement);
 }
