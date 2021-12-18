@@ -30,16 +30,12 @@ initialCards.forEach(item => {
 
 //мягкое связывание,открытие попапа с картинкой для карточки
 function handleCardClick(text, link) {
-    console.log('handleCardClick');
     // устанавливаем ссылку
     // устанавливаем подпись картинке
     //открываем попап универсальной функцией, которая навешивает обработчик Escape внутри себя
-    // console.log('curentPopup = ', curentPopup);
-
     curentPopup.querySelector('.popup__img').src = link;
     curentPopup.querySelector('.popup__img').alt = text;
     curentPopup.querySelector('.popup__caption').textContent = text;
-
     openPopup(curentPopup);
 }
 
@@ -83,26 +79,15 @@ const popupAddPlaceElement = document.querySelector('.add-plaсe__popup');
 function openPopupProfileEdit() {
     nameInput.value = profileName.innerText; // <== передаем значение из формы ==
     jobInput.value = profileJob.innerText;   // <== передаем значение из формы ==
-
     const nameInputValue = nameInput.value;
     const jobInputValue = jobInput.value;
-
-
     const formInputsList = { nameInputValue, jobInputValue };
-
-    console.log(' openPopupProfileEdit(): formInputsLis = ', formInputsList);
-
-    editFormValidator.resetValidation(formInputsList);
-
-    // debugger
-    // editFormValidator.toggleButtonState(formInputsList); // <== управляем кнопкой ==
-
-    openPopup(popupEditProfile);
+    editFormValidator.resetValidation(formInputsList); // <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
+    openPopup(popupEditProfile);// <== открываем попап ==
 }
 //открываем попап для добавления нового места
 function openPopupProfileAdd() {
-    // console.log('открыли попап с формой ProfileAdd');
-    cardFormValidator.resetValidation();
+    cardFormValidator.resetValidation();// <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
     openPopup(popupAddPlaceElement);
 }
 //закрываем открытый попап еслион есть
