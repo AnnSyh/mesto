@@ -89,23 +89,15 @@ export class FormValidator {
 		});
 		//заполняем поля
 		if (inputList) {
-			console.log('resetValidation: inputList = ', inputList);
 			this._inputList[0].value = inputList.nameInputValue; // <== заполняем поля ==
 			this._inputList[1].value = inputList.jobInputValue;// <== заполняем поля ==
 		};
 	};
 
 	toggleButtonState = (inputList) => {
-		// debugger
-		console.log('toggleButtonState: inputList = ', inputList);
-
-		const isFormValid = this._hasInvalidInput(inputList);
-		console.log('isFormValid = ', isFormValid);
-
-		this._submitButtonSelector.classList.toggle(this._inactiveButtonClass, isFormValid);
-		console.log('this._submitButtonSelector.classList = ', this._submitButtonSelector.classList);
-
-		this._submitButtonSelector.disabled = isFormValid;
+		const isFormValid = this._hasInvalidInput(inputList);// флаг валидности формы
+		this._submitButtonSelector.classList.toggle(this._inactiveButtonClass, isFormValid); //переключение класса активности кнопки сабмита в зависимости от флага валидности формы
+		this._submitButtonSelector.disabled = isFormValid;// отключение самой активности сабмита
 	};
 
 
