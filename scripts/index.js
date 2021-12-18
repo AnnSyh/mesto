@@ -24,7 +24,7 @@ initialCards.forEach(item => {
     // newCardInitial.render(cardsListContainer);
     // debugger
     // cardContainer.append(newCardInitial._view.cloneNode(true));
-    cardContainer.append(newCardInitial.render(cardsListContainer));
+    cardContainer.append(newCardInitial.render());
 
 });
 
@@ -79,14 +79,30 @@ const profileBtnAdd = document.querySelector('.profile__btn_user-add');
 const popupEditProfile = document.querySelector('.edit-profile__popup');
 const popupAddPlaceElement = document.querySelector('.add-plaсe__popup');
 
-//попап для редактирования  профиля
+//открываем попап для редактирования  профиля
 function openPopupProfileEdit() {
-    nameInput.value = profileName.innerText;
-    jobInput.value = profileJob.innerText;
+    nameInput.value = profileName.innerText; // <== передаем значение из формы ==
+    jobInput.value = profileJob.innerText;   // <== передаем значение из формы ==
+
+    const nameInputValue = nameInput.value;
+    const jobInputValue = jobInput.value;
+
+
+    const formInputsList = { nameInputValue, jobInputValue };
+
+    console.log(' openPopupProfileEdit(): formInputsLis = ', formInputsList);
+
+    editFormValidator.resetValidation(formInputsList);
+
+    // debugger
+    // editFormValidator.toggleButtonState(formInputsList); // <== управляем кнопкой ==
+
     openPopup(popupEditProfile);
 }
-//попап для добавления нового места
+//открываем попап для добавления нового места
 function openPopupProfileAdd() {
+    // console.log('открыли попап с формой ProfileAdd');
+    cardFormValidator.resetValidation();
     openPopup(popupAddPlaceElement);
 }
 //закрываем открытый попап еслион есть
@@ -154,11 +170,15 @@ function hanldeAddPlaceSubmit(evt) {
     const currentCreateCard = createCardFunction(placeNameInputValue, placeImgInputValue);
     // Добавляем карточку в разметку
     addCard(currentCreateCard);
+
+    //надо переместить в FormValidator.js
     //Деактивирую кнопку сабмита и очищать инпуты
-    placeNameInput.value = '';
-    placeImgInput.value = '';
-    popupBtn.classList.add('form__submit_inactive');
-    popupBtn.disabled = true;
+    // placeNameInput.value = '';
+    // placeImgInput.value = '';
+
+    // popupBtn.classList.add('form__submit_inactive');
+    // popupBtn.disabled = true;
+
     // закрываем popup
     closePopup(evt);
 }

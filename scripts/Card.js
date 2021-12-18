@@ -24,11 +24,6 @@ export class Card {
 		this._view = this._template.content.querySelector('.cards__item').cloneNode(true);
 	}
 
-	// _addCard(CardTemplate) {
-	// 	cardsList.prepend(CardTemplate);
-
-	// }
-
 	_removeCard = () => {
 		this._view.remove();
 	}
