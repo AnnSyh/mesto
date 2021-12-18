@@ -54,8 +54,8 @@ const cardFormValidator = new FormValidator(configData, formAddPlaceElement);
 editFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 
-editFormValidator.resetValidation();
-cardFormValidator.resetValidation();
+// editFormValidator.resetValidation();
+// cardFormValidator.resetValidation();
 
 // -----------------------------------------------------------
 // Находим поля формы в DOM
@@ -90,7 +90,7 @@ function openPopupProfileEdit() {
 }
 //попап для добавления нового места
 function openPopupProfileAdd() {
-    // console.log('открыли попап с формой ProfileAdd');
+    console.log('открыли попап с формой ProfileAdd');
     cardFormValidator.resetValidation();
     openPopup(popupAddPlaceElement);
 }
