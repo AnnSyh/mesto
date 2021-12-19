@@ -7,25 +7,33 @@ import { CardsList } from "./CardsList.js";
 import { FormValidator } from "./FormValidator.js";
 
 const curentPopup = document.querySelector('.open-img__popup');
+const curentPopupImg = curentPopup.querySelector('.popup__img');
+const curentPopupCaption = curentPopup.querySelector('.popup__caption');
+
 const cardsListTemplate = document.querySelector('.list-template').content;
 const cardsListContainer = document.querySelector('.list-template-place');
 const cardTemplate = document.querySelector('.card-template');
-//создаем инструкции для формы
-const createForm = (...args) => new Form(...args);
+
+// //рендерим нов карточку из формы  (через класс new Card)
+// function createCardFunction(name, src) {
+//     const newCardAdd = new Card(cardTemplate, handleCardClick, name, src);
+//     return newCardAdd.render();
+// }
+
 //создаем инструкции для списка
 const createCard = (...args) => new Card(cardTemplate, handleCardClick, ...args);
 //создаем список
-const cardsList = new CardsList(initialCards, cardsListTemplate, createForm, createCard);
+const cardsList = new CardsList(initialCards, cardsListTemplate, createCard);
 cardsList.render(cardsListContainer);
+// const cardsList = new CardsList(initialCards, cardsListTemplate, createCardFunction);
+// cardsListContainer.append(cardsList);
 
 const cardContainer = document.querySelector('.cards__list');
 initialCards.forEach(item => {
-    const newCardInitial = new Card(cardTemplate, handleCardClick, item.name, item.link);
-    // newCardInitial.render(cardsListContainer);
-    // debugger
-    // cardContainer.append(newCardInitial._view.cloneNode(true));
-    cardContainer.append(newCardInitial.render());
-
+    // Создаем карточку
+    const newCardInitial = createCardFunction(item.name, item.link);
+    // Добавляем карточку в разметку
+    cardContainer.append(newCardInitial);
 });
 
 //мягкое связывание,открытие попапа с картинкой для карточки
@@ -33,9 +41,9 @@ function handleCardClick(text, link) {
     // устанавливаем ссылку
     // устанавливаем подпись картинке
     //открываем попап универсальной функцией, которая навешивает обработчик Escape внутри себя
-    curentPopup.querySelector('.popup__img').src = link;
-    curentPopup.querySelector('.popup__img').alt = text;
-    curentPopup.querySelector('.popup__caption').textContent = text;
+    curentPopupImg.src = link;
+    curentPopupImg.alt = text;
+    curentPopupCaption.textContent = text;
     openPopup(curentPopup);
 }
 
@@ -77,12 +85,10 @@ const popupAddPlaceElement = document.querySelector('.add-plaсe__popup');
 
 //открываем попап для редактирования  профиля
 function openPopupProfileEdit() {
+    editFormValidator.resetValidation(); // <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
+    //заполнить поля
     nameInput.value = profileName.innerText; // <== передаем значение из формы ==
     jobInput.value = profileJob.innerText;   // <== передаем значение из формы ==
-    const nameInputValue = nameInput.value;
-    const jobInputValue = jobInput.value;
-    const formInputsList = { nameInputValue, jobInputValue };
-    editFormValidator.resetValidation(formInputsList); // <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
     openPopup(popupEditProfile);// <== открываем попап ==
 }
 //открываем попап для добавления нового места
@@ -114,15 +120,6 @@ function openPopup(popup) {
     popup.classList.add('popup_opened');
     //вешаем событие на кнопку Esc
     document.addEventListener('keydown', clickEsc);
-}
-//попап для карточек
-function openPopupImage(evt) {
-    const curentElement = evt.target;
-
-    curentPopup.querySelector('.popup__img').src = curentElement.src;
-    curentPopup.querySelector('.popup__img').alt = curentElement.alt;
-    curentPopup.querySelector('.popup__caption').innerText = curentElement.alt;
-    openPopup(curentPopup);
 }
 
 //Слушатель событий, закрывающий модальное окно по нажатию на Escape

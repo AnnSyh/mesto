@@ -2,10 +2,9 @@
 
 
 export class CardsList {
-	constructor(items, template, createForm, createCard) {
+	constructor(items, template, createCard) {
 		this._items = items;
 		this._template = template;
-		this._createForm = createForm;
 		this._createCard = createCard;
 	}
 
