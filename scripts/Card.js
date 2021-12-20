@@ -18,14 +18,14 @@ export class Card {
 		this._view.remove();
 	}
 
-	_addEventListeners(evt) {
+	_addEventListeners() {
 		// debugger
 		this._image.addEventListener('click', () => this._handleCardClick(this._text, this._link));
 		this._trash.addEventListener('click', (evt) => this._removeCard(evt));
-		this._heart.addEventListener('click', () => { heartTemplate.classList.toggle('cards__heart_active') });
+		this._heart.addEventListener('click', () => { this._heart.classList.toggle('cards__heart_active') });
 	}
 
-	render(container) {
+	render() {
 		this._createView();
 
 		this._image = this._view.querySelector('.cards__img');
