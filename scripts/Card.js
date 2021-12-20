@@ -18,10 +18,10 @@ export class Card {
 		this._view.remove();
 	}
 
-	_addEventListeners() {
+	_addEventListeners(evt) {
 		// debugger
 		this._image.addEventListener('click', () => this._handleCardClick(this._text, this._link));
-		this._trash.addEventListener('click', () => this._removeCard(evt));
+		this._trash.addEventListener('click', (evt) => this._removeCard(evt));
 		this._heart.addEventListener('click', () => { heartTemplate.classList.toggle('cards__heart_active') });
 	}
 

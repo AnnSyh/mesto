@@ -14,14 +14,15 @@ const cardsListTemplate = document.querySelector('.list-template').content;
 const cardsListContainer = document.querySelector('.list-template-place');
 const cardTemplate = document.querySelector('.card-template');
 
-// //рендерим нов карточку из формы  (через класс new Card)
-// function createCardFunction(name, src) {
-//     const newCardAdd = new Card(cardTemplate, handleCardClick, name, src);
-//     return newCardAdd.render();
-// }
-
 //создаем инструкции для списка
 const createCard = (...args) => new Card(cardTemplate, handleCardClick, ...args);
+
+//рендерим нов карточку из формы  (через класс new Card)
+// function createCardFunction(name, src) {
+//     // const newCardAdd = (name, src) => new Card(cardTemplate, handleCardClick, name, src);
+//     return createCard(name, src).render();
+// }
+
 //создаем список
 const cardsList = new CardsList(initialCards, cardsListTemplate, createCard);
 cardsList.render(cardsListContainer);
@@ -31,7 +32,7 @@ cardsList.render(cardsListContainer);
 const cardContainer = document.querySelector('.cards__list');
 initialCards.forEach(item => {
     // Создаем карточку
-    const newCardInitial = createCardFunction(item.name, item.link);
+    const newCardInitial = createCard(item.name, item.link).render();
     // Добавляем карточку в разметку
     cardContainer.append(newCardInitial);
 });
@@ -106,10 +107,10 @@ function closePopup(evt) {
     }
 }
 //рендерим нов карточку из формы  (через класс new Card)
-function createCardFunction(name, src) {
-    const newCardAdd = new Card(cardTemplate, handleCardClick, name, src);
-    return newCardAdd.render();
-}
+// function createCardFunction(name, src) {
+//     const newCardAdd = new Card(cardTemplate, handleCardClick, name, src);
+//     return newCardAdd.render();
+// }
 
 function addCard(itemCardTemplate) {
     cardsListElement.prepend(itemCardTemplate);
@@ -149,7 +150,12 @@ function hanldeAddPlaceSubmit(evt) {
     const placeNameInputValue = placeNameInput.value;
     const placeImgInputValue = placeImgInput.value;
     // Предаем их в создаваймую карточку
-    const currentCreateCard = createCardFunction(placeNameInputValue, placeImgInputValue);
+    const currentCreateCard = createCard(placeNameInputValue, placeImgInputValue).render();
+
+
+    //создаем инструкции для списка
+// const createCard = (...args) => new Card(cardTemplate, handleCardClick, ...args);
+
     // Добавляем карточку в разметку
     addCard(currentCreateCard);
 
