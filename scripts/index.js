@@ -17,17 +17,9 @@ const cardTemplate = document.querySelector('.card-template');
 //создаем инструкции для списка
 const createCard = (...args) => new Card(cardTemplate, handleCardClick, ...args);
 
-//рендерим нов карточку из формы  (через класс new Card)
-// function createCardFunction(name, src) {
-//     // const newCardAdd = (name, src) => new Card(cardTemplate, handleCardClick, name, src);
-//     return createCard(name, src).render();
-// }
-
 //создаем список
 const cardsList = new CardsList(initialCards, cardsListTemplate, createCard);
 cardsList.render(cardsListContainer);
-// const cardsList = new CardsList(initialCards, cardsListTemplate, createCardFunction);
-// cardsListContainer.append(cardsList);
 
 const cardContainer = document.querySelector('.cards__list');
 initialCards.forEach(item => {
@@ -106,11 +98,6 @@ function closePopup(evt) {
         document.removeEventListener('keydown', clickEsc);
     }
 }
-//рендерим нов карточку из формы  (через класс new Card)
-// function createCardFunction(name, src) {
-//     const newCardAdd = new Card(cardTemplate, handleCardClick, name, src);
-//     return newCardAdd.render();
-// }
 
 function addCard(itemCardTemplate) {
     cardsListElement.prepend(itemCardTemplate);
@@ -154,7 +141,7 @@ function hanldeAddPlaceSubmit(evt) {
 
 
     //создаем инструкции для списка
-// const createCard = (...args) => new Card(cardTemplate, handleCardClick, ...args);
+    // const createCard = (...args) => new Card(cardTemplate, handleCardClick, ...args);
 
     // Добавляем карточку в разметку
     addCard(currentCreateCard);
