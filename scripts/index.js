@@ -5,7 +5,7 @@ import { configData } from "./configData.js";
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
 import { Section } from './Section.js';
-
+import { Popup } from './Popup.js';
 
 
 const curentPopup = document.querySelector('.open-img__popup');
@@ -28,18 +28,7 @@ function renderer(item) {
     const newCardInitial = createCard(item.name, item.link).render();
     return newCardInitial;
 }
-
-
-//мягкое связывание,открытие попапа с картинкой для карточки
-function handleCardClick(text, link) {
-    // устанавливаем ссылку
-    // устанавливаем подпись картинке
-    //открываем попап универсальной функцией, которая навешивает обработчик Escape внутри себя
-    curentPopupImg.src = link;
-    curentPopupImg.alt = text;
-    curentPopupCaption.textContent = text;
-    openPopup(curentPopup);
-}
+//  /создаем список
 
 //Валидация форм
 // Находим формы в DOM
@@ -77,38 +66,37 @@ const profileBtnAdd = document.querySelector('.profile__btn_user-add');
 const popupEditProfile = document.querySelector('.edit-profile__popup');
 const popupAddPlaceElement = document.querySelector('.add-plaсe__popup');
 
+
+//открытие попапа с картинкой для карточки (мягкое связывание)
+function handleCardClick(text, link) {
+    // устанавливаем ссылку
+    // устанавливаем подпись картинке
+    //открываем попап универсальной функцией, которая навешивает обработчик Escape внутри себя
+    curentPopupImg.src = link;
+    curentPopupImg.alt = text;
+    curentPopupCaption.textContent = text;
+    // openPopup(curentPopup);// <== старый вариант: открываем попап ==
+    const showImgPopup = new Popup(curentPopup);  // <==  создаем эл-т класса Popup ==
+    showImgPopup.openPopup(); // <==  открываем попап ==
+}
+
 //открываем попап для редактирования  профиля
 function openPopupProfileEdit() {
     editFormValidator.resetValidation(); // <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
     //заполнить поля
     nameInput.value = profileName.innerText; // <== передаем значение из формы ==
     jobInput.value = profileJob.innerText;   // <== передаем значение из формы ==
-    openPopup(popupEditProfile);// <== открываем попап ==
+    // openPopup(popupEditProfile);// <== старый вариант: открываем попап ==
+    const editProfilePopup = new Popup(popupEditProfile);  // <==  создаем эл-т класса Popup ==
+    editProfilePopup.openPopup(); // <==  открываем попап ==
 }
+
 //открываем попап для добавления нового места
 function openPopupProfileAdd() {
     cardFormValidator.resetValidation();// <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
-    openPopup(popupAddPlaceElement);
-}
-//закрываем открытый попап еслион есть
-function closePopup(evt) {
-    const popup = document.querySelector('.popup_opened');
-    if (popup) {
-        popup.classList.remove('popup_opened');
-        //снять слушатель с кнопки Esc 
-        document.removeEventListener('keydown', clickEsc);
-    }
-}
-
-function addCard(itemCardTemplate) {
-    cardsListElement.prepend(itemCardTemplate);
-}
-
-//ф-я открытия любого попапа
-function openPopup(popup) {
-    popup.classList.add('popup_opened');
-    //вешаем событие на кнопку Esc
-    document.addEventListener('keydown', clickEsc);
+    // openPopup(popupAddPlaceElement); <== старый вариант: открываем попап ==
+    const addPlaсePopup = new Popup(popupAddPlaceElement);  // <==  создаем эл-т класса Popup ==
+    addPlaсePopup.openPopup(); // <==  открываем попап ==
 }
 
 //Слушатель событий, закрывающий модальное окно по нажатию на Escape
@@ -118,10 +106,14 @@ function clickEsc(evt) {
     }
 }
 
+function addCard(itemCardTemplate) {
+    cardsListElement.prepend(itemCardTemplate);
+}
+
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
 function handleProfileFormSubmit(evt) {
-    evt.preventDefault() // Эта строчка отменяет стандартную отправку формы.
+    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     // Получаем значение полей jobInput и nameInput из свойства value
     const nameInputValue = nameInput.value;
     const jobInputValue = jobInput.value;
@@ -129,34 +121,18 @@ function handleProfileFormSubmit(evt) {
     // Вставляем новые значения с помощью textContent
     profileName.textContent = nameInputValue;
     profileJob.textContent = jobInputValue;
-    // закрываем popup
-    closePopup(evt);
 }
 function hanldeAddPlaceSubmit(evt) {
-    evt.preventDefault() // Эта строчка отменяет стандартную отправку формы.
+    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     // Получаем значение полей jobInput и nameInput из свойства value
     const placeNameInputValue = placeNameInput.value;
     const placeImgInputValue = placeImgInput.value;
     // Предаем их в создаваймую карточку
     const currentCreateCard = createCard(placeNameInputValue, placeImgInputValue).render();
-
-
-    //создаем инструкции для списка
-    // const createCard = (...args) => new Card(cardTemplate, handleCardClick, ...args);
-
     // Добавляем карточку в разметку
     addCard(currentCreateCard);
-
-    //надо переместить в FormValidator.js
-    //Деактивирую кнопку сабмита и очищать инпуты
-    // placeNameInput.value = '';
-    // placeImgInput.value = '';
-
-    // popupBtn.classList.add('form__submit_inactive');
-    // popupBtn.disabled = true;
-
     // закрываем popup
-    closePopup(evt);
+
 }
 
 // Прикрепляем обработчик к форме:
@@ -167,12 +143,3 @@ formAddPlaceElement.addEventListener('submit', hanldeAddPlaceSubmit);
 //вешаем событие на кнопки(открывющие попапы с формами)
 profileBtnEdit.addEventListener('click', openPopupProfileEdit);
 profileBtnAdd.addEventListener('click', openPopupProfileAdd);
-
-//закрытие всех попапов при клике на крестик или оверлай
-popups.forEach((popup) => {
-    popup.addEventListener('click', (evt) => {
-        if (evt.target.classList.contains('popup__close') || evt.target.classList.contains('popup__overlay')) {
-            closePopup(popup);
-        }
-    });
-});

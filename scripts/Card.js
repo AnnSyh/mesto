@@ -10,7 +10,6 @@ export class Card {
 	}
 
 	_createView() {
-		// console.log('*** = ', this._template.content.querySelector('.cards__item'));
 		this._view = this._template.content.querySelector('.cards__item').cloneNode(true);
 	}
 
