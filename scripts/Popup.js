@@ -17,7 +17,7 @@ export class Popup {
         console.log('Popup: openPopup()');
         this._popupSelector.classList.add('popup_opened');
         this._addEventListeners();
-        // this._handleEscClose();
+        this._handleEscClose();
     }
     _addEventListeners() {
         this._close.addEventListener('click', (evt) => this.closePopup(evt));
@@ -47,9 +47,10 @@ export class Popup {
     }
 
     //Слушатель событий, закрывающий модальное окно по нажатию на Escape
-    _clickEsc(evt) {
+    _clickEsc = (evt) => {
         if (evt.key == 'Escape') {
-            this._closePopup();
+            // this._popupSelector.closePopup();
+            this._popupSelector.classList.remove('popup_opened');
         }
     }
 

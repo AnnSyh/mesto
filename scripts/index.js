@@ -75,7 +75,6 @@ function handleCardClick(text, link) {
     curentPopupImg.src = link;
     curentPopupImg.alt = text;
     curentPopupCaption.textContent = text;
-    // openPopup(curentPopup);// <== старый вариант: открываем попап ==
     const showImgPopup = new Popup(curentPopup);  // <==  создаем эл-т класса Popup ==
     showImgPopup.openPopup(); // <==  открываем попап ==
 }
@@ -86,7 +85,6 @@ function openPopupProfileEdit() {
     //заполнить поля
     nameInput.value = profileName.innerText; // <== передаем значение из формы ==
     jobInput.value = profileJob.innerText;   // <== передаем значение из формы ==
-    // openPopup(popupEditProfile);// <== старый вариант: открываем попап ==
     const editProfilePopup = new Popup(popupEditProfile);  // <==  создаем эл-т класса Popup ==
     editProfilePopup.openPopup(); // <==  открываем попап ==
 }
@@ -94,16 +92,8 @@ function openPopupProfileEdit() {
 //открываем попап для добавления нового места
 function openPopupProfileAdd() {
     cardFormValidator.resetValidation();// <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
-    // openPopup(popupAddPlaceElement); <== старый вариант: открываем попап ==
     const addPlaсePopup = new Popup(popupAddPlaceElement);  // <==  создаем эл-т класса Popup ==
     addPlaсePopup.openPopup(); // <==  открываем попап ==
-}
-
-//Слушатель событий, закрывающий модальное окно по нажатию на Escape
-function clickEsc(evt) {
-    if (evt.key == 'Escape') {
-        closePopup();
-    }
 }
 
 function addCard(itemCardTemplate) {
@@ -131,8 +121,6 @@ function hanldeAddPlaceSubmit(evt) {
     const currentCreateCard = createCard(placeNameInputValue, placeImgInputValue).render();
     // Добавляем карточку в разметку
     addCard(currentCreateCard);
-    // закрываем popup
-
 }
 
 // Прикрепляем обработчик к форме:
