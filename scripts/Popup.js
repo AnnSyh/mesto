@@ -7,10 +7,6 @@ export class Popup {
         this._close = this._popupSelector.querySelector('.popup__close');
         this._overlay = this._popupSelector.querySelector('.popup__overlay');
         this._submit = this._popupSelector.querySelector('.popup__btn');
-
-        // console.log('this = ', this);
-        // console.log('popupSelector = ', popupSelector);
-
     }
 
     openPopup() {

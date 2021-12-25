@@ -6,6 +6,8 @@ import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
 import { Section } from './Section.js';
 import { Popup } from './Popup.js';
+import { PopupWithImage } from './PopupWithImage.js';
+import { PopupWithForm } from './PopupWithForm.js';
 
 
 const curentPopup = document.querySelector('.open-img__popup');
@@ -72,10 +74,12 @@ function handleCardClick(text, link) {
     // устанавливаем ссылку
     // устанавливаем подпись картинке
     //открываем попап универсальной функцией, которая навешивает обработчик Escape внутри себя
-    curentPopupImg.src = link;
-    curentPopupImg.alt = text;
-    curentPopupCaption.textContent = text;
-    const showImgPopup = new Popup(curentPopup);  // <==  создаем эл-т класса Popup ==
+    // curentPopupImg.src = link;
+    // curentPopupImg.alt = text;
+    // curentPopupCaption.textContent = text;
+    // const showImgPopup = new Popup(curentPopup);  // <==  создаем эл-т класса Popup ==
+    // showImgPopup.openPopup(); // <==  открываем попап ==
+    const showImgPopup = new PopupWithImage(curentPopup, text, link);  // <==  создаем эл-т класса PopupWithImage ==
     showImgPopup.openPopup(); // <==  открываем попап ==
 }
 
@@ -85,14 +89,18 @@ function openPopupProfileEdit() {
     //заполнить поля
     nameInput.value = profileName.innerText; // <== передаем значение из формы ==
     jobInput.value = profileJob.innerText;   // <== передаем значение из формы ==
-    const editProfilePopup = new Popup(popupEditProfile);  // <==  создаем эл-т класса Popup ==
+    // const editProfilePopup = new Popup(popupEditProfile);  // <==  создаем эл-т класса Popup ==
+    // editProfilePopup.openPopup(); // <==  открываем попап ==
+    const editProfilePopup = new PopupWithForm(popupEditProfile);  // <==  создаем эл-т класса PopupWithForm ==
     editProfilePopup.openPopup(); // <==  открываем попап ==
 }
 
 //открываем попап для добавления нового места
 function openPopupProfileAdd() {
     cardFormValidator.resetValidation();// <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
-    const addPlaсePopup = new Popup(popupAddPlaceElement);  // <==  создаем эл-т класса Popup ==
+    // const addPlaсePopup = new Popup(popupAddPlaceElement);  // <==  создаем эл-т класса Popup ==
+    // addPlaсePopup.openPopup(); // <==  открываем попап ==
+    const addPlaсePopup = new PopupWithForm(popupAddPlaceElement);  // <==  создаем эл-т класса PopupWithForm ==
     addPlaсePopup.openPopup(); // <==  открываем попап ==
 }
 

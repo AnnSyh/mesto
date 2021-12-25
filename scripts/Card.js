@@ -7,6 +7,8 @@ export class Card {
 		this._link = link;
 		this._template = template;
 		this._handleCardClick = handleCardClick;
+
+		// debugger
 	}
 
 	_createView() {
