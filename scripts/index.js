@@ -3,8 +3,10 @@
 import { initialCards } from "./initialCards.js";
 import { configData } from "./configData.js";
 import { Card } from "./Card.js";
-import { CardsList } from "./CardsList.js";
 import { FormValidator } from "./FormValidator.js";
+import { Section } from './Section.js';
+
+
 
 const curentPopup = document.querySelector('.open-img__popup');
 const curentPopupImg = curentPopup.querySelector('.popup__img');
@@ -18,16 +20,15 @@ const cardTemplate = document.querySelector('.card-template');
 const createCard = (...args) => new Card(cardTemplate, handleCardClick, ...args);
 
 //создаем список
-const cardsList = new CardsList(initialCards, cardsListTemplate, createCard);
-cardsList.render(cardsListContainer);
+const defaultCardList = new Section({ data: initialCards, renderer }, cardsListContainer);
+defaultCardList.renderItems();
 
-const cardContainer = document.querySelector('.cards__list');
-initialCards.forEach(item => {
-    // Создаем карточку
+function renderer(item) {
+    // Создаем карточку и возвращаем ее шаблон
     const newCardInitial = createCard(item.name, item.link).render();
-    // Добавляем карточку в разметку
-    cardContainer.append(newCardInitial);
-});
+    return newCardInitial;
+}
+
 
 //мягкое связывание,открытие попапа с картинкой для карточки
 function handleCardClick(text, link) {
