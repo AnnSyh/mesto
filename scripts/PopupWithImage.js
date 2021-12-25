@@ -17,6 +17,9 @@ export class PopupWithImage extends Popup {
     }
 
     openPopup() {
+        // устанавливаем ссылку
+        // устанавливаем подпись картинке
+        //открываем попап универсальной функцией, которая навешивает обработчик Escape внутри себя
         this._title.innerText = this._text;
         this._img.alt = this._text;
         this._img.src = this._link;
