@@ -1,10 +1,9 @@
 'use strict'
 import { Popup } from './Popup.js';
-import { FormValidator } from "./FormValidator.js";
 
 export class PopupWithForm extends Popup {
 
-    constructor(popupSelector, handleProfileFormSubmit, hanldeAddPlaceSubmit) {
+    constructor(popupSelector, handleProfileFormSubmit, hanldeAddPlaceFormSubmit) {
         super(popupSelector);
         this._popupSelector = popupSelector;
         this._close = this._popupSelector.querySelector('.popup__close');
@@ -13,15 +12,26 @@ export class PopupWithForm extends Popup {
         this._form = this._popupSelector.querySelector('.form');
 
         this._handleProfileFormSubmit = handleProfileFormSubmit;
-        this._hanldeAddPlaceSubmit = hanldeAddPlaceSubmit;
+        this._hanldeAddPlaceFormSubmit = hanldeAddPlaceFormSubmit;
 
+        // debugger
         // this._getInputValues();
     }
-
-    _getInputValues() {
+    getInputValues() {
+        const rezultArrayProfiles = [];
+        const rezultArrayPlaces = [];
+        var name, job, placeTitle, plaсeImg;
         Array.from(this._form.elements).forEach(element => {
-            console.log('form.element = ', element);
+
+            if (element.id == "user-title") { name = element.value; }
+            if (element.id == "user-subtitle") { job = element.value; }
+            if (element.id == "place-title-input") { placeTitle = element.value; }
+            if (element.id == "plaсe-img-input") { plaсeImg = element.value; }
         });
+        rezultArrayProfiles.push({ name, job });
+        rezultArrayPlaces.push({ placeTitle, plaсeImg });
+        console.log('rezultArrayProfiles = ', rezultArrayProfiles);
+        // console.log('rezultArrayPlaces = ', rezultArrayPlaces);
     }
 
     _addEventListeners() {
@@ -31,15 +41,18 @@ export class PopupWithForm extends Popup {
 
         if (this._form.name == 'edit-profile') {
             console.log('edit-profile');
-            this._submit.addEventListener('submit', this._handleProfileFormSubmit);
+            debugger
+            // this._getInputValues();
+            // this._submit.addEventListener('submit', this._handleProfileFormSubmit);
+            this._submit.addEventListener('submit', () => {
+                console.log('_addEventListeners(): submit');
+                this._handleProfileFormSubmit(this._getInputValues());
+            });
         } else if (this._form.name == 'add-place') {
             console.log('add-place');
-            this._submit.addEventListener('submit', this._hanldeAddPlaceSubmit);
+            this._submit.addEventListener('submit', this._hanldeAddPlaceFormSubmit);
         }
     }
 
-    // closePopup() {
-    //     console.log('PopupWithForm: closePopup()');
-    // }
 
 }

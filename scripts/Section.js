@@ -7,7 +7,8 @@ export class Section {
     }
     renderItems() {
         // Переберем массив _initialArray с начальными карточками
-        this._renderedItems.forEach(item => {
+        Array.from(this._renderedItems).forEach(item => {
+            // console.log('item= ', item);
             this._renderer(item);
             // Вставим разметку на страницу,
             // используя метод addItem класса Section
@@ -15,6 +16,6 @@ export class Section {
         });
     }
     addItem(element) {
-        this._container.append(element);
+        this._container.prepend(element);
     }
 }

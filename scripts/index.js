@@ -99,6 +99,7 @@ function addCard(itemCardTemplate) {
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
 function handleProfileFormSubmit(evt) {
+    console.log('hanldeAddPlaceFormSubmit');
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     // Получаем значение полей jobInput и nameInput из свойства value
     const nameInputValue = nameInput.value;
@@ -107,22 +108,29 @@ function handleProfileFormSubmit(evt) {
     // Вставляем новые значения с помощью textContent
     profileName.textContent = nameInputValue;
     profileJob.textContent = jobInputValue;
+
+    formEditPlaceElement.getInputValues();
 }
-function hanldeAddPlaceSubmit(evt) {
+function hanldeAddPlaceFormSubmit(evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     // Получаем значение полей jobInput и nameInput из свойства value
-    const placeNameInputValue = placeNameInput.value;
-    const placeImgInputValue = placeImgInput.value;
-    // Предаем их в создаваймую карточку
-    const currentCreateCard = createCard(placeNameInputValue, placeImgInputValue).render();
-    // Добавляем карточку в разметку
-    addCard(currentCreateCard);
+    //собираем их в массив для карточки
+    const currentCardInputs = [
+        {
+            name: placeNameInput.value,
+            link: placeImgInput.value,
+        },
+    ];
+
+    //создаем список
+    const currentCreateCard = new Section({ data: currentCardInputs, renderer }, cardsListContainer);
+    currentCreateCard.renderItems();
 }
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formEditPlaceElement.addEventListener('submit', handleProfileFormSubmit);
-formAddPlaceElement.addEventListener('submit', hanldeAddPlaceSubmit);
+// formEditPlaceElement.addEventListener('submit', handleProfileFormSubmit);
+// formAddPlaceElement.addEventListener('submit', hanldeAddPlaceFormSubmit);
 
 //вешаем событие на кнопки(открывющие попапы с формами)
 profileBtnEdit.addEventListener('click', openPopupProfileEdit);

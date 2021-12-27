@@ -10,7 +10,6 @@ export class Popup {
     }
 
     openPopup() {
-        console.log('Popup: openPopup()');
         this._popupSelector.classList.add('popup_opened');
         this._addEventListeners();
         this._handleEscClose();
@@ -24,7 +23,6 @@ export class Popup {
     }
 
     closePopup() {
-        console.log('Popup: closePopup()');
         const flagOpen = this._popupSelector.classList.contains('popup_opened');
         if (flagOpen) {
             this._popupSelector.classList.remove('popup_opened');
