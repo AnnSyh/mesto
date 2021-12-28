@@ -17,7 +17,7 @@ export class PopupWithForm extends Popup {
         // debugger
         // this._getInputValues();
     }
-    getInputValues() {
+    _getInputValues() {
         const rezultArrayProfiles = [];
         const rezultArrayPlaces = [];
         var name, job, placeTitle, plaсeImg;
@@ -37,20 +37,22 @@ export class PopupWithForm extends Popup {
     _addEventListeners() {
         this._close.addEventListener('click', (evt) => this.closePopup(evt));
         this._overlay.addEventListener('click', (evt) => this.closePopup(evt));
-        this._submit.addEventListener('click', (evt) => this.closePopup(evt));
+        // this._submit.addEventListener('click', (evt) => this.closePopup(evt));
+        // this._submit.addEventListener('click', (evt) => console.log('submit'));
+        // this._form.addEventListener('submit', (evt) => console.log('formSubmit'));
 
         if (this._form.name == 'edit-profile') {
             console.log('edit-profile');
             debugger
             // this._getInputValues();
             // this._submit.addEventListener('submit', this._handleProfileFormSubmit);
-            this._submit.addEventListener('submit', () => {
+            this._form.addEventListener('submit', () => {
                 console.log('_addEventListeners(): submit');
                 this._handleProfileFormSubmit(this._getInputValues());
             });
         } else if (this._form.name == 'add-place') {
             console.log('add-place');
-            this._submit.addEventListener('submit', this._hanldeAddPlaceFormSubmit);
+            this._form.addEventListener('submit', this._hanldeAddPlaceFormSubmit);
         }
     }
 

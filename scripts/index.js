@@ -8,6 +8,7 @@ import { Section } from './Section.js';
 import { Popup } from './Popup.js';
 import { PopupWithImage } from './PopupWithImage.js';
 import { PopupWithForm } from './PopupWithForm.js';
+import { UserInfo } from './UserInfo.js';
 
 
 const curentPopup = document.querySelector('.open-img__popup');
@@ -31,6 +32,17 @@ function renderer(item) {
     return newCardInitial;
 }
 //  /создаем список
+
+
+//создаем карточку пользователя ЖакИв Кусто
+// const UserInfo = new UserInfo(name, info);
+
+// function renderer(item) {
+//     // Создаем карточку и возвращаем ее шаблон
+//     const newCardInitial = UserInfo(item.name, item.link).render();
+//     return newCardInitial;
+// }
+
 
 //Валидация форм
 // Находим формы в DOM
@@ -91,7 +103,7 @@ function openPopupProfileAdd() {
     const addPlaсePopup = new PopupWithForm(popupAddPlaceElement);  // <==  создаем эл-т класса PopupWithForm ==
     addPlaсePopup.openPopup(); // <==  открываем попап ==
 }
-
+//вставляет карточку на стр
 function addCard(itemCardTemplate) {
     cardsListElement.prepend(itemCardTemplate);
 }
@@ -106,8 +118,8 @@ function handleProfileFormSubmit(evt) {
     const jobInputValue = jobInput.value;
     // Выбераем элементы, куда должны быть вставлены значения полей
     // Вставляем новые значения с помощью textContent
-    profileName.textContent = nameInputValue;
-    profileJob.textContent = jobInputValue;
+    profileName.textContent = nameInput.value;
+    profileJob.textContent = jobInput.value;
 
     formEditPlaceElement.getInputValues();
 }
