@@ -15,7 +15,7 @@ export class PopupWithForm extends Popup {
         this._hanldeAddPlaceFormSubmit = hanldeAddPlaceFormSubmit;
 
         // debugger
-        // this._getInputValues();
+        // this.getInputValues();
     }
     _getInputValues() {
         const rezultArrayProfiles = [];
@@ -30,30 +30,30 @@ export class PopupWithForm extends Popup {
         });
         rezultArrayProfiles.push({ name, job });
         rezultArrayPlaces.push({ placeTitle, plaсeImg });
-        console.log('rezultArrayProfiles = ', rezultArrayProfiles);
         // console.log('rezultArrayPlaces = ', rezultArrayPlaces);
+
+        return { rezultArrayProfiles, rezultArrayPlaces };
     }
 
     _addEventListeners() {
         this._close.addEventListener('click', (evt) => this.closePopup(evt));
         this._overlay.addEventListener('click', (evt) => this.closePopup(evt));
         // this._submit.addEventListener('click', (evt) => this.closePopup(evt));
-        // this._submit.addEventListener('click', (evt) => console.log('submit'));
-        // this._form.addEventListener('submit', (evt) => console.log('formSubmit'));
 
         if (this._form.name == 'edit-profile') {
-            console.log('edit-profile');
-            debugger
-            // this._getInputValues();
-            // this._submit.addEventListener('submit', this._handleProfileFormSubmit);
-            this._form.addEventListener('submit', () => {
-                console.log('_addEventListeners(): submit');
-                this._handleProfileFormSubmit(this._getInputValues());
+            this._form.addEventListener('submit', (evt) => {
+                this._handleProfileFormSubmit(evt, this._getInputValues());
+                this.closePopup(evt);
             });
         } else if (this._form.name == 'add-place') {
-            console.log('add-place');
-            this._form.addEventListener('submit', this._hanldeAddPlaceFormSubmit);
+            this._form.addEventListener('submit', (evt) => {
+                this._hanldeAddPlaceFormSubmit(evt, this._getInputValues());
+                this.closePopup(evt);
+            });
         }
+
+
+
     }
 
 

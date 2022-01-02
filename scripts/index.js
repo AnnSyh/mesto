@@ -92,15 +92,15 @@ function openPopupProfileEdit() {
     editFormValidator.resetValidation(); // <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
     //заполнить поля
     nameInput.value = profileName.innerText; // <== передаем значение из формы ==
-    jobInput.value = profileJob.innerText;   // <== передаем значение из формы ==
-    const editProfilePopup = new PopupWithForm(popupEditProfile);  // <==  создаем эл-т класса PopupWithForm ==
+    jobInput.value = profileJob.innerText;
+    const editProfilePopup = new PopupWithForm(popupEditProfile, handleProfileFormSubmit, hanldeAddPlaceFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
     editProfilePopup.openPopup(); // <==  открываем попап ==
 }
 
 //открываем попап для добавления нового места
 function openPopupProfileAdd() {
     cardFormValidator.resetValidation();// <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
-    const addPlaсePopup = new PopupWithForm(popupAddPlaceElement);  // <==  создаем эл-т класса PopupWithForm ==
+    const addPlaсePopup = new PopupWithForm(popupAddPlaceElement, handleProfileFormSubmit, hanldeAddPlaceFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
     addPlaсePopup.openPopup(); // <==  открываем попап ==
 }
 //вставляет карточку на стр
@@ -110,20 +110,21 @@ function addCard(itemCardTemplate) {
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
-function handleProfileFormSubmit(evt) {
-    console.log('hanldeAddPlaceFormSubmit');
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+function handleProfileFormSubmit(evt, rezultArrayProfiles) {
+    console.log('handleProfileFormSubmit: rezultArrayProfiles  = ', rezultArrayProfiles);
+    // debugger
+    console.log('hanldeAddPlaceFormSubmit evt = ', evt);
+
+    // evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     // Получаем значение полей jobInput и nameInput из свойства value
-    const nameInputValue = nameInput.value;
-    const jobInputValue = jobInput.value;
     // Выбераем элементы, куда должны быть вставлены значения полей
-    // Вставляем новые значения с помощью textContent
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
 
-    formEditPlaceElement.getInputValues();
+    // formEditPlaceElement.getInputValues();
 }
-function hanldeAddPlaceFormSubmit(evt) {
+function hanldeAddPlaceFormSubmit(evt, rezultArrayPlaces) {
+    console.log('hanldeAddPlaceFormSubmit: rezultArrayPlaces  = ', rezultArrayPlaces);
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     // Получаем значение полей jobInput и nameInput из свойства value
     //собираем их в массив для карточки
