@@ -111,15 +111,14 @@ function addCard(itemCardTemplate) {
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
 function handleProfileFormSubmit(evt, rezultArrayProfiles) {
-    console.log('handleProfileFormSubmit: rezultArrayProfiles  = ', rezultArrayProfiles);
+    console.log('ProfileFormSubmit: rezultArrayProfiles  = ', rezultArrayProfiles);
     // Получаем значение полей jobInput и nameInput из свойства value
     // Выбераем элементы, куда должны быть вставлены значения полей
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
 }
 function hanldeAddPlaceFormSubmit(evt, rezultArrayPlaces) {
-    console.log('hanldeAddPlaceFormSubmit: rezultArrayPlaces  = ', rezultArrayPlaces);
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+    console.log('AddPlaceFormSubmit: rezultArrayPlaces  = ', rezultArrayPlaces);
     // Получаем значение полей jobInput и nameInput из свойства value
     //собираем их в массив для карточки
     const currentCardInputs = [

@@ -46,7 +46,6 @@ export class PopupWithForm extends Popup {
     _addEventListeners() {
         this._close.addEventListener('click', (evt) => this.closePopup(evt));
         this._overlay.addEventListener('click', (evt) => this.closePopup(evt));
-        // this._submit.addEventListener('click', (evt) => this.closePopup(evt));
 
         if (this._form.name == 'edit-profile') {
             // Прикрепляем обработчик к форме:
@@ -56,16 +55,12 @@ export class PopupWithForm extends Popup {
             // Прикрепляем обработчик к форме:
             this._form.addEventListener('submit', this._handlerAddPlace);
         }
-
     }
 
     _setEventListeners() {
         //снять слушатель с кнопки Esc 
         document.removeEventListener('keydown', this._clickEsc);
         //снять слушатель с кнопки submit
-        // debugger
-
-
         if (this._form.name == 'edit-profile') {
             this._form.removeEventListener('submit', this._handlerEditProfile);
 
@@ -74,5 +69,4 @@ export class PopupWithForm extends Popup {
         }
 
     }
-
 }
