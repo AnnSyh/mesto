@@ -13,9 +13,6 @@ export class PopupWithForm extends Popup {
 
         this._handleProfileFormSubmit = handleProfileFormSubmit;
         this._hanldeAddPlaceFormSubmit = hanldeAddPlaceFormSubmit;
-
-        // debugger
-        // this.getInputValues();
     }
     _getInputValues() {
         const rezultArrayProfiles = [];
@@ -35,26 +32,48 @@ export class PopupWithForm extends Popup {
         return { rezultArrayProfiles, rezultArrayPlaces };
     }
 
+    _handlerEditProfile = (evt) => {
+        this._handleProfileFormSubmit(evt, this._getInputValues());
+        // debugger
+        this.closePopup(evt);
+    };
+
+    _handlerAddPlace = (evt) => {
+        this._hanldeAddPlaceFormSubmit(evt, this._getInputValues());
+        this.closePopup(evt);
+    };
+
+
     _addEventListeners() {
         this._close.addEventListener('click', (evt) => this.closePopup(evt));
         this._overlay.addEventListener('click', (evt) => this.closePopup(evt));
         // this._submit.addEventListener('click', (evt) => this.closePopup(evt));
 
         if (this._form.name == 'edit-profile') {
-            this._form.addEventListener('submit', (evt) => {
-                this._handleProfileFormSubmit(evt, this._getInputValues());
-                this.closePopup(evt);
-            });
+            this._form.addEventListener('submit', this._handlerEditProfile);
+
         } else if (this._form.name == 'add-place') {
-            this._form.addEventListener('submit', (evt) => {
-                this._hanldeAddPlaceFormSubmit(evt, this._getInputValues());
-                this.closePopup(evt);
-            });
+            this._form.addEventListener('submit', this._handlerAddPlace);
         }
-
-
 
     }
 
+    _setEventListeners() {
+        //снять слушатель с кнопки Esc 
+        document.removeEventListener('keydown', this._clickEsc);
+        //снять слушатель с кнопки submit
+        // debugger
+
+
+        if (this._form.name == 'edit-profile') {
+            console.log('edit-profile  removeEventListener');
+            this._form.removeEventListener('submit', this._handlerEditProfile);
+
+        } else if (this._form.name == 'add-place') {
+            console.log('add-place  removeEventListener');
+            this._form.removeEventListener('submit', this._handlerAddPlace);
+        }
+
+    }
 
 }
