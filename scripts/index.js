@@ -112,16 +112,10 @@ function addCard(itemCardTemplate) {
 // она никуда отправляться не будет
 function handleProfileFormSubmit(evt, rezultArrayProfiles) {
     console.log('handleProfileFormSubmit: rezultArrayProfiles  = ', rezultArrayProfiles);
-    // debugger
-    console.log('hanldeAddPlaceFormSubmit evt = ', evt);
-
-    // evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     // Получаем значение полей jobInput и nameInput из свойства value
     // Выбераем элементы, куда должны быть вставлены значения полей
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
-
-    // formEditPlaceElement.getInputValues();
 }
 function hanldeAddPlaceFormSubmit(evt, rezultArrayPlaces) {
     console.log('hanldeAddPlaceFormSubmit: rezultArrayPlaces  = ', rezultArrayPlaces);
@@ -139,11 +133,6 @@ function hanldeAddPlaceFormSubmit(evt, rezultArrayPlaces) {
     const currentCreateCard = new Section({ data: currentCardInputs, renderer }, cardsListContainer);
     currentCreateCard.renderItems();
 }
-
-// Прикрепляем обработчик к форме:
-// он будет следить за событием “submit” - «отправка»
-// formEditPlaceElement.addEventListener('submit', handleProfileFormSubmit);
-// formAddPlaceElement.addEventListener('submit', hanldeAddPlaceFormSubmit);
 
 //вешаем событие на кнопки(открывющие попапы с формами)
 profileBtnEdit.addEventListener('click', openPopupProfileEdit);

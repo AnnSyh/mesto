@@ -34,7 +34,6 @@ export class PopupWithForm extends Popup {
 
     _handlerEditProfile = (evt) => {
         this._handleProfileFormSubmit(evt, this._getInputValues());
-        // debugger
         this.closePopup(evt);
     };
 
@@ -50,9 +49,11 @@ export class PopupWithForm extends Popup {
         // this._submit.addEventListener('click', (evt) => this.closePopup(evt));
 
         if (this._form.name == 'edit-profile') {
+            // Прикрепляем обработчик к форме:
             this._form.addEventListener('submit', this._handlerEditProfile);
 
         } else if (this._form.name == 'add-place') {
+            // Прикрепляем обработчик к форме:
             this._form.addEventListener('submit', this._handlerAddPlace);
         }
 
@@ -66,11 +67,9 @@ export class PopupWithForm extends Popup {
 
 
         if (this._form.name == 'edit-profile') {
-            console.log('edit-profile  removeEventListener');
             this._form.removeEventListener('submit', this._handlerEditProfile);
 
         } else if (this._form.name == 'add-place') {
-            console.log('add-place  removeEventListener');
             this._form.removeEventListener('submit', this._handlerAddPlace);
         }
 
