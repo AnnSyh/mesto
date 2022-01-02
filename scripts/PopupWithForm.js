@@ -1,5 +1,6 @@
 'use strict'
 import { Popup } from './Popup.js';
+import { FormValidator } from "./FormValidator.js";
 
 export class PopupWithForm extends Popup {
 
@@ -34,18 +35,18 @@ export class PopupWithForm extends Popup {
 
     _handlerEditProfile = (evt) => {
         this._handleProfileFormSubmit(evt, this._getInputValues());
-        this.closePopup(evt);
+        this._closePopup(evt);
     };
 
     _handlerAddPlace = (evt) => {
         this._hanldeAddPlaceFormSubmit(evt, this._getInputValues());
-        this.closePopup(evt);
+        this._closePopup(evt);
     };
 
 
     _addEventListeners() {
-        this._close.addEventListener('click', (evt) => this.closePopup(evt));
-        this._overlay.addEventListener('click', (evt) => this.closePopup(evt));
+        this._close.addEventListener('click', (evt) => this._closePopup(evt));
+        this._overlay.addEventListener('click', (evt) => this._closePopup(evt));
 
         if (this._form.name == 'edit-profile') {
             // Прикрепляем обработчик к форме:
@@ -68,5 +69,14 @@ export class PopupWithForm extends Popup {
             this._form.removeEventListener('submit', this._handlerAddPlace);
         }
 
+    }
+
+    _closePopup() {
+        // console.log(' _closePopup');
+        const flagOpen = this._popupSelector.classList.contains('popup_opened');
+        if (flagOpen) {
+            this._popupSelector.classList.remove('popup_opened');
+            this._setEventListeners();
+        }
     }
 }

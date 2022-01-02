@@ -13,8 +13,9 @@ export class UserInfo {
 		return { userName, userAbout }
 	}
 
-	setUserInfo() {
-
+	setUserInfo(dataUser) {
+		document.querySelector('.profile__name').prepend(dataUser.name);
+		document.querySelector('.profile__job').prepend(dataUser.job);
 	}
 
 

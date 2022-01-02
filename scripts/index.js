@@ -34,16 +34,6 @@ function renderer(item) {
 //  /создаем список
 
 
-//создаем карточку пользователя ЖакИв Кусто
-// const UserInfo = new UserInfo(name, info);
-
-// function renderer(item) {
-//     // Создаем карточку и возвращаем ее шаблон
-//     const newCardInitial = UserInfo(item.name, item.link).render();
-//     return newCardInitial;
-// }
-
-
 //Валидация форм
 // Находим формы в DOM
 const formEditPlaceElement = document.querySelector('.edit-profile__popup .popup__form');
@@ -90,8 +80,7 @@ function handleCardClick(text, link) {
 //открываем попап для редактирования  профиля
 function openPopupProfileEdit() {
     editFormValidator.resetValidation(); // <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
-    //заполнить поля
-    nameInput.value = profileName.innerText; // <== передаем значение из формы ==
+    nameInput.value = profileName.innerText; // <== передаем значение полей из формы ==
     jobInput.value = profileJob.innerText;
     const editProfilePopup = new PopupWithForm(popupEditProfile, handleProfileFormSubmit, hanldeAddPlaceFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
     editProfilePopup.openPopup(); // <==  открываем попап ==
@@ -127,7 +116,6 @@ function hanldeAddPlaceFormSubmit(evt, rezultArrayPlaces) {
             link: placeImgInput.value,
         },
     ];
-
     //создаем список
     const currentCreateCard = new Section({ data: currentCardInputs, renderer }, cardsListContainer);
     currentCreateCard.renderItems();
