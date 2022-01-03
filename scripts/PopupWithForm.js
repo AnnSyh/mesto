@@ -6,31 +6,20 @@ export class PopupWithForm extends Popup {
 
     constructor(popupSelector, handleProfileFormSubmit, hanldeAddPlaceFormSubmit) {
         super(popupSelector);
-        this._popupSelector = popupSelector;
-        this._close = this._popupSelector.querySelector('.popup__close');
-        this._overlay = this._popupSelector.querySelector('.popup__overlay');
-        this._submit = this._popupSelector.querySelector('.popup__btn');
         this._form = this._popupSelector.querySelector('.form');
+        this._formValues = this._form.elements;
 
         this._handleProfileFormSubmit = handleProfileFormSubmit;
         this._hanldeAddPlaceFormSubmit = hanldeAddPlaceFormSubmit;
     }
+
     _getInputValues() {
-        const rezultArrayProfiles = [];
-        const rezultArrayPlaces = [];
-        var name, job, placeTitle, plaсeImg;
+        this._formValues = {};
         Array.from(this._form.elements).forEach(element => {
-
-            if (element.id == "user-title") { name = element.value; }
-            if (element.id == "user-subtitle") { job = element.value; }
-            if (element.id == "place-title-input") { placeTitle = element.value; }
-            if (element.id == "plaсe-img-input") { plaсeImg = element.value; }
+            this._formValues[element.name] = element.value;
         });
-        rezultArrayProfiles.push({ name, job });
-        rezultArrayPlaces.push({ placeTitle, plaсeImg });
-        // console.log('rezultArrayPlaces = ', rezultArrayPlaces);
-
-        return { rezultArrayProfiles, rezultArrayPlaces };
+        console.log('this._formValues = ', this._formValues);
+        return this._formValues;
     }
 
     _handlerEditProfile = (evt) => {
@@ -60,7 +49,7 @@ export class PopupWithForm extends Popup {
 
     _setEventListeners() {
         //снять слушатель с кнопки Esc 
-        document.removeEventListener('keydown', this._clickEsc);
+        super._setEventListeners();
         //снять слушатель с кнопки submit
         if (this._form.name == 'edit-profile') {
             this._form.removeEventListener('submit', this._handlerEditProfile);
@@ -68,15 +57,12 @@ export class PopupWithForm extends Popup {
         } else if (this._form.name == 'add-place') {
             this._form.removeEventListener('submit', this._handlerAddPlace);
         }
+        //вызов 
 
     }
 
     _closePopup() {
-        // console.log(' _closePopup');
-        const flagOpen = this._popupSelector.classList.contains('popup_opened');
-        if (flagOpen) {
-            this._popupSelector.classList.remove('popup_opened');
-            this._setEventListeners();
-        }
+        super.closePopup();
+        this._form.reset();
     }
 }

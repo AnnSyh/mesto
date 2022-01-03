@@ -67,8 +67,8 @@ const profileBtnEdit = document.querySelector('.profile__btn_user-edit');
 // находим кнопки кот вызывают всплытие/закрытие окна-добавления карточки
 const profileBtnAdd = document.querySelector('.profile__btn_user-add');
 // Находим сам попап
-const popupEditProfile = document.querySelector('.edit-profile__popup');
-const popupAddPlaceElement = document.querySelector('.add-plaсe__popup');
+const popupEditProfileSelector = document.querySelector('.edit-profile__popup');
+const popupAddPlaceSelector = document.querySelector('.add-plaсe__popup');
 
 
 //открытие попапа с картинкой для карточки (мягкое связывание)
@@ -77,19 +77,29 @@ function handleCardClick(text, link) {
     showImgPopup.openPopup(); // <==  открываем попап ==
 }
 
+const editProfilePopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit, hanldeAddPlaceFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
+//создаю Экземпляр класса UserInfo
+const userInfo = new UserInfo(profileName.innerText, profileJob.innerText);
+
 //открываем попап для редактирования  профиля
 function openPopupProfileEdit() {
-    editFormValidator.resetValidation(); // <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
-    nameInput.value = profileName.innerText; // <== передаем значение полей из формы ==
-    jobInput.value = profileJob.innerText;
-    const editProfilePopup = new PopupWithForm(popupEditProfile, handleProfileFormSubmit, hanldeAddPlaceFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
+    editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
+
+    // nameInput.value = profileName.innerText; // <== передаем значение полей из формы ==
+    // jobInput.value = profileJob.innerText;
+
+    const currentUserInfo = new UserInfo(profileName.innerText, profileJob.innerText);
+
+    nameInput.value = currentUserInfo.getUserInfo().name;
+    jobInput.value = currentUserInfo.getUserInfo().about;
+
     editProfilePopup.openPopup(); // <==  открываем попап ==
 }
 
 //открываем попап для добавления нового места
 function openPopupProfileAdd() {
     cardFormValidator.resetValidation();// <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
-    const addPlaсePopup = new PopupWithForm(popupAddPlaceElement, handleProfileFormSubmit, hanldeAddPlaceFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
+    const addPlaсePopup = new PopupWithForm(popupAddPlaceSelector, handleProfileFormSubmit, hanldeAddPlaceFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
     addPlaсePopup.openPopup(); // <==  открываем попап ==
 }
 //вставляет карточку на стр
@@ -99,15 +109,18 @@ function addCard(itemCardTemplate) {
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
-function handleProfileFormSubmit(evt, rezultArrayProfiles) {
-    console.log('ProfileFormSubmit: rezultArrayProfiles  = ', rezultArrayProfiles);
+function handleProfileFormSubmit(evt, { title, subtitle }) {
+    debugger
+    console.log('ProfileFormSubmit: rezultArray  = ', title, subtitle);
     // Получаем значение полей jobInput и nameInput из свойства value
     // Выбераем элементы, куда должны быть вставлены значения полей
-    profileName.textContent = nameInput.value;
-    profileJob.textContent = jobInput.value;
+    profileName.textContent = title;
+    profileJob.textContent = subtitle;
+
 }
-function hanldeAddPlaceFormSubmit(evt, rezultArrayPlaces) {
-    console.log('AddPlaceFormSubmit: rezultArrayPlaces  = ', rezultArrayPlaces);
+function hanldeAddPlaceFormSubmit(evt, rezultArray) {
+    debugger
+    console.log('AddPlaceFormSubmit: rezultArray  = ', rezultArray);
     // Получаем значение полей jobInput и nameInput из свойства value
     //собираем их в массив для карточки
     const currentCardInputs = [
@@ -124,3 +137,15 @@ function hanldeAddPlaceFormSubmit(evt, rezultArrayPlaces) {
 //вешаем событие на кнопки(открывющие попапы с формами)
 profileBtnEdit.addEventListener('click', openPopupProfileEdit);
 profileBtnAdd.addEventListener('click', openPopupProfileAdd);
+
+
+
+// Находим переменные для функции openPopup()
+// const profileName = document.querySelector('.profile__name');
+// const profileJob = document.querySelector('.profile__job');
+
+
+// debugger
+// //создаю Экземпляр класса UserInfo
+// const userInfo = new UserInfo(profileName.innerText, profileJob.innerText);
+
