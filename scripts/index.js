@@ -84,10 +84,8 @@ const userInfo = new UserInfo(profileName.innerText, profileJob.innerText);
 //открываем попап для редактирования  профиля
 function openPopupProfileEdit() {
     editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
-
-    // nameInput.value = profileName.innerText; // <== передаем значение полей из формы ==
-    // jobInput.value = profileJob.innerText;
-
+    debugger
+    //  передаем значение полей из формы 
     const currentUserInfo = new UserInfo(profileName.innerText, profileJob.innerText);
 
     nameInput.value = currentUserInfo.getUserInfo().name;
@@ -110,7 +108,7 @@ function addCard(itemCardTemplate) {
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
 function handleProfileFormSubmit(evt, { title, subtitle }) {
-    debugger
+    // debugger
     console.log('ProfileFormSubmit: rezultArray  = ', title, subtitle);
     // Получаем значение полей jobInput и nameInput из свойства value
     // Выбераем элементы, куда должны быть вставлены значения полей

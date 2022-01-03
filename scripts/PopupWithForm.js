@@ -58,6 +58,7 @@ export class PopupWithForm extends Popup {
             this._form.removeEventListener('submit', this._handlerAddPlace);
         }
         //вызов 
+        
 
     }
 
