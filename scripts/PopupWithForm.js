@@ -57,9 +57,6 @@ export class PopupWithForm extends Popup {
         } else if (this._form.name == 'add-place') {
             this._form.removeEventListener('submit', this._handlerAddPlace);
         }
-        //вызов 
-        
-
     }
 
     _closePopup() {
