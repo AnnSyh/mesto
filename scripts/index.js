@@ -85,19 +85,21 @@ console.log('currentUser  = ', currentUser);
 currentUser.setUserInfo({ name: 'Жак-Ив Кусто', about: 'Исследователь океана' });
 currentUser.getUserInfo();
 
-// currentUser.updateUserInfo();
 
 //открываем попап для редактирования  профиля
 function openPopupProfileEdit() {
     editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
     debugger
     //  передаем значение полей из формы 
-    const currentUserInfo = new UserInfo('profile__name', 'profile__job');
+    currentUser.getUserInfo();// получили данные текущего юзера кот выведены на стр
 
-    nameInput.value = 'test';
-    jobInput.value = 'test';
+    nameInput.value = currentUser.getUserInfo().name;// передали эти данные в поля формы
+    jobInput.value = currentUser.getUserInfo().about;
 
     editProfilePopup.openPopup(); // <==  открываем попап ==
+
+    //надо получить новые данные из полей формы и установить их в поля для текущего юзера
+    currentUser.setUserInfo(nameInput.value, jobInput.value);
 }
 
 //открываем попап для добавления нового места
