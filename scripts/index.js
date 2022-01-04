@@ -79,31 +79,23 @@ function handleCardClick(text, link) {
 
 const editProfilePopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit, hanldeAddPlaceFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
 //создаю Экземпляр класса UserInfo
-const currentUser = new UserInfo(profileName.innerText, profileJob.innerText);
-currentUser.setUserInfo({ name: 'Жак-Ив Кусто', about: 'Исследователь океана' });
+const currentUser = new UserInfo('profile__name', 'profile__job');
+console.log('currentUser  = ', currentUser);
 
+currentUser.setUserInfo({ name: 'Жак-Ив Кусто', about: 'Исследователь океана' });
 currentUser.getUserInfo();
 
 // currentUser.updateUserInfo();
-console.log('currentUser  = ', currentUser);
 
 //открываем попап для редактирования  профиля
 function openPopupProfileEdit() {
     editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
     debugger
     //  передаем значение полей из формы 
-    // console.log('before: currentUser  = ', currentUser);
-    // currentUser.updateUserInfo('nameInput.value', 'jobInput.value');
+    const currentUserInfo = new UserInfo('profile__name', 'profile__job');
 
-    // console.log('nameInput.value = ', nameInput.value);
-    // console.log('jobInput.value = ', jobInput.value);
-
-    // console.log('after: currentUser  = ', currentUser);
-
-    const currentUserInfo = new UserInfo(profileName.innerText, profileJob.innerText);
-
-    nameInput.value = currentUserInfo.getUserInfo().name;
-    jobInput.value = currentUserInfo.getUserInfo().about;
+    nameInput.value = 'test';
+    jobInput.value = 'test';
 
     editProfilePopup.openPopup(); // <==  открываем попап ==
 }
