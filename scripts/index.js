@@ -114,7 +114,6 @@ function handleProfileFormSubmit(evt, { title, subtitle }) {
     profileJob.textContent = subtitle;
     //изменяем данные текущего юзера в соот с данными забитыми в форму
     currentUser.setUserInfo({ name: title, about: subtitle });
-
 }
 function hanldeAddPlaceFormSubmit(evt, rezultArray) {
     debugger
