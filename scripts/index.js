@@ -85,15 +85,10 @@ currentUser.setUserInfo({ name: 'Жак-Ив Кусто', about: 'Исследо
 //открываем попап для редактирования  профиля
 function openPopupProfileEdit() {
     editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
-    debugger
     //  передаем значение полей из формы 
     currentUser.getUserInfo();// получили данные текущего юзера кот выведены на стр
-
-    console.log('currentUser = ', currentUser);
-
     nameInput.value = currentUser.getUserInfo().name;// передали эти данные в поля формы
     jobInput.value = currentUser.getUserInfo().about;
-
     editProfilePopup.openPopup(); // <==  открываем попап ==
 }
 
@@ -112,12 +107,12 @@ function addCard(itemCardTemplate) {
 // она никуда отправляться не будет
 function handleProfileFormSubmit(evt, { title, subtitle }) {
     // debugger
-    console.log('ProfileFormSubmit: rezultArray  = ', title, subtitle);
+    // console.log('ProfileFormSubmit: rezultArray  = ', title, subtitle);
     // Получаем значение полей jobInput и nameInput из свойства value
     // Выбераем элементы, куда должны быть вставлены значения полей
     profileName.textContent = title;
     profileJob.textContent = subtitle;
-
+    //изменяем данные текущего юзера в соот с данными забитыми в форму
     currentUser.setUserInfo({ name: title, about: subtitle });
 
 }
