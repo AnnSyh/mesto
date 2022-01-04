@@ -12,8 +12,7 @@ export class PopupWithImage extends Popup {
         this._text = text;
         this._link = link;
 
-        console.log('PopupWithImage');
-
+        // console.log('PopupWithImage');
     }
 
     openPopup() {
@@ -25,6 +24,4 @@ export class PopupWithImage extends Popup {
         this._img.alt = this._text;
         this._img.src = this._link;
     }
-
-
 }

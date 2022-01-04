@@ -11,7 +11,7 @@ export class UserInfo {
 	}
 
 	getUserInfo() {
-		console.log('getUserInfo() = ', this._name, this._about);
+		// console.log('getUserInfo() = ', this._name, this._about);
 		return {
 			name: this._name,
 			about: this._about

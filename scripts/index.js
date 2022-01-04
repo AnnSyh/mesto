@@ -116,8 +116,8 @@ function handleProfileFormSubmit(evt, { title, subtitle }) {
     currentUser.setUserInfo({ name: title, about: subtitle });
 }
 function hanldeAddPlaceFormSubmit(evt, rezultArray) {
-    debugger
-    console.log('AddPlaceFormSubmit: rezultArray  = ', rezultArray);
+    // debugger
+    // console.log('AddPlaceFormSubmit: rezultArray  = ', rezultArray);
     // Получаем значение полей jobInput и nameInput из свойства value
     //собираем их в массив для карточки
     const currentCardInputs = [
@@ -134,15 +134,3 @@ function hanldeAddPlaceFormSubmit(evt, rezultArray) {
 //вешаем событие на кнопки(открывющие попапы с формами)
 profileBtnEdit.addEventListener('click', openPopupProfileEdit);
 profileBtnAdd.addEventListener('click', openPopupProfileAdd);
-
-
-
-// Находим переменные для функции openPopup()
-// const profileName = document.querySelector('.profile__name');
-// const profileJob = document.querySelector('.profile__job');
-
-
-// debugger
-// //создаю Экземпляр класса UserInfo
-// const userInfo = new UserInfo(profileName.innerText, profileJob.innerText);
-

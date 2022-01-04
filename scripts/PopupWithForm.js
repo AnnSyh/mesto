@@ -17,7 +17,7 @@ export class PopupWithForm extends Popup {
         Array.from(this._form.elements).forEach(element => {
             this._formValues[element.name] = element.value;
         });
-        console.log('this._formValues = ', this._formValues);
+        // console.log('this._formValues = ', this._formValues);
         return this._formValues;
     }
 
