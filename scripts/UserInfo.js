@@ -11,7 +11,7 @@ export class UserInfo {
 		this._containerProfileJob = document.querySelector('.' + this._userAboutSelector);
 
 		this._inputUserTitleElement = document.querySelector('.popup__input_user-title');
-		this._containerProfileJob = document.querySelector('.popup__input_user-subtitle');
+		this._containerProfileJobElement = document.querySelector('.popup__input_user-subtitle');
 
 		this._name = null;
 		this._about = null;
@@ -29,6 +29,9 @@ export class UserInfo {
 		debugger
 		this._name = name;
 		this._about = about;
+
+		console.log('this._containerProfileName = ', this._containerProfileName);
+		console.log('this._containerProfileJob = ', this._containerProfileJob);
 
 		this._containerProfileName.textContent = name;
 		this._containerProfileJob.textContent = about;
