@@ -78,13 +78,9 @@ function handleCardClick(text, link) {
 }
 
 const editProfilePopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit, hanldeAddPlaceFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
-//создаю Экземпляр класса UserInfo
+//создаю Экземпляр класса UserInfo и передаю туда нач данные
 const currentUser = new UserInfo('profile__name', 'profile__job');
-console.log('currentUser  = ', currentUser);
-
 currentUser.setUserInfo({ name: 'Жак-Ив Кусто', about: 'Исследователь океана' });
-currentUser.getUserInfo();
-
 
 //открываем попап для редактирования  профиля
 function openPopupProfileEdit() {
@@ -93,13 +89,12 @@ function openPopupProfileEdit() {
     //  передаем значение полей из формы 
     currentUser.getUserInfo();// получили данные текущего юзера кот выведены на стр
 
+    console.log('currentUser = ', currentUser);
+
     nameInput.value = currentUser.getUserInfo().name;// передали эти данные в поля формы
     jobInput.value = currentUser.getUserInfo().about;
 
     editProfilePopup.openPopup(); // <==  открываем попап ==
-
-    //надо получить новые данные из полей формы и установить их в поля для текущего юзера
-    currentUser.setUserInfo(nameInput.value, jobInput.value);
 }
 
 //открываем попап для добавления нового места
@@ -122,6 +117,8 @@ function handleProfileFormSubmit(evt, { title, subtitle }) {
     // Выбераем элементы, куда должны быть вставлены значения полей
     profileName.textContent = title;
     profileJob.textContent = subtitle;
+
+    currentUser.setUserInfo({ name: title, about: subtitle });
 
 }
 function hanldeAddPlaceFormSubmit(evt, rezultArray) {
