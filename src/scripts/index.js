@@ -10,6 +10,8 @@ import { PopupWithImage } from './PopupWithImage.js';
 import { PopupWithForm } from './PopupWithForm.js';
 import { UserInfo } from './UserInfo.js';
 
+import '../pages/index.css';
+
 
 const curentPopup = document.querySelector('.open-img__popup');
 const curentPopupImg = curentPopup.querySelector('.popup__img');
