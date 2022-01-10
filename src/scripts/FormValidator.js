@@ -6,6 +6,8 @@ export class FormValidator {
 		this._configData = configData;
 		this._formElement = formElement;
 
+		console.log('formElement = ', this._formElement);
+
 		const { formSelector, inputSelector, submitButtonSelector,
 			inactiveButtonClass, inputErrorClass, errorClass
 		} = configData;
@@ -48,6 +50,8 @@ export class FormValidator {
 			evt.preventDefault();
 		});
 
+
+
 		// чтобы проверить состояние кнопки в самом начале
 		this.toggleButtonState();
 
@@ -66,6 +70,7 @@ export class FormValidator {
 
 	_hasInvalidInput = () => {
 		return Array.from(this._inputList).some((inputElement) => {
+			console.log('!inputElement.validity.valid = ', !inputElement.validity.valid);
 			return !inputElement.validity.valid;
 		});
 	};
@@ -86,8 +91,21 @@ export class FormValidator {
 		});
 	};
 
+	// toggleButtonState() {
+	// 	const isFormValid = this._formElement.checkValidity(); // флаг валидности формы
+	// 	console.log('isFormValid = ', isFormValid);
+	// 	this._submitButton.classList.toggle(this._inactiveButtonClass, !isFormValid); // если невалидна - отключаем кнопку. И наоборот
+	// 	this._submitButton.disabled = !isFormValid; // если невалидна - добавляем кнопке класс. И наоборот
+	// }
+
 	toggleButtonState = () => {
+		debugger
+
+		console.log('this = ', this._formElement);
+
+		// const isFormValid = this._formElement.checkValidity();
 		const isFormValid = this._hasInvalidInput();// флаг валидности формы
+		console.log('isFormValid = ', isFormValid);
 		this._submitButton.classList.toggle(this._inactiveButtonClass, isFormValid); //переключение класса активности кнопки сабмита в зависимости от флага валидности формы
 		this._submitButton.disabled = isFormValid;// отключение самой активности сабмита
 	};

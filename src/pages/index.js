@@ -38,13 +38,22 @@ function renderer(item) {
 
 //Валидация форм
 // Находим формы в DOM
-const formEditPlaceElement = document.querySelector('.edit-profile__popup .popup__form');
-const formAddPlaceElement = document.querySelector('.add-plaсe__popup .popup__form');
+const formEditProfile = document.querySelector('.edit-profile__popup .popup__form');
+const formAddPlace = document.querySelector('.add-plaсe__popup .popup__form');
 
-const editFormValidator = new FormValidator(configData, formEditPlaceElement);
-const cardFormValidator = new FormValidator(configData, formAddPlaceElement);
+// console.log('index.js: formEditProfile = ', formEditProfile);
+// console.log('index.js: formAddPlace = ', formAddPlace);
 
+const editFormValidator = new FormValidator(configData, formEditProfile);
+const cardFormValidator = new FormValidator(configData, formAddPlace);
+
+
+
+// editFormValidator.toggleButtonState();// чтобы проверить состояние кнопки в самом начале
 editFormValidator.enableValidation();
+
+
+// cardFormValidator.toggleButtonState();// чтобы проверить состояние кнопки в самом начале
 cardFormValidator.enableValidation();
 
 // -----------------------------------------------------------

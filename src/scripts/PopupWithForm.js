@@ -9,19 +9,14 @@ export class PopupWithForm extends Popup {
         this._formValues = this._form.elements;
 
         this._handleFormSubmit = handleFormSubmit;
-
-        // this._handleProfileFormSubmit = handleProfileFormSubmit;
-        // this._hanldeAddPlaceFormSubmit = hanldeAddPlaceFormSubmit;
     }
 
     _getInputValues() {
-        console.log(' _getInputValues()');
         this._formValues = {};
         Array.from(this._form.elements).forEach(element => {
             this._formValues[element.name] = element.value;
         });
-        console.log('this._formValues = ', this._formValues);
-        debugger
+        // debugger
         return this._formValues;
     }
 
@@ -30,30 +25,9 @@ export class PopupWithForm extends Popup {
         this._closePopup()
     }
 
-    // _handlerEditProfile = (evt) => {
-    //     this._handleProfileFormSubmit(evt, this._getInputValues());
-    //     this._closePopup(evt);
-    // };
-
-    // _handlerAddPlace = (evt) => {
-    //     this._hanldeAddPlaceFormSubmit(evt, this._getInputValues());
-    //     this._closePopup(evt);
-    // };
-
-
     setEventListeners() {
         super.setEventListeners();
-
         this._form.addEventListener('submit', this._handler);
-
-        // if (this._form.name == 'edit-profile') {
-        //     // Прикрепляем обработчик к форме:
-        //     this._form.addEventListener('submit', this._handlerEditProfile);
-
-        // } else if (this._form.name == 'add-place') {
-        //     // Прикрепляем обработчик к форме:
-        //     this._form.addEventListener('submit', this._handlerAddPlace);
-        // }
     }
 
     _closePopup() {

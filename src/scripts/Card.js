@@ -17,7 +17,7 @@ export class Card {
 
 	_removeCard = () => {
 		this._view.remove();
-		// this._element = null;
+		this._view = null;
 	}
 
 	setEventListeners() {
