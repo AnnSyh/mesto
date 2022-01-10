@@ -32,9 +32,8 @@ export class PopupWithForm extends Popup {
     };
 
 
-    _addEventListeners() {
-        this._close.addEventListener('click', (evt) => this._closePopup(evt));
-        this._overlay.addEventListener('click', (evt) => this._closePopup(evt));
+    setEventListeners() {
+        super.setEventListeners();
 
         if (this._form.name == 'edit-profile') {
             // Прикрепляем обработчик к форме:
@@ -43,18 +42,6 @@ export class PopupWithForm extends Popup {
         } else if (this._form.name == 'add-place') {
             // Прикрепляем обработчик к форме:
             this._form.addEventListener('submit', this._handlerAddPlace);
-        }
-    }
-
-    _setEventListeners() {
-        //снять слушатель с кнопки Esc 
-        super._setEventListeners();
-        //снять слушатель с кнопки submit
-        if (this._form.name == 'edit-profile') {
-            this._form.removeEventListener('submit', this._handlerEditProfile);
-
-        } else if (this._form.name == 'add-place') {
-            this._form.removeEventListener('submit', this._handlerAddPlace);
         }
     }
 

@@ -17,9 +17,10 @@ export class Card {
 
 	_removeCard = () => {
 		this._view.remove();
+		// this._element = null;
 	}
 
-	_addEventListeners() {
+	setEventListeners() {
 		// debugger
 		this._image.addEventListener('click', () => this._handleCardClick(this._text, this._link));
 		this._trash.addEventListener('click', (evt) => this._removeCard(evt));
@@ -33,13 +34,12 @@ export class Card {
 		this._trash = this._view.querySelector('.cards__trash');
 		this._heart = this._view.querySelector('.cards__heart');
 		this._title = this._view.querySelector('.cards__title');
-		this._imageAlt = this._view.querySelector('.cards__alt');
 
 		this._title.innerText = this._text;
 		this._image.alt = this._text;
 		this._image.src = this._link;
 
-		this._addEventListeners();
+		this.setEventListeners();
 
 		// container.append(this._view);
 		return this._view;
