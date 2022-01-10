@@ -11,17 +11,13 @@ export class UserInfo {
 	}
 
 	getUserInfo() {
-		// console.log('getUserInfo() = ', this._name, this._about);
 		return {
-			name: this._name,
-			about: this._about
+			name: this._containerProfileName.textContent,
+			about: this._containerProfileJob.textContent
 		};
 	}
 
 	setUserInfo({ name, about }) {
-		this._name = name;
-		this._about = about;
-
 		this._containerProfileName.textContent = name;
 		this._containerProfileJob.textContent = about;
 	}

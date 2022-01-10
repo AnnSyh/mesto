@@ -30,11 +30,8 @@ cardList.renderItems();
 function renderer(item) {
     // Создаем карточку и возвращаем ее шаблон
     const newCardInitial = createCard(item.name, item.link).render();
-
     this.addItem(newCardInitial);
-
     return newCardInitial;
-
 }
 //  /создаем список
 
@@ -77,8 +74,10 @@ const popupAddPlaceSelector = document.querySelector('.add-plaсe__popup');
 
 
 //открытие попапа с картинкой для карточки (мягкое связывание)
+const showImgPopup = new PopupWithImage(curentPopup);  // <==  создаем эл-т класса PopupWithImage ==
 function handleCardClick(text, link) {
-    const showImgPopup = new PopupWithImage(curentPopup, text, link);  // <==  создаем эл-т класса PopupWithImage ==
+    showImgPopup._link = link;// передали эти данные в поля формы
+    showImgPopup._text = text;
     showImgPopup.openPopup(); // <==  открываем попап ==
 }
 
@@ -91,49 +90,40 @@ currentUser.setUserInfo({ name: 'Жак-Ив Кусто', about: 'Исследо
 function openPopupProfileEdit() {
     editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
     //  передаем значение полей из формы 
-    currentUser.getUserInfo();// получили данные текущего юзера кот выведены на стр
-    nameInput.value = currentUser.getUserInfo().name;// передали эти данные в поля формы
-    jobInput.value = currentUser.getUserInfo().about;
+    const currentUserInfo = currentUser.getUserInfo();// получили данные текущего юзера кот выведены на стр
+    nameInput.value = currentUserInfo.name;// передали эти данные в поля формы
+    jobInput.value = currentUserInfo.about;
     editProfilePopup.openPopup(); // <==  открываем попап ==
 }
 
 //открываем попап для добавления нового места
+const addPlaсePopup = new PopupWithForm(popupAddPlaceSelector, hanldeAddPlaceFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
 function openPopupProfileAdd() {
     cardFormValidator.resetValidation();// <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
-    const addPlaсePopup = new PopupWithForm(popupAddPlaceSelector, hanldeAddPlaceFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
     addPlaсePopup.openPopup(); // <==  открываем попап ==
-}
-//вставляет карточку на стр
-function addCard(itemCardTemplate) {
-    cardsListElement.prepend(itemCardTemplate);
 }
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
 function handleProfileFormSubmit(evt, { title, subtitle }) {
-    console.log('function handleProfileFormSubmit');
-    console.log('ProfileFormSubmit: rezultArray  = ', title, subtitle);
-    // Получаем значение полей jobInput и nameInput из свойства value
-    // Выбераем элементы, куда должны быть вставлены значения полей
-    profileName.textContent = title;
-    profileJob.textContent = subtitle;
     //изменяем данные текущего юзера в соот с данными забитыми в форму
     currentUser.setUserInfo({ name: title, about: subtitle });
 }
-function hanldeAddPlaceFormSubmit(evt, rezultArray) {
-    // debugger
-    // console.log('AddPlaceFormSubmit: rezultArray  = ', rezultArray);
+function hanldeAddPlaceFormSubmit() {
+    //создаем список
+    cardList.addItem(createCard(placeNameInput.value, placeImgInput.value).render());
+
     // Получаем значение полей jobInput и nameInput из свойства value
     //собираем их в массив для карточки
-    const currentCardInputs = [
-        {
-            name: placeNameInput.value,
-            link: placeImgInput.value,
-        },
-    ];
+    // const currentCardInputs = [
+    //     {
+    //         name: placeNameInput.value,
+    //         link: placeImgInput.value,
+    //     },
+    // ];
     //создаем список
-    const currentCreateCard = new Section({ data: currentCardInputs, renderer }, cardsListContainer);
-    currentCreateCard.renderItems();
+    // const currentCreateCard = new Section({ data: currentCardInputs, renderer }, cardsListContainer);
+    // currentCreateCard.renderItems();
 }
 
 //вешаем событие на кнопки(открывющие попапы с формами)
