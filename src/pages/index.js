@@ -1,7 +1,7 @@
 'use strict'
 
-import { initialCards } from "../scripts/initialCards.js";
-import { configData } from "../scripts/configData.js";
+import { initialCards } from "../utils/initialCards.js";
+import { configData } from "../utils/configData.js";
 import { Card } from "../scripts/Card.js";
 import { FormValidator } from "../scripts/FormValidator.js";
 import { Section } from '../scripts/Section.js';
