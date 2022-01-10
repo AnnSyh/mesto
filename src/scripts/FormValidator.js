@@ -6,8 +6,6 @@ export class FormValidator {
 		this._configData = configData;
 		this._formElement = formElement;
 
-		console.log('formElement = ', this._formElement);
-
 		const { formSelector, inputSelector, submitButtonSelector,
 			inactiveButtonClass, inputErrorClass, errorClass
 		} = configData;
@@ -50,10 +48,8 @@ export class FormValidator {
 			evt.preventDefault();
 		});
 
-
-
 		// чтобы проверить состояние кнопки в самом начале
-		this.toggleButtonState();
+		// this.toggleButtonState();
 
 		this._inputList.forEach((inputElement) => {
 			inputElement.addEventListener('input', () => {
@@ -91,23 +87,14 @@ export class FormValidator {
 		});
 	};
 
-	// toggleButtonState() {
-	// 	const isFormValid = this._formElement.checkValidity(); // флаг валидности формы
-	// 	console.log('isFormValid = ', isFormValid);
-	// 	this._submitButton.classList.toggle(this._inactiveButtonClass, !isFormValid); // если невалидна - отключаем кнопку. И наоборот
-	// 	this._submitButton.disabled = !isFormValid; // если невалидна - добавляем кнопке класс. И наоборот
-	// }
-
 	toggleButtonState = () => {
-		debugger
+		// debugger
+		// console.log('this = ', this._formElement);
 
-		console.log('this = ', this._formElement);
-
-		// const isFormValid = this._formElement.checkValidity();
-		const isFormValid = this._hasInvalidInput();// флаг валидности формы
-		console.log('isFormValid = ', isFormValid);
-		this._submitButton.classList.toggle(this._inactiveButtonClass, isFormValid); //переключение класса активности кнопки сабмита в зависимости от флага валидности формы
-		this._submitButton.disabled = isFormValid;// отключение самой активности сабмита
+		const isFormValid = this._formElement.checkValidity(); // флаг валидности формы
+		// const isFormValid = this._hasInvalidInput();// флаг валидности формы
+		this._submitButton.classList.toggle(this._inactiveButtonClass, !isFormValid); //переключение класса активности кнопки сабмита в зависимости от флага валидности формы
+		this._submitButton.disabled = !isFormValid;// отключение самой активности сабмита
 	};
 
 

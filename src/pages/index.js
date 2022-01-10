@@ -41,19 +41,10 @@ function renderer(item) {
 const formEditProfile = document.querySelector('.edit-profile__popup .popup__form');
 const formAddPlace = document.querySelector('.add-plaсe__popup .popup__form');
 
-// console.log('index.js: formEditProfile = ', formEditProfile);
-// console.log('index.js: formAddPlace = ', formAddPlace);
-
 const editFormValidator = new FormValidator(configData, formEditProfile);
 const cardFormValidator = new FormValidator(configData, formAddPlace);
 
-
-
-// editFormValidator.toggleButtonState();// чтобы проверить состояние кнопки в самом начале
 editFormValidator.enableValidation();
-
-
-// cardFormValidator.toggleButtonState();// чтобы проверить состояние кнопки в самом начале
 cardFormValidator.enableValidation();
 
 // -----------------------------------------------------------
@@ -102,7 +93,9 @@ function openPopupProfileEdit() {
     const currentUserInfo = currentUser.getUserInfo();// получили данные текущего юзера кот выведены на стр
     nameInput.value = currentUserInfo.name;// передали эти данные в поля формы
     jobInput.value = currentUserInfo.about;
+
     editProfilePopup.openPopup(); // <==  открываем попап ==
+    editFormValidator.toggleButtonState(); // проверить состояние кнопки при открытии формы
 }
 
 //открываем попап для добавления нового места
