@@ -2,7 +2,7 @@
   "name": "mesto",
   "version": "1.0.0",
   "description": "- Интро\r - Figma\r - Картинки\r - Модульный JS\r - Webpack",
-  "main": "index.js",
+  "main": "./index.js",
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack serve"

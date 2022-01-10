@@ -1,23 +1,22 @@
 'use strict'
 
-import { initialCards } from "./initialCards.js";
-import { configData } from "./configData.js";
-import { Card } from "./Card.js";
-import { FormValidator } from "./FormValidator.js";
-import { Section } from './Section.js';
-import { Popup } from './Popup.js';
-import { PopupWithImage } from './PopupWithImage.js';
-import { PopupWithForm } from './PopupWithForm.js';
-import { UserInfo } from './UserInfo.js';
+import { initialCards } from "../scripts/initialCards.js";
+import { configData } from "../scripts/configData.js";
+import { Card } from "../scripts/Card.js";
+import { FormValidator } from "../scripts/FormValidator.js";
+import { Section } from '../scripts/Section.js';
+import { PopupWithImage } from '../scripts/PopupWithImage.js';
+import { PopupWithForm } from '../scripts/PopupWithForm.js';
+import { UserInfo } from '../scripts/UserInfo.js';
 
 import '../pages/index.css';
 
 
 const curentPopup = document.querySelector('.open-img__popup');
-const curentPopupImg = curentPopup.querySelector('.popup__img');
-const curentPopupCaption = curentPopup.querySelector('.popup__caption');
+// const curentPopupImg = curentPopup.querySelector('.popup__img');
+// const curentPopupCaption = curentPopup.querySelector('.popup__caption');
 
-const cardsListTemplate = document.querySelector('.list-template').content;
+// const cardsListTemplate = document.querySelector('.list-template').content;
 const cardsListContainer = document.querySelector('.list-template-place');
 const cardTemplate = document.querySelector('.card-template');
 
@@ -25,13 +24,17 @@ const cardTemplate = document.querySelector('.card-template');
 const createCard = (...args) => new Card(cardTemplate, handleCardClick, ...args);
 
 //создаем список
-const defaultCardList = new Section({ data: initialCards, renderer }, cardsListContainer);
-defaultCardList.renderItems();
+const cardList = new Section({ data: initialCards, renderer }, cardsListContainer);
+cardList.renderItems();
 
 function renderer(item) {
     // Создаем карточку и возвращаем ее шаблон
     const newCardInitial = createCard(item.name, item.link).render();
+
+    this.addItem(newCardInitial);
+
     return newCardInitial;
+
 }
 //  /создаем список
 
@@ -79,7 +82,7 @@ function handleCardClick(text, link) {
     showImgPopup.openPopup(); // <==  открываем попап ==
 }
 
-const editProfilePopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit, hanldeAddPlaceFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
+const editProfilePopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
 //создаю Экземпляр класса UserInfo и передаю туда нач данные
 const currentUser = new UserInfo('profile__name', 'profile__job');
 currentUser.setUserInfo({ name: 'Жак-Ив Кусто', about: 'Исследователь океана' });
@@ -97,7 +100,7 @@ function openPopupProfileEdit() {
 //открываем попап для добавления нового места
 function openPopupProfileAdd() {
     cardFormValidator.resetValidation();// <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
-    const addPlaсePopup = new PopupWithForm(popupAddPlaceSelector, handleProfileFormSubmit, hanldeAddPlaceFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
+    const addPlaсePopup = new PopupWithForm(popupAddPlaceSelector, hanldeAddPlaceFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
     addPlaсePopup.openPopup(); // <==  открываем попап ==
 }
 //вставляет карточку на стр
@@ -108,8 +111,8 @@ function addCard(itemCardTemplate) {
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
 function handleProfileFormSubmit(evt, { title, subtitle }) {
-    // debugger
-    // console.log('ProfileFormSubmit: rezultArray  = ', title, subtitle);
+    console.log('function handleProfileFormSubmit');
+    console.log('ProfileFormSubmit: rezultArray  = ', title, subtitle);
     // Получаем значение полей jobInput и nameInput из свойства value
     // Выбераем элементы, куда должны быть вставлены значения полей
     profileName.textContent = title;
