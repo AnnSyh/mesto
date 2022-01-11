@@ -13,8 +13,8 @@ import '../pages/index.css';
 
 
 const curentPopup = document.querySelector('.open-img__popup');
-// const curentPopupImg = curentPopup.querySelector('.popup__img');
-// const curentPopupCaption = curentPopup.querySelector('.popup__caption');
+const curentPopupImg = curentPopup.querySelector('.popup__img');
+const curentPopupCaption = curentPopup.querySelector('.popup__caption');
 
 // const cardsListTemplate = document.querySelector('.list-template').content;
 const cardsListContainer = document.querySelector('.list-template-place');
@@ -73,15 +73,18 @@ const popupEditProfileSelector = document.querySelector('.edit-profile__popup');
 const popupAddPlaceSelector = document.querySelector('.add-plaсe__popup');
 
 
+// const curentPopup = document.querySelector('.open-img__popup');
+// const curentPopupImg = curentPopup.querySelector('.popup__img');
+// const curentPopupCaption = curentPopup.querySelector('.popup__caption');
+
 //открытие попапа с картинкой для карточки (мягкое связывание)
-const showImgPopup = new PopupWithImage(curentPopup);  // <==  создаем эл-т класса PopupWithImage ==
+const popupImage = new PopupWithImage(curentPopup, curentPopupCaption, curentPopupImg);  // <==  создаем эл-т класса PopupWithImage ==
+
 function handleCardClick(text, link) {
-    showImgPopup._link = link;// передали эти данные в поля формы
-    showImgPopup._text = text;
-    showImgPopup.openPopup(); // <==  открываем попап ==
+    popupImage.openPopup(text, link); // <==  открываем попап ==
 }
 
-const editProfilePopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
+const imagePopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
 //создаю Экземпляр класса UserInfo и передаю туда нач данные
 const currentUser = new UserInfo('profile__name', 'profile__job');
 currentUser.setUserInfo({ name: 'Жак-Ив Кусто', about: 'Исследователь океана' });
@@ -94,15 +97,15 @@ function openPopupProfileEdit() {
     nameInput.value = currentUserInfo.name;// передали эти данные в поля формы
     jobInput.value = currentUserInfo.about;
 
-    editProfilePopup.openPopup(); // <==  открываем попап ==
+    imagePopup.openPopup(); // <==  открываем попап ==
     editFormValidator.toggleButtonState(); // проверить состояние кнопки при открытии формы
 }
 
 //открываем попап для добавления нового места
-const addPlaсePopup = new PopupWithForm(popupAddPlaceSelector, hanldeAddPlaceFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
+const newCardPopup = new PopupWithForm(popupAddPlaceSelector, hanldeAddPlaceFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
 function openPopupProfileAdd() {
     cardFormValidator.resetValidation();// <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
-    addPlaсePopup.openPopup(); // <==  открываем попап ==
+    newCardPopup.openPopup(); // <==  открываем попап ==
 }
 
 // Обработчик «отправки» формы, хотя пока

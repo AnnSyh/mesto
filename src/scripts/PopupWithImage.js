@@ -9,17 +9,19 @@ export class PopupWithImage extends Popup {
         this._img = this._popupSelector.querySelector('.popup__img');
         this._title = this._popupSelector.querySelector('.popup__caption');
 
+        // debugger;
+
         this._text = text;
         this._link = link;
     }
 
-    openPopup() {
+    openPopup(text, link) {
         super.openPopup();
         // устанавливаем ссылку
         // устанавливаем подпись картинке
         //открываем попап универсальной функцией, которая навешивает обработчик Escape внутри себя
-        this._title.innerText = this._text;
-        this._img.alt = this._text;
-        this._img.src = this._link;
+        this._title.innerText = text;
+        this._img.alt = text;
+        this._img.src = link;
     }
 }
