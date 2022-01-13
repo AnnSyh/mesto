@@ -84,7 +84,7 @@ function handleCardClick(text, link) {
     popupImage.openPopup(text, link); // <==  открываем попап ==
 }
 
-const imagePopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
+const userInfoPopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
 //создаю Экземпляр класса UserInfo и передаю туда нач данные
 const currentUser = new UserInfo('profile__name', 'profile__job');
 currentUser.setUserInfo({ name: 'Жак-Ив Кусто', about: 'Исследователь океана' });
@@ -97,7 +97,7 @@ function openPopupProfileEdit() {
     nameInput.value = currentUserInfo.name;// передали эти данные в поля формы
     jobInput.value = currentUserInfo.about;
 
-    imagePopup.openPopup(); // <==  открываем попап ==
+    userInfoPopup.openPopup(); // <==  открываем попап ==
     editFormValidator.toggleButtonState(); // проверить состояние кнопки при открытии формы
 }
 
