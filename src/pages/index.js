@@ -5,11 +5,16 @@ import { configData } from "../utils/configData.js";
 import { Card } from "../scripts/Card.js";
 import { FormValidator } from "../scripts/FormValidator.js";
 import { Section } from '../scripts/Section.js';
+import { PopupConfirm } from '../scripts/PopupConfirm.js';
 import { PopupWithImage } from '../scripts/PopupWithImage.js';
 import { PopupWithForm } from '../scripts/PopupWithForm.js';
 import { UserInfo } from '../scripts/UserInfo.js';
+import { Api } from '../scripts/Api.js';
 
 import '../pages/index.css';
+import { Popup } from "../scripts/Popup.js";
+
+const curentPopupConfirmation = document.querySelector('.popup__confirmation');
 
 
 const curentPopup = document.querySelector('.open-img__popup');
@@ -21,7 +26,7 @@ const cardsListContainer = document.querySelector('.list-template-place');
 const cardTemplate = document.querySelector('.card-template');
 
 //создаем инструкции для списка
-const createCard = (...args) => new Card(cardTemplate, handleCardClick, ...args);
+const createCard = (...args) => new Card(cardTemplate, handleCardClick, openConfirm, closeConfirm, ...args);
 
 //создаем список
 const cardList = new Section({ data: initialCards, renderer }, cardsListContainer);
@@ -77,14 +82,48 @@ const popupAddPlaceSelector = document.querySelector('.add-plaсe__popup');
 // const curentPopupImg = curentPopup.querySelector('.popup__img');
 // const curentPopupCaption = curentPopup.querySelector('.popup__caption');
 
+//открытие попапа с предупреждением
+const popupConfirmation = new PopupConfirm(curentPopupConfirmation, openConfirm, closeConfirm);// <==  создаем эл-т класса Popup
+function openConfirm(evt) {
+    popupConfirmation.openPopup(); // <==  открываем попап ==
+}
+function closeConfirm(evt) {
+    popupConfirmation.closePopup(); // <==  закрываем попап ==
+}
+
 //открытие попапа с картинкой для карточки (мягкое связывание)
 const popupImage = new PopupWithImage(curentPopup, curentPopupCaption, curentPopupImg);  // <==  создаем эл-т класса PopupWithImage ==
-
 function handleCardClick(text, link) {
     popupImage.openPopup(text, link); // <==  открываем попап ==
 }
 
+//запрос к серверу получаю нач данные для карточки пользователя
+function updateUserInfo() {
+
+    fetch('https://nomoreparties.co/v1/cohort-34/users/me ')
+    // .then(res => {
+    //     console.log('res');
+    // });
+
+    fetch('https://mesto.nomoreparties.co/v1/cohort-34/cards', {
+        headers: {
+            authorization: 'c56e30dc-2883-4270-a59e-b2f7bae969c6'
+        }
+    })
+        .then(res => {
+            res.json();
+            console.log('res');
+        })
+        .then((result) => {
+            console.log(result);
+        });
+}
+
+// debugger
+profileBtnAdd.addEventListener('click', updateUserInfo);
+
 const userInfoPopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
+
 //создаю Экземпляр класса UserInfo и передаю туда нач данные
 const currentUser = new UserInfo('profile__name', 'profile__job');
 currentUser.setUserInfo({ name: 'Жак-Ив Кусто', about: 'Исследователь океана' });
@@ -110,6 +149,13 @@ function openPopupProfileAdd() {
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
+function hanldeConfirmFormSubmit(evt) {
+    evt.preventDefault();
+    const submitConfirmationBtn = document.querySelector('.confirmation .popup__btn');
+    submitConfirmationBtn.addEventListener('click', console.log('click confirmation .popup__btn'))
+
+}
+
 function handleProfileFormSubmit(evt, { title, subtitle }) {
     //изменяем данные текущего юзера в соот с данными забитыми в форму
     currentUser.setUserInfo({ name: title, about: subtitle });

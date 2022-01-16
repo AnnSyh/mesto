@@ -2,11 +2,15 @@
 
 export class Card {
 
-	constructor(template, handleCardClick, text, link) {
+	// constructor(template, handleCardClick, handleConfirmation, hanldeConfirmFormSubmit, text, link)
+	constructor(template, handleCardClick, openConfirm, closeConfirm, text, link) {
 		this._text = text;
 		this._link = link;
 		this._template = template;
 		this._handleCardClick = handleCardClick;
+
+		this._openConfirm = openConfirm;
+		this._closeConfirm = closeConfirm;
 
 		// debugger
 	}
@@ -16,13 +20,28 @@ export class Card {
 	}
 
 	_removeCard = () => {
-		this._view.remove();
-		this._view = null;
+		this._openConfirm();
+		const confirmBtn = document.querySelector('.confirmation-btn');
+
+		confirmBtn.addEventListener('click', (evt) => {
+			evt.preventDefault();
+
+			console.log('2-this._view = ', this._view);
+
+			debugger
+
+			this._view.remove();
+			this._view = null;
+
+			this._closeConfirm();
+
+		});
 	}
 
 	setEventListeners() {
 		// debugger
 		this._image.addEventListener('click', () => this._handleCardClick(this._text, this._link));
+		// this._trash.addEventListener('click', () => this._handleConfirmation());
 		this._trash.addEventListener('click', (evt) => this._removeCard(evt));
 		this._heart.addEventListener('click', () => { this._heart.classList.toggle('cards__heart_active') });
 	}
