@@ -5,7 +5,6 @@ import { configData } from "../utils/configData.js";
 import { Card } from "../scripts/Card.js";
 import { FormValidator } from "../scripts/FormValidator.js";
 import { Section } from '../scripts/Section.js';
-import { PopupConfirm } from '../scripts/PopupConfirm.js';
 import { PopupWithImage } from '../scripts/PopupWithImage.js';
 import { PopupWithForm } from '../scripts/PopupWithForm.js';
 import { UserInfo } from '../scripts/UserInfo.js';
@@ -83,7 +82,7 @@ const popupAddPlaceSelector = document.querySelector('.add-plaсe__popup');
 // const curentPopupCaption = curentPopup.querySelector('.popup__caption');
 
 //открытие попапа с предупреждением
-const popupConfirmation = new PopupConfirm(curentPopupConfirmation, openConfirm, closeConfirm);// <==  создаем эл-т класса Popup
+const popupConfirmation = new Popup(curentPopupConfirmation, openConfirm, closeConfirm);// <==  создаем эл-т класса Popup
 function openConfirm(evt) {
     popupConfirmation.openPopup(); // <==  открываем попап ==
 }
