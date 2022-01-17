@@ -23,11 +23,44 @@ const curentPopupCaption = curentPopup.querySelector('.popup__caption');
 const cardsListContainer = document.querySelector('.list-template-place');
 const cardTemplate = document.querySelector('.card-template');
 
+
+const arr = [];
+//запрос к серверу получаю начальный набор карточек с сервера
+function updateDefaultCards() {
+    fetch('https://mesto.nomoreparties.co/v1/cohort-34/cards', {
+        headers: {
+            authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e'
+        }
+    })
+        .then((res) => {
+            return res.json();
+        })
+        .then((data) => {// если мы попали в этот then, data — это объект
+
+            for (let i = 0; i <= data.length; i++) {
+                arr.push(data[i]);
+            }
+        })
+        .catch((err) => {
+            console.log('Ошибка. Запрос не выполнен: ', err);
+            const cardList = new Section({ data: initialCards, renderer }, cardsListContainer);
+            cardList.renderItems();
+        });
+    return arr;
+}
+
+//загружаем нач набор карточек с сервера
+updateDefaultCards();
+
+console.log('new-arr = ', arr);
+console.log('initialCards = ', initialCards);
+
 //создаем инструкции для списка
 const createCard = (...args) => new Card(cardTemplate, handleCardClick, openConfirm, closeConfirm, ...args);
 
 //создаем список
-const cardList = new Section({ data: initialCards, renderer }, cardsListContainer);
+// const cardList = new Section({ data: initialCards, renderer }, cardsListContainer);
+const cardList = new Section({ data: arr, renderer }, cardsListContainer);
 cardList.renderItems();
 
 function renderer(item) {
@@ -117,6 +150,8 @@ function updateUserInfo() {
             currentUser.setUserInfo({ name: 'Жак-Ив Кусто', about: 'Исследователь океана' });
         });
 }
+
+
 
 const userInfoPopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
 
