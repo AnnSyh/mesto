@@ -26,7 +26,6 @@ export class Card {
 			evt.preventDefault();//открываем окно подтверждения
 			// debugger
 			this._view.remove(); //удаляем карточку
-			// this._view = null;
 			this._closeConfirm();//закрываем окно подтверждения
 		});
 	}
@@ -34,7 +33,6 @@ export class Card {
 	setEventListeners() {
 		// debugger
 		this._image.addEventListener('click', () => this._handleCardClick(this._text, this._link));
-		// this._trash.addEventListener('click', () => this._handleConfirmation());
 		this._trash.addEventListener('click', (evt) => this._removeCard(evt));
 		this._heart.addEventListener('click', () => { this._heart.classList.toggle('cards__heart_active') });
 	}

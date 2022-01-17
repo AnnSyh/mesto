@@ -15,7 +15,6 @@ import { Popup } from "../scripts/Popup.js";
 
 const curentPopupConfirmation = document.querySelector('.popup__confirmation');
 
-
 const curentPopup = document.querySelector('.open-img__popup');
 const curentPopupImg = curentPopup.querySelector('.popup__img');
 const curentPopupCaption = curentPopup.querySelector('.popup__caption');
@@ -99,33 +98,32 @@ function handleCardClick(text, link) {
 //запрос к серверу получаю нач данные для карточки пользователя
 function updateUserInfo() {
 
-    fetch('https://nomoreparties.co/v1/cohort-34/users/me ')
-    // .then(res => {
-    //     console.log('res');
-    // });
-
-    fetch('https://mesto.nomoreparties.co/v1/cohort-34/cards', {
+    fetch('https://mesto.nomoreparties.co/v1/cohort-34/users/me', {
         headers: {
-            authorization: 'c56e30dc-2883-4270-a59e-b2f7bae969c6'
+            authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e'
         }
     })
-        .then(res => {
-            res.json();
-            console.log('res');
+        .then((res) => {
+            return res.json();
         })
-        .then((result) => {
-            console.log(result);
+        .then((data) => {// если мы попали в этот then, data — это объект
+            // console.log('data.name = ', data.name);
+            // console.log('data.about = ', data.about);
+            // console.log('data.avatar = ', data.avatar);
+            currentUser.setUserInfo({ name: data.name, about: data.about });
+        })
+        .catch((err) => {
+            console.log('Ошибка. Запрос не выполнен: ', err);
+            currentUser.setUserInfo({ name: 'Жак-Ив Кусто', about: 'Исследователь океана' });
         });
 }
 
-// debugger
-profileBtnAdd.addEventListener('click', updateUserInfo);
-
 const userInfoPopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
 
-//создаю Экземпляр класса UserInfo и передаю туда нач данные
 const currentUser = new UserInfo('profile__name', 'profile__job');
-currentUser.setUserInfo({ name: 'Жак-Ив Кусто', about: 'Исследователь океана' });
+// вывожу данные пользователя полученые с сервера
+updateUserInfo();
+
 
 //открываем попап для редактирования  профиля
 function openPopupProfileEdit() {
@@ -179,3 +177,5 @@ function hanldeAddPlaceFormSubmit() {
 //вешаем событие на кнопки(открывющие попапы с формами)
 profileBtnEdit.addEventListener('click', openPopupProfileEdit);
 profileBtnAdd.addEventListener('click', openPopupProfileAdd);
+
+
