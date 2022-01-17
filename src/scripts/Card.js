@@ -19,22 +19,15 @@ export class Card {
 		this._view = this._template.content.querySelector('.cards__item').cloneNode(true);
 	}
 
-	_removeCard = () => {
+	_removeCard = (evt) => {
 		this._openConfirm();
 		const confirmBtn = document.querySelector('.confirmation-btn');
-
 		confirmBtn.addEventListener('click', (evt) => {
-			evt.preventDefault();
-
-			console.log('2-this._view = ', this._view);
-
-			debugger
-
-			this._view.remove();
-			this._view = null;
-
-			this._closeConfirm();
-
+			evt.preventDefault();//открываем окно подтверждения
+			// debugger
+			this._view.remove(); //удаляем карточку
+			// this._view = null;
+			this._closeConfirm();//закрываем окно подтверждения
 		});
 	}
 
