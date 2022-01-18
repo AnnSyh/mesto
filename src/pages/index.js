@@ -1,6 +1,5 @@
 'use strict'
 
-import { initialCards } from "../utils/initialCards.js";
 import { configData } from "../utils/configData.js";
 import { Card } from "../scripts/Card.js";
 import { FormValidator } from "../scripts/FormValidator.js";
@@ -26,7 +25,6 @@ const cardTemplate = document.querySelector('.card-template');
 
 //создаем список
 const cardList = new Section({ data: [], renderer }, cardsListContainer);
-
 
 //запрос к серверу получаю начальный набор карточек с сервера
 function updateDefaultCards() {
@@ -101,6 +99,8 @@ const profileBtnAdd = document.querySelector('.profile__btn_user-add');
 const popupEditProfileSelector = document.querySelector('.edit-profile__popup');
 const popupEditProfileAvatar = document.querySelector('.new-avatar__popup');
 const popupAddPlaceSelector = document.querySelector('.add-plaсe__popup');
+//флаг для новой карточки загруженной через форму 
+const isCardNew = true;
 
 
 // const curentPopup = document.querySelector('.open-img__popup');
@@ -134,9 +134,6 @@ function updateUserInfo() {
             return res.json();
         })
         .then((data) => {// если мы попали в этот then, data — это объект
-            // console.log('data.name = ', data.name);
-            // console.log('data.about = ', data.about);
-            // console.log('data.avatar = ', data.avatar);
             currentUser.setUserInfo({ name: data.name, about: data.about });
         })
         .catch((err) => {
@@ -195,10 +192,36 @@ function hanldeConfirmFormSubmit(evt) {
 function handleProfileFormSubmit(evt, { title, subtitle }) {
     //изменяем данные текущего юзера в соот с данными забитыми в форму
     currentUser.setUserInfo({ name: title, about: subtitle });
+    //отправляем новые данные пользователя на сервер
+    fetch('https://mesto.nomoreparties.co/v1/cohort-34/users/me', {
+        method: 'PATCH',
+        headers: {
+            authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: title,
+            about: subtitle
+        })
+    });
 }
 function hanldeAddPlaceFormSubmit() {
     //создаем список
+    console.log('hanldeAddPlaceFormSubmit');
     cardList.addItem(createCard(placeNameInput.value, placeImgInput.value).render());
+    //отправляем новую карточку на сервер
+    fetch('https://mesto.nomoreparties.co/v1/cohort-34/cards', {
+        method: 'POST',
+        headers: {
+            authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: placeNameInput.value,
+            link: placeImgInput.value
+        })
+    });
+
 
     // Получаем значение полей jobInput и nameInput из свойства value
     //собираем их в массив для карточки
