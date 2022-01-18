@@ -36,10 +36,10 @@ function updateDefaultCards() {
             return res.json();
         })
         .then((data) => {// если мы попали в этот then, data — это объект
+            //создаем список
+            const cardList = new Section({ data: data, renderer }, cardsListContainer);
+            cardList.renderItems();
 
-            for (let i = 0; i <= data.length; i++) {
-                arr.push(data[i]);
-            }
         })
         .catch((err) => {
             console.log('Ошибка. Запрос не выполнен: ', err);
@@ -52,16 +52,13 @@ function updateDefaultCards() {
 //загружаем нач набор карточек с сервера
 updateDefaultCards();
 
-console.log('new-arr = ', arr);
-console.log('initialCards = ', initialCards);
-
 //создаем инструкции для списка
 const createCard = (...args) => new Card(cardTemplate, handleCardClick, openConfirm, closeConfirm, ...args);
 
 //создаем список
 // const cardList = new Section({ data: initialCards, renderer }, cardsListContainer);
-const cardList = new Section({ data: arr, renderer }, cardsListContainer);
-cardList.renderItems();
+// const cardList = new Section({ data: arr, renderer }, cardsListContainer);
+// cardList.renderItems();
 
 function renderer(item) {
     // Создаем карточку и возвращаем ее шаблон
@@ -101,11 +98,13 @@ const popupBtn = document.querySelector('.popup__btn');
 // находим все попапы 
 const popups = document.querySelectorAll('.popup');
 // находим кнопки кот вызывают всплытие/закрытие окна-редактирования
-const profileBtnEdit = document.querySelector('.profile__btn_user-edit');
+const profileBtnEdit = document.querySelector('.btn-user-edit');
+const profileAvatarEdit = document.querySelector('.btn-avatar-edit');
 // находим кнопки кот вызывают всплытие/закрытие окна-добавления карточки
 const profileBtnAdd = document.querySelector('.profile__btn_user-add');
 // Находим сам попап
 const popupEditProfileSelector = document.querySelector('.edit-profile__popup');
+const popupEditProfileAvatar = document.querySelector('.new-avatar__popup');
 const popupAddPlaceSelector = document.querySelector('.add-plaсe__popup');
 
 
@@ -154,11 +153,23 @@ function updateUserInfo() {
 
 
 const userInfoPopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
+const userAvatarPopup = new PopupWithForm(popupEditProfileAvatar, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
 
 const currentUser = new UserInfo('profile__name', 'profile__job');
 // вывожу данные пользователя полученые с сервера
 updateUserInfo();
 
+//открываем попап для редактирования  аватара
+function openPopupAvatarEdit() {
+    editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
+    //  передаем значение полей из формы 
+    const currentUserInfo = currentUser.getUserInfo();// получили данные текущего юзера кот выведены на стр
+    nameInput.value = currentUserInfo.name;// передали эти данные в поля формы
+    jobInput.value = currentUserInfo.about;
+
+    userAvatarPopup.openPopup(); // <==  открываем попап ==
+    editFormValidator.toggleButtonState(); // проверить состояние кнопки при открытии формы
+}
 
 //открываем попап для редактирования  профиля
 function openPopupProfileEdit() {
@@ -211,6 +222,7 @@ function hanldeAddPlaceFormSubmit() {
 
 //вешаем событие на кнопки(открывющие попапы с формами)
 profileBtnEdit.addEventListener('click', openPopupProfileEdit);
+profileAvatarEdit.addEventListener('click', openPopupAvatarEdit);
 profileBtnAdd.addEventListener('click', openPopupProfileAdd);
 
 

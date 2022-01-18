@@ -1,7 +1,6 @@
 'use strict'
 export class Section {
     constructor({ data, renderer }, container) {
-        debugger
         this._renderedItems = data;
         this._renderer = renderer;
         this._container = container;
