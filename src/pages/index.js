@@ -13,7 +13,7 @@ import { Api } from '../scripts/Api.js';
 import '../pages/index.css';
 import { Popup } from "../scripts/Popup.js";
 
-const curentPopupConfirmation = document.querySelector('.popup__confirmation');
+const curentPopupConfirmation = document.querySelector('.confirmation__popup');
 
 const curentPopup = document.querySelector('.open-img__popup');
 const curentPopupImg = curentPopup.querySelector('.popup__img');
@@ -56,9 +56,9 @@ updateDefaultCards();
 const createCard = (...args) => new Card(cardTemplate, handleCardClick, openConfirm, closeConfirm, ...args);
 
 //создаем список
-// const cardList = new Section({ data: initialCards, renderer }, cardsListContainer);
-// const cardList = new Section({ data: arr, renderer }, cardsListContainer);
-// cardList.renderItems();
+const cardList = new Section({ data: initialCards, renderer }, cardsListContainer);
+// // const cardList = new Section({ data: arr, renderer }, cardsListContainer);
+cardList.renderItems();
 
 function renderer(item) {
     // Создаем карточку и возвращаем ее шаблон
