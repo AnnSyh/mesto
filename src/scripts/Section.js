@@ -5,9 +5,9 @@ export class Section {
         this._renderer = renderer;
         this._container = container;
     }
-    renderItems() {
+    renderItems(data) {
         // Переберем массив _initialArray с начальными карточками
-        this._renderedItems.forEach(item => {
+        data.forEach(item => {
             this._renderer(item);
         });
     }
