@@ -24,13 +24,10 @@ const cardsListContainer = document.querySelector('.list-template-place');
 const cardTemplate = document.querySelector('.card-template');
 
 
-// //создаем список
+//создаем список
 const cardList = new Section({ data: [], renderer }, cardsListContainer);
-// // // const cardList = new Section({ data: arr, renderer }, cardsListContainer);
-// cardList.renderItems();
 
 
-const arr = [];
 //запрос к серверу получаю начальный набор карточек с сервера
 function updateDefaultCards() {
     fetch('https://mesto.nomoreparties.co/v1/cohort-34/cards', {
@@ -42,19 +39,14 @@ function updateDefaultCards() {
             return res.json();
         })
         .then((data) => {// если мы попали в этот then, data — это объект
-            // console.log('data = ', data);
-            debugger
             //создаем список
-            // const cardList = new Section({ data: data, renderer }, cardsListContainer);
             cardList.renderItems(data);
-
         })
         .catch((err) => {
             console.log('Ошибка. Запрос не выполнен: ', err);
             // const cardList = new Section({ data: initialCards, renderer }, cardsListContainer);
             cardList.renderItems(initialCards);
         });
-    return arr;
 }
 
 //загружаем нач набор карточек с сервера
@@ -62,11 +54,6 @@ updateDefaultCards();
 
 //создаем инструкции для списка
 const createCard = (...args) => new Card(cardTemplate, handleCardClick, openConfirm, closeConfirm, ...args);
-
-// //создаем список
-// const cardList = new Section({ data: initialCards, renderer }, cardsListContainer);
-// // // const cardList = new Section({ data: arr, renderer }, cardsListContainer);
-// cardList.renderItems();
 
 function renderer(item) {
     // Создаем карточку и возвращаем ее шаблон
@@ -157,8 +144,6 @@ function updateUserInfo() {
             currentUser.setUserInfo({ name: 'Жак-Ив Кусто', about: 'Исследователь океана' });
         });
 }
-
-
 
 const userInfoPopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
 const userAvatarPopup = new PopupWithForm(popupEditProfileAvatar, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
