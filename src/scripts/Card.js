@@ -3,11 +3,15 @@
 export class Card {
 
 	// constructor(template, handleCardClick, handleConfirmation, hanldeConfirmFormSubmit, text, link)
-	constructor(template, handleCardClick, openConfirm, closeConfirm, text, link) {
+	constructor(template, handleCardClick, openConfirm, closeConfirm, text, link, owner) {
 		this._text = text;
 		this._link = link;
 		this._template = template;
 		this._handleCardClick = handleCardClick;
+
+		this._owner = owner;
+		// console.log('owner = ', owner);
+		console.log('owner._id = ', owner._id);
 
 		this._openConfirm = openConfirm;
 		this._closeConfirm = closeConfirm;
@@ -39,6 +43,8 @@ export class Card {
 
 	render() {
 		this._createView();
+
+		// console.log('',owner._id === user._id);
 
 		this._image = this._view.querySelector('.cards__img');
 		this._trash = this._view.querySelector('.cards__trash');

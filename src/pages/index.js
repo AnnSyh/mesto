@@ -43,19 +43,23 @@ function updateDefaultCards() {
         .catch((err) => {
             console.log('Ошибка. Запрос не выполнен: ', err);
             // const cardList = new Section({ data: initialCards, renderer }, cardsListContainer);
-            cardList.renderItems(initialCards);
+            // cardList.renderItems(initialCards);
         });
 }
 
 //загружаем нач набор карточек с сервера
 updateDefaultCards();
 
+
 //создаем инструкции для списка
 const createCard = (...args) => new Card(cardTemplate, handleCardClick, openConfirm, closeConfirm, ...args);
 
 function renderer(item) {
+    //проверка пользователя
+    console.log('renderer(item)');
+
     // Создаем карточку и возвращаем ее шаблон
-    const newCardInitial = createCard(item.name, item.link).render();
+    const newCardInitial = createCard(item.name, item.link, item.owner).render();
     this.addItem(newCardInitial);
     return newCardInitial;
 }
@@ -103,6 +107,17 @@ const popupAddPlaceSelector = document.querySelector('.add-plaсe__popup');
 const isCardNew = true;
 
 
+const api = new Api({
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-34',
+    headers: {
+        authorization: 'c56e30dc-2883-4270-a59e-b2f7bae969c6',
+        'Content-Type': 'application/json'
+    }
+});
+
+console.log('api = ', api);
+
+
 // const curentPopup = document.querySelector('.open-img__popup');
 // const curentPopupImg = curentPopup.querySelector('.popup__img');
 // const curentPopupCaption = curentPopup.querySelector('.popup__caption');
@@ -135,11 +150,16 @@ function updateUserInfo() {
         })
         .then((data) => {// если мы попали в этот then, data — это объект
             currentUser.setUserInfo({ name: data.name, about: data.about });
+            // console.log('data = ', data);
+            console.log('user._id = ', data._id);
+            return data;
         })
         .catch((err) => {
             console.log('Ошибка. Запрос не выполнен: ', err);
             currentUser.setUserInfo({ name: 'Жак-Ив Кусто', about: 'Исследователь океана' });
         });
+
+
 }
 
 const userInfoPopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
@@ -148,8 +168,14 @@ const userAvatarPopup = new PopupWithForm(popupEditProfileAvatar, handleProfileF
 const currentUser = new UserInfo('profile__name', 'profile__job');
 // вывожу данные пользователя полученые с сервера
 updateUserInfo();
+console.log('updateUserInfo()=', updateUserInfo());
+
+console.log('updateUserInfo(); = ', updateUserInfo())
+
+
 
 //открываем попап для редактирования  аватара
+//надо сделать проверку пользователя - редактировать может только авторизированный пользователь ???
 function openPopupAvatarEdit() {
     editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
     //  передаем значение полей из формы 
@@ -208,6 +234,10 @@ function handleProfileFormSubmit(evt, { title, subtitle }) {
 function hanldeAddPlaceFormSubmit() {
     //создаем список
     console.log('hanldeAddPlaceFormSubmit');
+    //надо сделать проверку пользователя
+
+
+
     cardList.addItem(createCard(placeNameInput.value, placeImgInput.value).render(), 'prepend');
     //отправляем новую карточку на сервер
     fetch('https://mesto.nomoreparties.co/v1/cohort-34/cards', {
