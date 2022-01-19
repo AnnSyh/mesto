@@ -208,7 +208,7 @@ function handleProfileFormSubmit(evt, { title, subtitle }) {
 function hanldeAddPlaceFormSubmit() {
     //создаем список
     console.log('hanldeAddPlaceFormSubmit');
-    cardList.addItem(createCard(placeNameInput.value, placeImgInput.value).render());
+    cardList.addItem(createCard(placeNameInput.value, placeImgInput.value).render(), 'prepend');
     //отправляем новую карточку на сервер
     fetch('https://mesto.nomoreparties.co/v1/cohort-34/cards', {
         method: 'POST',
