@@ -23,36 +23,17 @@ const cardsListContainer = document.querySelector('.list-template-place');
 const cardTemplate = document.querySelector('.card-template');
 
 
-//создаем список
-const cardList = new Section({ data: [], renderer }, cardsListContainer);
-
-//запрос к серверу получаю начальный набор карточек с сервера
-function updateDefaultCards() {
-    fetch('https://mesto.nomoreparties.co/v1/cohort-34/cards', {
-        headers: {
-            authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e'
-        }
-    })
-        .then((res) => {
-            return res.json();
-        })
-        .then((data) => {// если мы попали в этот then, data — это объект
-            //создаем список
-            cardList.renderItems(data);
-        })
-        .catch((err) => {
-            console.log('Ошибка. Запрос не выполнен: ', err);
-            // const cardList = new Section({ data: initialCards, renderer }, cardsListContainer);
-            // cardList.renderItems(initialCards);
-        });
-}
-
-//загружаем нач набор карточек с сервера
-updateDefaultCards();
+const api = new Api({
+    url: 'https://mesto.nomoreparties.co/v1/cohort-34/cards',
+    headers: {
+        authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e',
+        'Content-Type': 'application/json'
+    }
+});
 
 
 //создаем инструкции для списка
-const createCard = (...args) => new Card(cardTemplate, handleCardClick, openConfirm, closeConfirm, ...args);
+const createCard = (...args) => new Card(cardTemplate, handleCardClick, openConfirm, closeConfirm, ...args, api);
 
 function renderer(item) {
     //проверка пользователя
@@ -64,6 +45,19 @@ function renderer(item) {
     return newCardInitial;
 }
 //  /создаем список
+
+
+//создаем список
+const cardList = new Section({ data: [], renderer }, cardsListContainer);
+
+//запрос к серверу получаю начальный набор карточек с сервера
+api.getInitialCards()
+    .then(data => {
+        //создаем список
+        cardList.renderItems(data);
+    })
+    .catch(err => console.log(err));
+
 
 
 //Валидация форм
@@ -107,15 +101,7 @@ const popupAddPlaceSelector = document.querySelector('.add-plaсe__popup');
 const isCardNew = true;
 
 
-const api = new Api({
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-34',
-    headers: {
-        authorization: 'c56e30dc-2883-4270-a59e-b2f7bae969c6',
-        'Content-Type': 'application/json'
-    }
-});
 
-console.log('api = ', api);
 
 
 // const curentPopup = document.querySelector('.open-img__popup');
