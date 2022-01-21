@@ -1,24 +1,15 @@
 'use strict'
 
 export class Card {
-
-	// constructor(template, handleCardClick, handleConfirmation, hanldeConfirmFormSubmit, text, link)
 	constructor(template, handleCardClick, openConfirm, closeConfirm, text, link, owner, api) {
 		this._text = text;
 		this._link = link;
 		this._template = template;
 		this._handleCardClick = handleCardClick;
-
 		this._owner = owner;
-		// console.log('owner = ', owner);
-		console.log('owner._id = ', owner._id);
-
 		this._openConfirm = openConfirm;
 		this._closeConfirm = closeConfirm;
-
 		this._api = api;
-
-		// debugger
 	}
 
 	_createView() {
@@ -59,7 +50,6 @@ export class Card {
 
 		this.setEventListeners();
 
-		// container.append(this._view);
 		return this._view;
 	}
 
