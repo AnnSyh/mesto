@@ -177,7 +177,10 @@ function hanldeConfirmFormSubmit(evt) {
 function handleProfileFormSubmit(evt, { title, subtitle }) {
     //изменяем данные текущего юзера в соот с данными забитыми в форму
     currentUser.setUserInfo({ name: title, about: subtitle });
+
     //отправляем новые данные пользователя на сервер
+
+
     fetch('https://mesto.nomoreparties.co/v1/cohort-34/users/me', {
         method: 'PATCH',
         headers: {
@@ -196,9 +199,16 @@ function hanldeAddPlaceFormSubmit() {
     //надо сделать проверку пользователя
 
 
-
     cardList.addItem(createCard(placeNameInput.value, placeImgInput.value).render(), 'prepend');
     //отправляем новую карточку на сервер
+
+    		// this._api.createCard()
+		// 	.then(() => {
+		// 		this._view = this._template.content.querySelector('.cards__item').cloneNode(true);
+		// 	})
+		// 	.catch()
+
+
     fetch('https://mesto.nomoreparties.co/v1/cohort-34/cards', {
         method: 'POST',
         headers: {

@@ -21,6 +21,9 @@ export class Api {
     })
       .then(onError);
   }
+  postUser(){
+
+  }
 
   getInitialCards() {
     return fetch(this._url, { headers: this._headers })
