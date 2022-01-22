@@ -1,7 +1,7 @@
 'use strict'
 
 export class Card {
-	constructor(template, handleCardClick, openConfirm, closeConfirm, text, link, owner, api) {
+	constructor(template, handleCardClick, openConfirm, closeConfirm, text, link, owner, user, api) {
 		this._text = text;
 		this._link = link;
 		this._template = template;
@@ -9,7 +9,9 @@ export class Card {
 		this._owner = owner;
 		this._openConfirm = openConfirm;
 		this._closeConfirm = closeConfirm;
+		this._user = user;
 		this._api = api;
+
 	}
 
 	_createView() {
@@ -18,11 +20,22 @@ export class Card {
 	}
 
 	_removeCard = (evt) => {
+
+		console.log('evt.target = ',evt.target.parentElement);
+
 		this._openConfirm();
 		const confirmBtn = document.querySelector('.confirmation-btn');
 		confirmBtn.addEventListener('click', (evt) => {
 			evt.preventDefault();//открываем окно подтверждения
-			this._view.remove(); //удаляем карточку
+
+			this._api.deleteCard(evt)
+			.then(()=>{
+				this._view.remove(evt); //удаляем карточку
+
+			})
+			.catch();
+
+
 			this._closeConfirm();//закрываем окно подтверждения
 		});
 	}
@@ -34,9 +47,6 @@ export class Card {
 	}
 
 	render() {
-
-
-
 		this._createView();
 
 		this._image = this._view.querySelector('.cards__img');
@@ -50,7 +60,17 @@ export class Card {
 
 		this.setEventListeners();
 
+			// console.log('2 cards owner = ',this._owner._id);
+			// console.log('2 cards user = ',this._user);
+
 		return this._view;
+	}
+
+	likeCard(){
+
+	}
+	dislikeCard(){
+
 	}
 
 }

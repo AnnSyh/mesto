@@ -22,7 +22,6 @@ const curentPopupCaption = curentPopup.querySelector('.popup__caption');
 const cardsListContainer = document.querySelector('.list-template-place');
 const cardTemplate = document.querySelector('.card-template');
 
-
 const api = new Api({
     url: 'https://mesto.nomoreparties.co/v1/cohort-34/cards',
     headers: {
@@ -48,14 +47,15 @@ function renderer(item) {
     console.log('renderer(item)');
 
     // Создаем карточку и возвращаем ее шаблон
-    const newCardInitial = createCard(item.name, item.link, item.owner).render();
+    const newCardInitial = createCard(item.name, item.link, item.owner,currentUser).render();
     this.addItem(newCardInitial);
+
     return newCardInitial;
 }
 //  /создаем список
 
 
-//создаем список
+//создаем пустой список в который далее будем вставлять карточки
 const cardList = new Section({ data: [], renderer }, cardsListContainer);
 
 //запрос к серверу получаю начальный набор карточек с сервера
@@ -121,12 +121,26 @@ function handleCardClick(text, link) {
     popupImage.openPopup(text, link); // <==  открываем попап ==
 }
 
-//запрос к серверу получаю нач данные для карточки пользователя
+let user;
+//запрос к серверу получаю нач данные для профайла пользователя
 userApi.getUser()
-    .then(data => {
-        currentUser.setUserInfo({ name: data.name, about: data.about });
+    .then((data) => {
+
+        debugger
+        currentUser.setUserInfo({ name: data.name, about: data.about});
+
+        console.log('userApi.getUser():  currentUser = ',currentUser);
+        console.log('userApi.getUser():  data._id = ',data._id);
+
+       const user = data._id;
+       console.log('userApi.getUser():  user = ',user);
+
+     return user
+
     })
     .catch(err => console.log(err));
+
+    console.log('after:  user = ',user);
 
 const userInfoPopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
 const userAvatarPopup = new PopupWithForm(popupEditProfileAvatar, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
@@ -148,6 +162,9 @@ function openPopupAvatarEdit() {
 
 //открываем попап для редактирования  профиля
 function openPopupProfileEdit() {
+
+
+
     editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
     //  передаем значение полей из формы
     const currentUserInfo = currentUser.getUserInfo();// получили данные текущего юзера кот выведены на стр
@@ -189,13 +206,11 @@ function handleProfileFormSubmit(evt, { title, subtitle }) {
 
 function hanldeAddPlaceFormSubmit() {
     //создаем нов карточку в соот с данными забитыми в форму
-    cardList.addItem(createCard(placeNameInput.value, placeImgInput.value).render(), 'prepend');
-
     //отправляем данные новой карточки на сервер
 
     api.postCreateCard({name: placeNameInput.value, link: placeImgInput.value})
-    .then(() => {
-         createCard(placeNameInput.value, placeImgInput.value)
+    .then((data) => {
+        cardList.addItem(createCard(data.name, data.link).render(), 'prepend');
     })
     .catch(err => console.log(err));
 

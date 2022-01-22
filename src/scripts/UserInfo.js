@@ -8,12 +8,16 @@ export class UserInfo {
 
 		this._containerProfileName = document.querySelector('.' + this._userNameSelector);
 		this._containerProfileJob = document.querySelector('.' + this._userAboutSelector);
+
+
+console.log('getUserInfo(): this = ',this);
 	}
 
 	getUserInfo() {
 		return {
 			name: this._containerProfileName.textContent,
-			about: this._containerProfileJob.textContent
+			about: this._containerProfileJob.textContent,
+
 		};
 	}
 
