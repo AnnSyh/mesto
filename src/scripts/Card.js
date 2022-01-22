@@ -49,6 +49,7 @@ export class Card {
 	render() {
 		this._createView();
 
+
 		this._image = this._view.querySelector('.cards__img');
 		this._trash = this._view.querySelector('.cards__trash');
 		this._heart = this._view.querySelector('.cards__heart');
@@ -59,9 +60,16 @@ export class Card {
 		this._image.src = this._link;
 
 		this.setEventListeners();
-
 			// console.log('2 cards owner = ',this._owner._id);
 			// console.log('2 cards user = ',this._user);
+
+		let myCard = (this._owner._id == this._user);
+
+		console.log('myCard = ',myCard );
+
+    if(!myCard){
+	         this._trash = this._view.querySelector('.cards__trash').classList.add("hidden");
+    }
 
 		return this._view;
 	}

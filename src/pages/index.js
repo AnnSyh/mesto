@@ -47,7 +47,7 @@ function renderer(item) {
     console.log('renderer(item)');
 
     // Создаем карточку и возвращаем ее шаблон
-    const newCardInitial = createCard(item.name, item.link, item.owner,currentUser).render();
+    const newCardInitial = createCard(item.name, item.link, item.owner, user).render();
     this.addItem(newCardInitial);
 
     return newCardInitial;
@@ -129,14 +129,11 @@ userApi.getUser()
         debugger
         currentUser.setUserInfo({ name: data.name, about: data.about});
 
-        console.log('userApi.getUser():  currentUser = ',currentUser);
         console.log('userApi.getUser():  data._id = ',data._id);
 
-       const user = data._id;
-       console.log('userApi.getUser():  user = ',user);
+        user = data._id;
 
-     return user
-
+        console.log('userApi.getUser():  user = ',user);
     })
     .catch(err => console.log(err));
 
