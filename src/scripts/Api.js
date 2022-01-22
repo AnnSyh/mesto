@@ -1,21 +1,57 @@
 'use strict'
 
+const onError = res => {
+  if (res.ok) {
+    return res.json();
+  }
+
+  return Promise.reject('Something went wrong!');
+};
+
 export class Api {
-  constructor(options) {
-    // тело конструктора
+  constructor({ url, headers }) {
+    this._url = url;
+    this._headers = headers;
+  }
+
+  getUser() {
+    return fetch(this._url, {
+      headers: this._headers,
+      body: JSON.stringify()
+    })
+      .then(onError);
+  }
+  postUser(user){
+    console.log('postUser(user)');
+    return fetch(this._url, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify(user)
+    })
+      .then(onError);
   }
 
   getInitialCards() {
-    // ...
+    return fetch(this._url, { headers: this._headers })
+      .then(onError);
+  }
+
+  postCreateCard(card) {
+    return fetch(this._url, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(card)
+    })
+      .then(onError);
+  }
+
+  deleteCard(id) {
+    return fetch(`${this._url}/${id}`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+      .then(onError);
   }
 
   // другие методы работы с API
 }
-
-const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-34',
-  headers: {
-    authorization: 'c56e30dc-2883-4270-a59e-b2f7bae969c6',
-    'Content-Type': 'application/json'
-  }
-});

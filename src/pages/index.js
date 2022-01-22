@@ -23,43 +23,49 @@ const cardsListContainer = document.querySelector('.list-template-place');
 const cardTemplate = document.querySelector('.card-template');
 
 
-//создаем список
-const cardList = new Section({ data: [], renderer }, cardsListContainer);
+const api = new Api({
+    url: 'https://mesto.nomoreparties.co/v1/cohort-34/cards',
+    headers: {
+        authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e',
+        'Content-Type': 'application/json'
+    }
+});
 
-//запрос к серверу получаю начальный набор карточек с сервера
-function updateDefaultCards() {
-    fetch('https://mesto.nomoreparties.co/v1/cohort-34/cards', {
-        headers: {
-            authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e'
-        }
-    })
-        .then((res) => {
-            return res.json();
-        })
-        .then((data) => {// если мы попали в этот then, data — это объект
-            //создаем список
-            cardList.renderItems(data);
-        })
-        .catch((err) => {
-            console.log('Ошибка. Запрос не выполнен: ', err);
-            // const cardList = new Section({ data: initialCards, renderer }, cardsListContainer);
-            cardList.renderItems(initialCards);
-        });
-}
+const userApi = new Api({
+    url: 'https://mesto.nomoreparties.co/v1/cohort-34/users/me',
+    headers: {
+        authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e',
+        'Content-Type': 'application/json'
+    }
+});
 
-//загружаем нач набор карточек с сервера
-updateDefaultCards();
 
 //создаем инструкции для списка
-const createCard = (...args) => new Card(cardTemplate, handleCardClick, openConfirm, closeConfirm, ...args);
+const createCard = (...args) => new Card(cardTemplate, handleCardClick, openConfirm, closeConfirm, ...args, api);
 
 function renderer(item) {
+    //проверка пользователя
+    console.log('renderer(item)');
+
     // Создаем карточку и возвращаем ее шаблон
-    const newCardInitial = createCard(item.name, item.link).render();
+    const newCardInitial = createCard(item.name, item.link, item.owner).render();
     this.addItem(newCardInitial);
     return newCardInitial;
 }
 //  /создаем список
+
+
+//создаем список
+const cardList = new Section({ data: [], renderer }, cardsListContainer);
+
+//запрос к серверу получаю начальный набор карточек с сервера
+api.getInitialCards()
+    .then(data => {
+        //создаем список
+        cardList.renderItems(data);
+    })
+    .catch(err => console.log(err));
+
 
 
 //Валидация форм
@@ -86,9 +92,9 @@ const profileJob = document.querySelector('.profile__job');
 
 // // находим список в кот надо встаивть карточки
 const cardsListElement = document.querySelector('.cards__list');
-//Находим кнопку 'Сохранить' в форме 
+//Находим кнопку 'Сохранить' в форме
 const popupBtn = document.querySelector('.popup__btn');
-// находим все попапы 
+// находим все попапы
 const popups = document.querySelectorAll('.popup');
 // находим кнопки кот вызывают всплытие/закрытие окна-редактирования
 const profileBtnEdit = document.querySelector('.btn-user-edit');
@@ -99,13 +105,6 @@ const profileBtnAdd = document.querySelector('.profile__btn_user-add');
 const popupEditProfileSelector = document.querySelector('.edit-profile__popup');
 const popupEditProfileAvatar = document.querySelector('.new-avatar__popup');
 const popupAddPlaceSelector = document.querySelector('.add-plaсe__popup');
-//флаг для новой карточки загруженной через форму 
-const isCardNew = true;
-
-
-// const curentPopup = document.querySelector('.open-img__popup');
-// const curentPopupImg = curentPopup.querySelector('.popup__img');
-// const curentPopupCaption = curentPopup.querySelector('.popup__caption');
 
 //открытие попапа с предупреждением
 const popupConfirmation = new Popup(curentPopupConfirmation, openConfirm, closeConfirm);// <==  создаем эл-т класса Popup
@@ -123,36 +122,22 @@ function handleCardClick(text, link) {
 }
 
 //запрос к серверу получаю нач данные для карточки пользователя
-function updateUserInfo() {
-
-    fetch('https://mesto.nomoreparties.co/v1/cohort-34/users/me', {
-        headers: {
-            authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e'
-        }
+userApi.getUser()
+    .then(data => {
+        currentUser.setUserInfo({ name: data.name, about: data.about });
     })
-        .then((res) => {
-            return res.json();
-        })
-        .then((data) => {// если мы попали в этот then, data — это объект
-            currentUser.setUserInfo({ name: data.name, about: data.about });
-        })
-        .catch((err) => {
-            console.log('Ошибка. Запрос не выполнен: ', err);
-            currentUser.setUserInfo({ name: 'Жак-Ив Кусто', about: 'Исследователь океана' });
-        });
-}
+    .catch(err => console.log(err));
 
 const userInfoPopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
 const userAvatarPopup = new PopupWithForm(popupEditProfileAvatar, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
 
 const currentUser = new UserInfo('profile__name', 'profile__job');
-// вывожу данные пользователя полученые с сервера
-updateUserInfo();
 
 //открываем попап для редактирования  аватара
+//надо сделать проверку пользователя - редактировать может только авторизированный пользователь ???
 function openPopupAvatarEdit() {
     editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
-    //  передаем значение полей из формы 
+    //  передаем значение полей из формы
     const currentUserInfo = currentUser.getUserInfo();// получили данные текущего юзера кот выведены на стр
     nameInput.value = currentUserInfo.name;// передали эти данные в поля формы
     jobInput.value = currentUserInfo.about;
@@ -164,7 +149,7 @@ function openPopupAvatarEdit() {
 //открываем попап для редактирования  профиля
 function openPopupProfileEdit() {
     editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
-    //  передаем значение полей из формы 
+    //  передаем значение полей из формы
     const currentUserInfo = currentUser.getUserInfo();// получили данные текущего юзера кот выведены на стр
     nameInput.value = currentUserInfo.name;// передали эти данные в поля формы
     jobInput.value = currentUserInfo.about;
@@ -192,53 +177,31 @@ function hanldeConfirmFormSubmit(evt) {
 function handleProfileFormSubmit(evt, { title, subtitle }) {
     //изменяем данные текущего юзера в соот с данными забитыми в форму
     currentUser.setUserInfo({ name: title, about: subtitle });
+
     //отправляем новые данные пользователя на сервер
-    fetch('https://mesto.nomoreparties.co/v1/cohort-34/users/me', {
-        method: 'PATCH',
-        headers: {
-            authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            name: title,
-            about: subtitle
-        })
-    });
+
+    userApi.postUser({ name: title, about: subtitle })
+    .then(data => {
+        currentUser.setUserInfo({ name: title, about: subtitle });
+    })
+    .catch(err => console.log(err));
 }
+
 function hanldeAddPlaceFormSubmit() {
-    //создаем список
-    console.log('hanldeAddPlaceFormSubmit');
+    //создаем нов карточку в соот с данными забитыми в форму
     cardList.addItem(createCard(placeNameInput.value, placeImgInput.value).render(), 'prepend');
-    //отправляем новую карточку на сервер
-    fetch('https://mesto.nomoreparties.co/v1/cohort-34/cards', {
-        method: 'POST',
-        headers: {
-            authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            name: placeNameInput.value,
-            link: placeImgInput.value
-        })
-    });
 
+    //отправляем данные новой карточки на сервер
 
-    // Получаем значение полей jobInput и nameInput из свойства value
-    //собираем их в массив для карточки
-    // const currentCardInputs = [
-    //     {
-    //         name: placeNameInput.value,
-    //         link: placeImgInput.value,
-    //     },
-    // ];
-    //создаем список
-    // const currentCreateCard = new Section({ data: currentCardInputs, renderer }, cardsListContainer);
-    // currentCreateCard.renderItems();
+    api.postCreateCard({name: placeNameInput.value, link: placeImgInput.value})
+    .then(() => {
+         createCard(placeNameInput.value, placeImgInput.value)
+    })
+    .catch(err => console.log(err));
+
 }
 
 //вешаем событие на кнопки(открывющие попапы с формами)
 profileBtnEdit.addEventListener('click', openPopupProfileEdit);
 profileAvatarEdit.addEventListener('click', openPopupAvatarEdit);
 profileBtnAdd.addEventListener('click', openPopupProfileAdd);
-
-
