@@ -21,8 +21,14 @@ export class Api {
     })
       .then(onError);
   }
-  postUser(){
-
+  postUser(user){
+    console.log('postUser(user)');
+    return fetch(this._url, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify(user)
+    })
+      .then(onError);
   }
 
   getInitialCards() {
@@ -30,7 +36,7 @@ export class Api {
       .then(onError);
   }
 
-  createCard(card) {
+  postCreateCard(card) {
     return fetch(this._url, {
       method: 'POST',
       headers: this._headers,
@@ -49,4 +55,3 @@ export class Api {
 
   // другие методы работы с API
 }
-

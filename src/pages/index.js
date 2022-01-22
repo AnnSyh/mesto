@@ -92,9 +92,9 @@ const profileJob = document.querySelector('.profile__job');
 
 // // находим список в кот надо встаивть карточки
 const cardsListElement = document.querySelector('.cards__list');
-//Находим кнопку 'Сохранить' в форме 
+//Находим кнопку 'Сохранить' в форме
 const popupBtn = document.querySelector('.popup__btn');
-// находим все попапы 
+// находим все попапы
 const popups = document.querySelectorAll('.popup');
 // находим кнопки кот вызывают всплытие/закрытие окна-редактирования
 const profileBtnEdit = document.querySelector('.btn-user-edit');
@@ -137,7 +137,7 @@ const currentUser = new UserInfo('profile__name', 'profile__job');
 //надо сделать проверку пользователя - редактировать может только авторизированный пользователь ???
 function openPopupAvatarEdit() {
     editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
-    //  передаем значение полей из формы 
+    //  передаем значение полей из формы
     const currentUserInfo = currentUser.getUserInfo();// получили данные текущего юзера кот выведены на стр
     nameInput.value = currentUserInfo.name;// передали эти данные в поля формы
     jobInput.value = currentUserInfo.about;
@@ -149,7 +149,7 @@ function openPopupAvatarEdit() {
 //открываем попап для редактирования  профиля
 function openPopupProfileEdit() {
     editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
-    //  передаем значение полей из формы 
+    //  передаем значение полей из формы
     const currentUserInfo = currentUser.getUserInfo();// получили данные текущего юзера кот выведены на стр
     nameInput.value = currentUserInfo.name;// передали эти данные в поля формы
     jobInput.value = currentUserInfo.about;
@@ -180,64 +180,28 @@ function handleProfileFormSubmit(evt, { title, subtitle }) {
 
     //отправляем новые данные пользователя на сервер
 
-
-    fetch('https://mesto.nomoreparties.co/v1/cohort-34/users/me', {
-        method: 'PATCH',
-        headers: {
-            authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            name: title,
-            about: subtitle
-        })
-    });
+    userApi.postUser({ name: title, about: subtitle })
+    .then(data => {
+        currentUser.setUserInfo({ name: title, about: subtitle });
+    })
+    .catch(err => console.log(err));
 }
+
 function hanldeAddPlaceFormSubmit() {
-    //создаем список
-    console.log('hanldeAddPlaceFormSubmit');
-    //надо сделать проверку пользователя
-
-
+    //создаем нов карточку в соот с данными забитыми в форму
     cardList.addItem(createCard(placeNameInput.value, placeImgInput.value).render(), 'prepend');
-    //отправляем новую карточку на сервер
 
-    		// this._api.createCard()
-		// 	.then(() => {
-		// 		this._view = this._template.content.querySelector('.cards__item').cloneNode(true);
-		// 	})
-		// 	.catch()
+    //отправляем данные новой карточки на сервер
 
+    api.postCreateCard({name: placeNameInput.value, link: placeImgInput.value})
+    .then(() => {
+         createCard(placeNameInput.value, placeImgInput.value)
+    })
+    .catch(err => console.log(err));
 
-    fetch('https://mesto.nomoreparties.co/v1/cohort-34/cards', {
-        method: 'POST',
-        headers: {
-            authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            name: placeNameInput.value,
-            link: placeImgInput.value
-        })
-    });
-
-
-    // Получаем значение полей jobInput и nameInput из свойства value
-    //собираем их в массив для карточки
-    // const currentCardInputs = [
-    //     {
-    //         name: placeNameInput.value,
-    //         link: placeImgInput.value,
-    //     },
-    // ];
-    //создаем список
-    // const currentCreateCard = new Section({ data: currentCardInputs, renderer }, cardsListContainer);
-    // currentCreateCard.renderItems();
 }
 
 //вешаем событие на кнопки(открывющие попапы с формами)
 profileBtnEdit.addEventListener('click', openPopupProfileEdit);
 profileAvatarEdit.addEventListener('click', openPopupAvatarEdit);
 profileBtnAdd.addEventListener('click', openPopupProfileAdd);
-
-
