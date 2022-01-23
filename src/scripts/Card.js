@@ -1,7 +1,7 @@
 'use strict'
 
 export class Card {
-	constructor(template, handleCardClick, openConfirm, closeConfirm, text, link, owner, user, api) {
+	constructor(template, handleCardClick, openConfirm, closeConfirm, text, link, owner, user, cardId, api) {
 		this._text = text;
 		this._link = link;
 		this._template = template;
@@ -11,6 +11,10 @@ export class Card {
 		this._closeConfirm = closeConfirm;
 		this._user = user;
 		this._api = api;
+		this._cardId = cardId;
+
+		// console.log('this = ',this);
+		console.log('constructor: this._cardId = ',this._cardId);
 
 	}
 
@@ -20,21 +24,19 @@ export class Card {
 	}
 
 	_removeCard = (evt) => {
-
-		console.log('evt.target = ',evt.target.parentElement);
+		console.log('_removeCard: this._cardId = ',this._cardId);
 
 		this._openConfirm();
 		const confirmBtn = document.querySelector('.confirmation-btn');
 		confirmBtn.addEventListener('click', (evt) => {
 			evt.preventDefault();//открываем окно подтверждения
 
-			this._api.deleteCard(evt)
+			this._api.deleteCard(this._cardId)
 			.then(()=>{
-				this._view.remove(evt); //удаляем карточку
+				this._view.remove(this._cardId); //удаляем карточку
 
 			})
 			.catch();
-
 
 			this._closeConfirm();//закрываем окно подтверждения
 		});
@@ -60,8 +62,12 @@ export class Card {
 		this._image.src = this._link;
 
 		this.setEventListeners();
-			// console.log('2 cards owner = ',this._owner._id);
-			// console.log('2 cards user = ',this._user);
+
+			console.log('render(): cards  = ',this);
+			console.log('render(): owner = ',this._owner);
+
+			console.log('render(): owner._id = ',this._owner._id);
+			console.log('render(): user = ',this._user);
 
 		let myCard = (this._owner._id == this._user);
 

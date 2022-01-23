@@ -42,12 +42,16 @@ const userApi = new Api({
 //создаем инструкции для списка
 const createCard = (...args) => new Card(cardTemplate, handleCardClick, openConfirm, closeConfirm, ...args, api);
 
+let currentCardId;
 function renderer(item) {
     //проверка пользователя
-    console.log('renderer(item)');
+    console.log('renderer(item) = ',item);
+// debugger
+    let currentCardId = item._id;
+    console.log('currentCardId = ',currentCardId);
 
     // Создаем карточку и возвращаем ее шаблон
-    const newCardInitial = createCard(item.name, item.link, item.owner, user).render();
+    const newCardInitial = createCard(item.name, item.link, item.owner, user, currentCardId).render();
     this.addItem(newCardInitial);
 
     return newCardInitial;
@@ -125,19 +129,11 @@ let user;
 //запрос к серверу получаю нач данные для профайла пользователя
 userApi.getUser()
     .then((data) => {
-
-        debugger
         currentUser.setUserInfo({ name: data.name, about: data.about});
-
-        console.log('userApi.getUser():  data._id = ',data._id);
-
         user = data._id;
-
-        console.log('userApi.getUser():  user = ',user);
     })
     .catch(err => console.log(err));
 
-    console.log('after:  user = ',user);
 
 const userInfoPopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
 const userAvatarPopup = new PopupWithForm(popupEditProfileAvatar, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
@@ -207,7 +203,8 @@ function hanldeAddPlaceFormSubmit() {
 
     api.postCreateCard({name: placeNameInput.value, link: placeImgInput.value})
     .then((data) => {
-        cardList.addItem(createCard(data.name, data.link).render(), 'prepend');
+        // console.log('data = ',data._id);
+        cardList.addItem(createCard(data.name, data.link, data._id).render(), 'prepend');
     })
     .catch(err => console.log(err));
 
