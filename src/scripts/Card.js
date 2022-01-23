@@ -7,7 +7,8 @@ export class Card {
 		this._link = card.link;
 		this._owner = card.owner._id;
 		this._id = card._id;
-
+		this._likes = card.likes;
+// debugger
 		this._template = template;
 		this._handleCardClick = handleCardClick;
 		this._handleCardLikes = handleCardLikes;
@@ -54,20 +55,25 @@ export class Card {
 
 	render() {
 		this._createView();
+		debugger
+		console.log('this._likes = ',this._likes);
 
 		this._image = this._view.querySelector('.cards__img');
 		this._trash = this._view.querySelector('.cards__trash');
 		this._heart = this._view.querySelector('.cards__heart');
 		this._title = this._view.querySelector('.cards__title');
 		this._counter = this._view.querySelector('.cards__heart-counter');
+		this._likesSelector = this._view.querySelector('.cards__heart-counter');
 
 		this._title.innerText = this._text;
 		this._image.alt = this._text;
 		this._image.src = this._link;
+		this._likesSelector.textContent = this._likes.length;
 
 		this.setEventListeners();
 
-			console.log('render(): user = ',this._user);
+			// console.log('render(): user = ',this._user);
+			console.log('render(): this._likes.length = ',this._likes.length);
 
 // debugger
 

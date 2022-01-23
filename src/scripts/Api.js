@@ -55,5 +55,13 @@ export class Api {
       .then(onError);
   }
 
+  getLike() {
+    return fetch(this._url, {
+      headers: this._headers,
+      body: JSON.stringify()
+    })
+      .then(onError);
+  }
+
   // другие методы работы с API
 }
