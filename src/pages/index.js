@@ -40,19 +40,18 @@ const userApi = new Api({
 
 
 //создаем инструкции для списка
-const createCard = (...args) => new Card(cardTemplate, handleCardClick, openConfirm, closeConfirm, ...args, api);
+const createCard = (...args) => new Card(cardTemplate, handleCardClick, handleCardLikes, openConfirm, closeConfirm, ...args, api);
 
 let currentCardId;
 function renderer(item) {
     //проверка пользователя
     console.log('renderer(item) = ',item);
 // debugger
-    let currentCardId = item._id;
+     currentCardId = item._id;
     console.log('currentCardId = ',currentCardId);
 
     // Создаем карточку и возвращаем ее шаблон
-    // const newCardInitial = createCard(item.name, item.link, item.owner, user, currentCardId).render();
-    const newCardInitial = createCard(item, user, currentCardId).render();
+    const newCardInitial = createCard(item, user).render();
     this.addItem(newCardInitial);
 
     return newCardInitial;
@@ -126,6 +125,17 @@ function handleCardClick(text, link) {
     popupImage.openPopup(text, link); // <==  открываем попап ==
 }
 
+// лайки
+function handleCardLikes() {
+    this._heart.classList.toggle('cards__heart_active');
+    let heartCounter = this._counter.textContent;
+    let newHeartCounter;
+    // debugger
+    newHeartCounter = +heartCounter + 1;
+    heartCounter = newHeartCounter;
+    this._counter.textContent = heartCounter;
+}
+
 let user;
 //запрос к серверу получаю нач данные для профайла пользователя
 userApi.getUser()
@@ -156,9 +166,6 @@ function openPopupAvatarEdit() {
 
 //открываем попап для редактирования  профиля
 function openPopupProfileEdit() {
-
-
-
     editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
     //  передаем значение полей из формы
     const currentUserInfo = currentUser.getUserInfo();// получили данные текущего юзера кот выведены на стр
@@ -204,7 +211,7 @@ function hanldeAddPlaceFormSubmit() {
 
     api.postCreateCard({name: placeNameInput.value, link: placeImgInput.value})
     .then((data) => {
-        console.log('user = ',user);
+        console.log('api.postCreateCard: user = ',user);
         // console.log('data = ',data._id);
         cardList.addItem(createCard(data).render(), 'prepend');
     })

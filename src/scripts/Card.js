@@ -1,47 +1,46 @@
 'use strict'
 
 export class Card {
-	// constructor(template, handleCardClick, openConfirm, closeConfirm, text, link, owner, user, cardId, api) {
-	constructor(template, handleCardClick, openConfirm, closeConfirm, card, user, cardId, api) {
+	constructor(template, handleCardClick, handleCardLikes, openConfirm, closeConfirm, card, user, api) {
 		this._card = card;
-
 		this._text = card.name;
 		this._link = card.link;
 		this._owner = card.owner._id;
+		this._id = card._id;
 
 		this._template = template;
 		this._handleCardClick = handleCardClick;
+		this._handleCardLikes = handleCardLikes;
 		this._openConfirm = openConfirm;
 		this._closeConfirm = closeConfirm;
 
 		this._user = user;
 		this._api = api;
-		this._cardId = cardId;
 
 		// console.log('this = ',this);
-		console.log('constructor: this._cardId = ',this._cardId);
+		console.log('this._user = ',this._user);
 
 	}
 
 	_createView() {
 		this._view = this._template.content.querySelector('.cards__item').cloneNode(true);
-
 	}
 
+
 	_removeCard = (evt) => {
-		console.log('_removeCard: this._cardId = ',this._cardId);
+		console.log('_removeCard: this._cardId = ',this._id);
 
 		this._openConfirm();
 		const confirmBtn = document.querySelector('.confirmation-btn');
+
 		confirmBtn.addEventListener('click', (evt) => {
 			evt.preventDefault();//открываем окно подтверждения
-
-			this._api.deleteCard(this._cardId)
+// debugger
+			this._api.deleteCard(this._id)
 			.then(()=>{
-				this._view.remove(this._cardId); //удаляем карточку
-
+				this._view.remove(this._id); //удаляем карточку
 			})
-			.catch();
+			.catch(err => console.log(err));
 
 			this._closeConfirm();//закрываем окно подтверждения
 		});
@@ -50,17 +49,17 @@ export class Card {
 	setEventListeners() {
 		this._image.addEventListener('click', () => this._handleCardClick(this._text, this._link));
 		this._trash.addEventListener('click', (evt) => this._removeCard(evt));
-		this._heart.addEventListener('click', () => { this._heart.classList.toggle('cards__heart_active') });
+		this._heart.addEventListener('click', () => { this._handleCardLikes(this._id) });
 	}
 
 	render() {
 		this._createView();
 
-
 		this._image = this._view.querySelector('.cards__img');
 		this._trash = this._view.querySelector('.cards__trash');
 		this._heart = this._view.querySelector('.cards__heart');
 		this._title = this._view.querySelector('.cards__title');
+		this._counter = this._view.querySelector('.cards__heart-counter');
 
 		this._title.innerText = this._text;
 		this._image.alt = this._text;
@@ -68,11 +67,9 @@ export class Card {
 
 		this.setEventListeners();
 
-			console.log('render(): cards  = ',this);
-			console.log('render(): owner = ',this._owner);
-
-
 			console.log('render(): user = ',this._user);
+
+// debugger
 
 		let myCard = (this._owner == this._user);
 
@@ -83,13 +80,6 @@ export class Card {
     }
 
 		return this._view;
-	}
-
-	likeCard(){
-
-	}
-	dislikeCard(){
-
 	}
 
 }
