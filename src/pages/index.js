@@ -51,7 +51,8 @@ function renderer(item) {
     console.log('currentCardId = ',currentCardId);
 
     // Создаем карточку и возвращаем ее шаблон
-    const newCardInitial = createCard(item.name, item.link, item.owner, user, currentCardId).render();
+    // const newCardInitial = createCard(item.name, item.link, item.owner, user, currentCardId).render();
+    const newCardInitial = createCard(item, user, currentCardId).render();
     this.addItem(newCardInitial);
 
     return newCardInitial;
@@ -203,8 +204,9 @@ function hanldeAddPlaceFormSubmit() {
 
     api.postCreateCard({name: placeNameInput.value, link: placeImgInput.value})
     .then((data) => {
+        console.log('user = ',user);
         // console.log('data = ',data._id);
-        cardList.addItem(createCard(data.name, data.link, data._id).render(), 'prepend');
+        cardList.addItem(createCard(data).render(), 'prepend');
     })
     .catch(err => console.log(err));
 

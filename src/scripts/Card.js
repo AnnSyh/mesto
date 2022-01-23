@@ -1,14 +1,19 @@
 'use strict'
 
 export class Card {
-	constructor(template, handleCardClick, openConfirm, closeConfirm, text, link, owner, user, cardId, api) {
-		this._text = text;
-		this._link = link;
+	// constructor(template, handleCardClick, openConfirm, closeConfirm, text, link, owner, user, cardId, api) {
+	constructor(template, handleCardClick, openConfirm, closeConfirm, card, user, cardId, api) {
+		this._card = card;
+
+		this._text = card.name;
+		this._link = card.link;
+		this._owner = card.owner._id;
+
 		this._template = template;
 		this._handleCardClick = handleCardClick;
-		this._owner = owner;
 		this._openConfirm = openConfirm;
 		this._closeConfirm = closeConfirm;
+
 		this._user = user;
 		this._api = api;
 		this._cardId = cardId;
@@ -66,10 +71,10 @@ export class Card {
 			console.log('render(): cards  = ',this);
 			console.log('render(): owner = ',this._owner);
 
-			console.log('render(): owner._id = ',this._owner._id);
+
 			console.log('render(): user = ',this._user);
 
-		let myCard = (this._owner._id == this._user);
+		let myCard = (this._owner == this._user);
 
 		console.log('myCard = ',myCard );
 
