@@ -12,6 +12,8 @@ export class Api {
   constructor({ url, headers }) {
     this._url = url;
     this._headers = headers;
+
+    console.log('this._url = ',this._url);
   }
 
   getUser() {
@@ -55,10 +57,11 @@ export class Api {
       .then(onError);
   }
 
-  getLike() {
-    return fetch(this._url, {
+  postLike(id) {
+    // debugger
+    return fetch(`${this._url}/${id}/likes`, {
+      method: 'PUT',
       headers: this._headers,
-      body: JSON.stringify()
     })
       .then(onError);
   }

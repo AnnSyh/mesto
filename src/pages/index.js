@@ -49,6 +49,7 @@ function renderer(item) {
 // debugger
      currentCardId = item._id;
     console.log('currentCardId = ',currentCardId);
+    console.log('user = ',user);
 
     // Создаем карточку и возвращаем ее шаблон
     const newCardInitial = createCard(item, user).render();
@@ -125,16 +126,30 @@ function handleCardClick(text, link) {
     popupImage.openPopup(text, link); // <==  открываем попап ==
 }
 
-// лайки
-function handleCardLikes() {
+// кликаем лайки
+function handleCardLikes(cardId) {
+    console.log('handleCardLikes: cardId = ',cardId);
+debugger
     this._heart.classList.toggle('cards__heart_active');
-    let heartCounter = this._counter.textContent;
-    let newHeartCounter;
-    // debugger
-    newHeartCounter = +heartCounter + 1;
-    heartCounter = newHeartCounter;
-    this._counter.textContent = heartCounter;
+
+    api.postLike(cardId)
+    .then(()=>{
+        //проверить лайкала я эту карточку или нет
+
+         //отправить на сервер новый лайк
+         let heartCounter = this._counter.textContent;
+         let newHeartCounter;
+         // debugger
+         newHeartCounter = +heartCounter + 1;
+         heartCounter = newHeartCounter;
+         this._counter.textContent = heartCounter;
+    })
+    .catch(err => console.log(err));
+
+    // console.log('likesApi = ',likesApi);
 }
+
+
 
 let user;
 //запрос к серверу получаю нач данные для профайла пользователя
@@ -213,7 +228,7 @@ function hanldeAddPlaceFormSubmit() {
     .then((data) => {
         console.log('api.postCreateCard: user = ',user);
         // console.log('data = ',data._id);
-        cardList.addItem(createCard(data).render(), 'prepend');
+        cardList.addItem(createCard(data,user).render(), 'prepend');
     })
     .catch(err => console.log(err));
 

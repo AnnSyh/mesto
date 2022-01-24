@@ -55,7 +55,7 @@ export class Card {
 
 	render() {
 		this._createView();
-		debugger
+		// debugger
 		console.log('this._likes = ',this._likes);
 
 		this._image = this._view.querySelector('.cards__img');
@@ -73,7 +73,6 @@ export class Card {
 		this.setEventListeners();
 
 			// console.log('render(): user = ',this._user);
-			console.log('render(): this._likes.length = ',this._likes.length);
 
 // debugger
 
