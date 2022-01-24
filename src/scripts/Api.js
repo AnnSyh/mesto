@@ -48,8 +48,6 @@ export class Api {
   }
 
   deleteCard(id) {
-    console.log('deleteCard(id)');
-    // debugger
     return fetch(`${this._url}/${id}`, {
       method: 'DELETE',
       headers: this._headers
@@ -61,6 +59,15 @@ export class Api {
     // debugger
     return fetch(`${this._url}/${id}/likes`, {
       method: 'PUT',
+      headers: this._headers,
+    })
+      .then(onError);
+  }
+
+  deleteLike(id) {
+    // debugger
+    return fetch(`${this._url}/${id}/likes`, {
+      method: 'DELETE',
       headers: this._headers,
     })
       .then(onError);

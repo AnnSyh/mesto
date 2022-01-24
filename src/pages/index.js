@@ -46,10 +46,8 @@ let currentCardId;
 function renderer(item) {
     //проверка пользователя
     console.log('renderer(item) = ',item);
-// debugger
-     currentCardId = item._id;
-    console.log('currentCardId = ',currentCardId);
-    console.log('user = ',user);
+
+    currentCardId = item._id;
 
     // Создаем карточку и возвращаем ее шаблон
     const newCardInitial = createCard(item, user).render();
@@ -127,26 +125,45 @@ function handleCardClick(text, link) {
 }
 
 // кликаем лайки
-function handleCardLikes(cardId) {
-    console.log('handleCardLikes: cardId = ',cardId);
-debugger
+function handleCardLikes(cardId,cardLikes) {
     this._heart.classList.toggle('cards__heart_active');
 
-    api.postLike(cardId)
-    .then(()=>{
-        //проверить лайкала я эту карточку или нет
+    console.log('cardId = ',cardId);
+    console.log('cardLikes = ',cardLikes);
+    debugger
 
-         //отправить на сервер новый лайк
-         let heartCounter = this._counter.textContent;
-         let newHeartCounter;
-         // debugger
+    const even = (element) => element._id == user;
+
+    cardLikes.some(even);
+
+    console.log('cardLikes.some(even) = ',cardLikes.some(even));
+
+    let heartCounter = this._counter.textContent;
+    let newHeartCounter;
+
+    if( cardLikes.some(even)){
+            //отправить на сервер новый уменьшеный на 1 лайк
+            newHeartCounter = +heartCounter - 1;
+            heartCounter = newHeartCounter;
+            // this._counter.textContent = heartCounter;
+            api.deleteLike(cardId)
+            .then(()=>{
+                this._counter.textContent = heartCounter;
+            })
+            .catch(err => console.log(err));
+    } else {
+           //отправить на сервер новый увеличеный на 1 лайк
          newHeartCounter = +heartCounter + 1;
          heartCounter = newHeartCounter;
-         this._counter.textContent = heartCounter;
-    })
-    .catch(err => console.log(err));
+        //  this._counter.textContent = heartCounter;
+         api.postLike(cardId)
+         .then(()=>{
+            this._counter.textContent = heartCounter;
+         })
+         .catch(err => console.log(err));
+    }
 
-    // console.log('likesApi = ',likesApi);
+
 }
 
 
@@ -226,8 +243,6 @@ function hanldeAddPlaceFormSubmit() {
 
     api.postCreateCard({name: placeNameInput.value, link: placeImgInput.value})
     .then((data) => {
-        console.log('api.postCreateCard: user = ',user);
-        // console.log('data = ',data._id);
         cardList.addItem(createCard(data,user).render(), 'prepend');
     })
     .catch(err => console.log(err));

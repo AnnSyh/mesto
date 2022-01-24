@@ -50,7 +50,7 @@ export class Card {
 	setEventListeners() {
 		this._image.addEventListener('click', () => this._handleCardClick(this._text, this._link));
 		this._trash.addEventListener('click', (evt) => this._removeCard(evt));
-		this._heart.addEventListener('click', () => { this._handleCardLikes(this._id) });
+		this._heart.addEventListener('click', () => { this._handleCardLikes(this._id,this._likes) });
 	}
 
 	render() {
@@ -71,15 +71,9 @@ export class Card {
 		this._likesSelector.textContent = this._likes.length;
 
 		this.setEventListeners();
-
-			// console.log('render(): user = ',this._user);
-
 // debugger
-
 		let myCard = (this._owner == this._user);
-
-		console.log('myCard = ',myCard );
-
+		// console.log('myCard = ',myCard );
     if(!myCard){
 	         this._trash = this._view.querySelector('.cards__trash').classList.add("hidden");
     }
