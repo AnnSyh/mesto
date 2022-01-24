@@ -37,7 +37,7 @@ export class Api {
     console.log('Api: postAvatar(avatar)  avatar = ',avatar);
     console.log('Api: postAvatar(avatar): avatar.avatar-src = ',avatar['avatar-src']);
 
-    return fetch('this._url/avatar', {
+    return fetch(`${this._url}/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify(avatar['avatar-src'])
