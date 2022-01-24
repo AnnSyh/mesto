@@ -239,23 +239,19 @@ function hanldeConfirmFormSubmit(evt) {
 
 //сабмитим форму с аватаром
 function handleAvatarFormSubmit(evt, avatar) {
-
     // avatar = 'https://www.zarubejom.ru/wp-content/uploads/2020/02/%D1%83567787865.jpg'
-
     console.log('handleAvatarFormSubmit()');
     console.log('handleAvatarFormSubmit(): avatar = ',avatar);
 
-    debugger
-
     evt.preventDefault();
-
     //изменяем данные текущего юзера в соот с данными забитыми в форму
-    currentUser.setUserAvatar(avatar["avatar-src"]);
-
+    // currentUser.setUserAvatar(avatar["avatar-src"]);
     //отправляем новые данные пользователя на сервер
-
     userApi.postAvatar(avatar)
     .then(data => {
+
+console.log('userApi.postAvatar(avatar)');
+
         currentUser.setUserAvatar(avatar["avatar-src"]);
     })
     .catch(err => console.log(err));
