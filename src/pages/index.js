@@ -38,13 +38,6 @@ const userApi = new Api({
     }
 });
 
-// const avatarApi = new Api({
-//     url: 'https://mesto.nomoreparties.co/v1/cohort-34/users/me/avatar',
-//     headers: {
-//         authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e',
-//         'Content-Type': 'application/json'
-//     }
-// });
 
 
 //создаем инструкции для списка
@@ -173,14 +166,13 @@ function handleCardLikes(cardId,cardLikes) {
 
 let user;
 let avatar;
+
 //запрос к серверу получаю нач данные для профайла пользователя
 userApi.getUser()
     .then((data) => {
         currentUser.setUserInfo({ name: data.name, about: data.about});
         avatar = data.avatar;
         user = data._id;
-
-
         console.log('userApi.getUser(): avatar = ',avatar);
     })
     .catch(err => console.log(err));
@@ -239,20 +231,14 @@ function hanldeConfirmFormSubmit(evt) {
 
 //сабмитим форму с аватаром
 function handleAvatarFormSubmit(evt, avatar) {
-    // avatar = 'https://www.zarubejom.ru/wp-content/uploads/2020/02/%D1%83567787865.jpg'
-    console.log('handleAvatarFormSubmit()');
-    console.log('handleAvatarFormSubmit(): avatar = ',avatar);
-
+    // console.log('handleAvatarFormSubmit(): avatar = ',avatar);
     evt.preventDefault();
     //изменяем данные текущего юзера в соот с данными забитыми в форму
-    // currentUser.setUserAvatar(avatar["avatar-src"]);
     //отправляем новые данные пользователя на сервер
     userApi.postAvatar(avatar)
     .then(data => {
-
-console.log('userApi.postAvatar(avatar)');
-
-        currentUser.setUserAvatar(avatar["avatar-src"]);
+        // console.log('userApi.postAvatar(avatar)');
+        currentUser.setUserAvatar(avatar['avatar-src']);
     })
     .catch(err => console.log(err));
 

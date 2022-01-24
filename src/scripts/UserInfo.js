@@ -36,12 +36,9 @@ console.log('getUserInfo(): this = ',this);
 	}
 
 	setUserAvatar( avatar ) {
-		console.log('avatar = ',avatar);
-		console.log('this._userAvatarSelector = ',this._userAvatarSelector);
-		console.log('olld avatar - this._userAvatarSelector.src = ',this._userAvatarSelector.src);
+		console.log('setUserAvatar( avatar ): avatar = ',avatar);
+		console.log('setUserAvatar( avatar ): this._userAvatarSelector = ',this._userAvatarSelector);
 
 		this._userAvatarSelector.src = avatar;
-
-		console.log('new avatar 2- this._userAvatarSelector.src = ',this._userAvatarSelector.src);
 	}
 }

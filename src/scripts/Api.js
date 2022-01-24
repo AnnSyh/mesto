@@ -40,7 +40,10 @@ export class Api {
     return fetch(`${this._url}/avatar`, {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify(avatar['avatar-src'])
+      body: JSON.stringify({
+        avatar: avatar['avatar-src']
+      })
+
     })
       .then(onError);
   }
