@@ -38,6 +38,14 @@ const userApi = new Api({
     }
 });
 
+// const avatarApi = new Api({
+//     url: 'https://mesto.nomoreparties.co/v1/cohort-34/users/me/avatar',
+//     headers: {
+//         authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e',
+//         'Content-Type': 'application/json'
+//     }
+// });
+
 
 //создаем инструкции для списка
 const createCard = (...args) => new Card(cardTemplate, handleCardClick, handleCardLikes, openConfirm, closeConfirm, ...args, api);
@@ -45,7 +53,7 @@ const createCard = (...args) => new Card(cardTemplate, handleCardClick, handleCa
 let currentCardId;
 function renderer(item) {
     //проверка пользователя
-    console.log('renderer(item) = ',item);
+    console.log('renderer(item) ');
 
     currentCardId = item._id;
 
@@ -84,7 +92,10 @@ cardFormValidator.enableValidation();
 
 // -----------------------------------------------------------
 // Находим поля формы в DOM
+const submitAvatarBtn = document.querySelector('.submit-avatar-btn');
+
 const nameInput = document.querySelector('.popup__input_user-title');
+const avatarInput = document.querySelector('.popup__input_avatar-img');
 const jobInput = document.querySelector('.popup__input_user-subtitle');
 const placeNameInput = document.querySelector('.popup__input_plaсe-title');
 const placeImgInput = document.querySelector('.popup__input_plaсe-img');
@@ -128,69 +139,69 @@ function handleCardClick(text, link) {
 function handleCardLikes(cardId,cardLikes) {
     this._heart.classList.toggle('cards__heart_active');
 
-    console.log('cardId = ',cardId);
-    console.log('cardLikes = ',cardLikes);
-    debugger
+    // console.log('cardId = ',cardId);
+    // console.log('1 - cardLikes = ',cardLikes);
+    // console.log('1 - cardLikes.length = ',cardLikes.length);
+    // debugger
 
     const even = (element) => element._id == user;
-
-    cardLikes.some(even);
-
+    // cardLikes.some(even);
     console.log('cardLikes.some(even) = ',cardLikes.some(even));
 
     let heartCounter = this._counter.textContent;
     let newHeartCounter;
 
     if( cardLikes.some(even)){
+        // debugger
             //отправить на сервер новый уменьшеный на 1 лайк
-            newHeartCounter = +heartCounter - 1;
-            heartCounter = newHeartCounter;
-            // this._counter.textContent = heartCounter;
+
             api.deleteLike(cardId)
             .then(()=>{
-                this._counter.textContent = heartCounter;
+                this._counter.textContent = cardLikes.length;
             })
             .catch(err => console.log(err));
     } else {
            //отправить на сервер новый увеличеный на 1 лайк
-         newHeartCounter = +heartCounter + 1;
-         heartCounter = newHeartCounter;
-        //  this._counter.textContent = heartCounter;
+
          api.postLike(cardId)
          .then(()=>{
-            this._counter.textContent = heartCounter;
+             this._counter.textContent = cardLikes.length;
          })
          .catch(err => console.log(err));
     }
-
-
 }
 
-
-
 let user;
+let avatar;
 //запрос к серверу получаю нач данные для профайла пользователя
 userApi.getUser()
     .then((data) => {
         currentUser.setUserInfo({ name: data.name, about: data.about});
+        avatar = data.avatar;
         user = data._id;
+
+
+        console.log('userApi.getUser(): avatar = ',avatar);
     })
     .catch(err => console.log(err));
 
 
 const userInfoPopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
-const userAvatarPopup = new PopupWithForm(popupEditProfileAvatar, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
+const userAvatarPopup = new PopupWithForm(popupEditProfileAvatar, handleAvatarFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
 
 const currentUser = new UserInfo('profile__name', 'profile__job');
+
+const profileImg = document.querySelector('.profile__img');
+
 
 //открываем попап для редактирования  аватара
 //надо сделать проверку пользователя - редактировать может только авторизированный пользователь ???
 function openPopupAvatarEdit() {
     editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
+    // const currentUserAvatar = currentUser.getUserAvatar();// получили данные текущего юзера кот выведены на стр
+
     //  передаем значение полей из формы
-    const currentUserInfo = currentUser.getUserInfo();// получили данные текущего юзера кот выведены на стр
-    nameInput.value = currentUserInfo.name;// передали эти данные в поля формы
-    jobInput.value = currentUserInfo.about;
+    avatarInput.value = avatar;
 
     userAvatarPopup.openPopup(); // <==  открываем попап ==
     editFormValidator.toggleButtonState(); // проверить состояние кнопки при открытии формы
@@ -221,6 +232,33 @@ function hanldeConfirmFormSubmit(evt) {
     evt.preventDefault();
     const submitConfirmationBtn = document.querySelector('.confirmation .popup__btn');
     submitConfirmationBtn.addEventListener('click', console.log('click confirmation .popup__btn'))
+
+}
+
+
+
+//сабмитим форму с аватаром
+function handleAvatarFormSubmit(evt, avatar) {
+
+    // avatar = 'https://www.zarubejom.ru/wp-content/uploads/2020/02/%D1%83567787865.jpg'
+
+    console.log('handleAvatarFormSubmit()');
+    console.log('handleAvatarFormSubmit(): avatar = ',avatar);
+
+    debugger
+
+    evt.preventDefault();
+
+    //изменяем данные текущего юзера в соот с данными забитыми в форму
+    currentUser.setUserAvatar(avatar["avatar-src"]);
+
+    //отправляем новые данные пользователя на сервер
+
+    userApi.postAvatar(avatar)
+    .then(data => {
+        currentUser.setUserAvatar(avatar["avatar-src"]);
+    })
+    .catch(err => console.log(err));
 
 }
 

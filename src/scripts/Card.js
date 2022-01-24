@@ -19,7 +19,7 @@ export class Card {
 		this._api = api;
 
 		// console.log('this = ',this);
-		console.log('this._user = ',this._user);
+		// console.log('this._user = ',this._user);
 
 	}
 
@@ -56,7 +56,7 @@ export class Card {
 	render() {
 		this._createView();
 		// debugger
-		console.log('this._likes = ',this._likes);
+		// console.log('this._likes = ',this._likes);
 
 		this._image = this._view.querySelector('.cards__img');
 		this._trash = this._view.querySelector('.cards__trash');
