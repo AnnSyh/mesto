@@ -35,14 +35,14 @@ export class Api {
   postAvatar(avatar){
     console.log('Api: postAvatar(avatar)  this._url = ',this._url);
     console.log('Api: postAvatar(avatar)  avatar = ',avatar);
-    console.log('Api: postAvatar(avatar): avatar.avatar-src = ',avatar["avatar-src"]);
+    console.log('Api: postAvatar(avatar): avatar.avatar-src = ',avatar['avatar-src']);
 
-    console.log('Api: this._url = ',`${this._url}/${avatar["avatar-src"]}`);
+    console.log('Api: this._url = ',`${this._url}/${avatar['avatar-src']}`);
 
-    return fetch(`${this._url}/${avatar}`, {
+    return fetch(`${this._url}/${avatar['avatar-src']}`, {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify(avatar)
+      body: JSON.stringify(avatar['avatar-src'])
     })
       .then(onError);
   }
