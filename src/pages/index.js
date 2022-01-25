@@ -124,37 +124,22 @@ function handleCardClick(text, link) {
 
 // кликаем лайки
 function handleCardLikes(cardId,cardLikes) {
+
     this._heart.classList.toggle('cards__heart_active');
 
-    console.log('api = ',api);
-    console.log('this = ',this);
-    console.log('передаются в ф-ю  cardId = ',cardId);
-    console.log('передаются в ф-ю  cardLikes = ',cardLikes);
-
     const even = (element) => element._id == user;
-    // cardLikes.some(even);
-    console.log('cardLikes.some(even) = ',cardLikes.some(even));
-
-
     if( cardLikes.some(even)){
             //стереть из массива лайков карточки данные юзера лайкнувшего карточку
             api.deleteLike(cardId)
             .then((data)=>{
-                console.log('postLike:  data = ',data);
-                console.log('postLike:  data.likes = ',data.likes);
                 this._counter.textContent = data.likes.length;
-
             })
             .catch(err => console.log(err));
     } else {
            //записать в массив лайков карточки данные юзера лайкнувшего карточку
          api.postLike(cardId)
          .then((data)=>{
-            // console.log('postLike:  data = ',data);
-            // console.log('postLike:  data.likes = ',data.likes);
              this._counter.textContent = data.likes.length;
-            //  this._counter.textContent = 30;
-
          })
          .catch(err => console.log(err));
     }
