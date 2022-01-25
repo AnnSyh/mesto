@@ -96,6 +96,7 @@ const placeImgInput = document.querySelector('.popup__input_plaсe-img');
 // Находим переменные для функции openPopup()
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
+const profileImg = document.querySelector('.profile__img');
 
 // // находим список в кот надо встаивть карточки
 const cardsListElement = document.querySelector('.cards__list');
@@ -183,17 +184,21 @@ const userAvatarPopup = new PopupWithForm(popupEditProfileAvatar, handleAvatarFo
 
 const currentUser = new UserInfo('profile__name', 'profile__job');
 
-const profileImg = document.querySelector('.profile__img');
+
 
 
 //открываем попап для редактирования  аватара
 //надо сделать проверку пользователя - редактировать может только авторизированный пользователь ???
 function openPopupAvatarEdit() {
     editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
-    // const currentUserAvatar = currentUser.getUserAvatar();// получили данные текущего юзера кот выведены на стр
+    const currentUserAvatar = currentUser.getUserAvatar();// получили данные текущего аватара кот выведены на стр
+
+    console.log('avatar = ',avatar);
+    console.log('currentUserAvatar = ',currentUserAvatar);
 
     //  передаем значение полей из формы
-    avatarInput.value = avatar;
+    // avatarInput.value = avatar;
+    avatarInput.value = currentUserAvatar.avatar;
 
     userAvatarPopup.openPopup(); // <==  открываем попап ==
     editFormValidator.toggleButtonState(); // проверить состояние кнопки при открытии формы
