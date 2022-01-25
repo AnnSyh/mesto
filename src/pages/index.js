@@ -38,26 +38,19 @@ const userApi = new Api({
     }
 });
 
-
-
 //создаем инструкции для списка
 const createCard = (...args) => new Card(cardTemplate, handleCardClick, handleCardLikes, openConfirm, closeConfirm, ...args, api);
 
 let currentCardId;
 function renderer(item) {
     //проверка пользователя
-    console.log('renderer(item) ');
-
     currentCardId = item._id;
-
     // Создаем карточку и возвращаем ее шаблон
     const newCardInitial = createCard(item, user).render();
     this.addItem(newCardInitial);
-
     return newCardInitial;
 }
 //  /создаем список
-
 
 //создаем пустой список в который далее будем вставлять карточки
 const cardList = new Section({ data: [], renderer }, cardsListContainer);
@@ -172,7 +165,6 @@ let avatar;
 userApi.getUser()
     .then((data) => {
         currentUser.setUserInfo({ name: data.name, about: data.about});
-        // currentUser.setUserAvatar('https://www.zarubejom.ru/wp-content/uploads/2020/02/%D1%83567787865.jpg');
         avatar = data.avatar;
         currentUser.setUserAvatar(avatar);
         user = data._id;
