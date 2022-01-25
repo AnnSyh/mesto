@@ -1,16 +1,16 @@
 'use strict'
 
 import { configData } from "../utils/configData.js";
-import { Card } from "../scripts/Card.js";
-import { FormValidator } from "../scripts/FormValidator.js";
-import { Section } from '../scripts/Section.js';
-import { PopupWithImage } from '../scripts/PopupWithImage.js';
-import { PopupWithForm } from '../scripts/PopupWithForm.js';
-import { UserInfo } from '../scripts/UserInfo.js';
-import { Api } from '../scripts/Api.js';
+import { Card } from "../components/Card.js";
+import { FormValidator } from "../components/FormValidator.js";
+import { Section } from '../components/Section.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
+import { UserInfo } from '../components/UserInfo.js';
+import { Api } from '../components/Api.js';
 
 import '../pages/index.css';
-import { Popup } from "../scripts/Popup.js";
+import { Popup } from "../components/Popup.js";
 
 const curentPopupConfirmation = document.querySelector('.confirmation__popup');
 
@@ -18,9 +18,16 @@ const curentPopup = document.querySelector('.open-img__popup');
 const curentPopupImg = curentPopup.querySelector('.popup__img');
 const curentPopupCaption = curentPopup.querySelector('.popup__caption');
 
-// const cardsListTemplate = document.querySelector('.list-template').content;
 const cardsListContainer = document.querySelector('.list-template-place');
 const cardTemplate = document.querySelector('.card-template');
+
+const apiNew = new Api({
+    url: 'https://mesto.nomoreparties.co/v1/cohort-34/cards',
+    headers: {
+        authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e',
+        'Content-Type': 'application/json'
+    }
+});
 
 const api = new Api({
     url: 'https://mesto.nomoreparties.co/v1/cohort-34/cards',
@@ -39,7 +46,7 @@ const userApi = new Api({
 });
 
 //создаем инструкции для списка
-const createCard = (...args) => new Card(cardTemplate, handleCardClick, handleCardLikes, openConfirm, closeConfirm, ...args, api);
+const createCard = (...args) => new Card(cardTemplate, handleCardClick, openConfirm, closeConfirm, ...args, api);
 
 let currentCardId;
 function renderer(item) {
@@ -61,7 +68,7 @@ api.getInitialCards()
         //создаем список
         cardList.renderItems(data);
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(`WASTED - ${err}`));
 
 
 
@@ -78,25 +85,12 @@ cardFormValidator.enableValidation();
 
 // -----------------------------------------------------------
 // Находим поля формы в DOM
-const submitAvatarBtn = document.querySelector('.submit-avatar-btn');
-
 const nameInput = document.querySelector('.popup__input_user-title');
 const avatarInput = document.querySelector('.popup__input_avatar-img');
 const jobInput = document.querySelector('.popup__input_user-subtitle');
 const placeNameInput = document.querySelector('.popup__input_plaсe-title');
 const placeImgInput = document.querySelector('.popup__input_plaсe-img');
 
-// Находим переменные для функции openPopup()
-const profileName = document.querySelector('.profile__name');
-const profileJob = document.querySelector('.profile__job');
-const profileImg = document.querySelector('.profile__img');
-
-// // находим список в кот надо встаивть карточки
-const cardsListElement = document.querySelector('.cards__list');
-//Находим кнопку 'Сохранить' в форме
-const popupBtn = document.querySelector('.popup__btn');
-// находим все попапы
-const popups = document.querySelectorAll('.popup');
 // находим кнопки кот вызывают всплытие/закрытие окна-редактирования
 const profileBtnEdit = document.querySelector('.btn-user-edit');
 const profileAvatarEdit = document.querySelector('.btn-avatar-edit');
@@ -122,29 +116,6 @@ function handleCardClick(text, link) {
     popupImage.openPopup(text, link); // <==  открываем попап ==
 }
 
-// кликаем лайки
-function handleCardLikes(cardId,cardLikes) {
-
-    this._heart.classList.toggle('cards__heart_active');
-
-    const even = (element) => element._id == user;
-    if( cardLikes.some(even)){
-            //стереть из массива лайков карточки данные юзера лайкнувшего карточку
-            api.deleteLike(cardId)
-            .then((data)=>{
-                this._counter.textContent = data.likes.length;
-            })
-            .catch(err => console.log(err));
-    } else {
-           //записать в массив лайков карточки данные юзера лайкнувшего карточку
-         api.postLike(cardId)
-         .then((data)=>{
-             this._counter.textContent = data.likes.length;
-         })
-         .catch(err => console.log(err));
-    }
-}
-
 let user;
 let avatar;
 
@@ -156,7 +127,7 @@ userApi.getUser()
         currentUser.setUserAvatar(avatar);
         user = data._id;
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(`WASTED - ${err}`));
 
 
 const userInfoPopup = new PopupWithForm(popupEditProfileSelector, handleProfileFormSubmit);  // <==  создаем эл-т класса PopupWithForm ==
@@ -224,7 +195,7 @@ function handleAvatarFormSubmit(evt, avatar) {
         // console.log('userApi.postAvatar(avatar)');
         currentUser.setUserAvatar(avatar['avatar-src']);
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(`WASTED - ${err}`));
 
 }
 
@@ -238,7 +209,7 @@ function handleProfileFormSubmit(evt, { title, subtitle }) {
     .then(data => {
         currentUser.setUserInfo({ name: title, about: subtitle });
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(`WASTED - ${err}`));
 }
 
 function hanldeAddPlaceFormSubmit() {
@@ -249,7 +220,7 @@ function hanldeAddPlaceFormSubmit() {
     .then((data) => {
         cardList.addItem(createCard(data,user).render(), 'prepend');
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(`WASTED - ${err}`));
 
 }
 
@@ -257,3 +228,8 @@ function hanldeAddPlaceFormSubmit() {
 profileBtnEdit.addEventListener('click', openPopupProfileEdit);
 profileAvatarEdit.addEventListener('click', openPopupAvatarEdit);
 profileBtnAdd.addEventListener('click', openPopupProfileAdd);
+
+//событие на загрузку стр
+document.addEventListener('load', () =>{
+    console.log('load!!!')
+} )
