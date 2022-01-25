@@ -73,7 +73,7 @@ export class Api {
 
   postLike(id) {
     console.log(' postLike(id)');
-    debugger
+    // debugger
     console.log('url = ',`${this._url}/${id}/likes`);
     return fetch(`${this._url}/${id}/likes`, {
       method: 'PUT',

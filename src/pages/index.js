@@ -126,33 +126,35 @@ function handleCardClick(text, link) {
 function handleCardLikes(cardId,cardLikes) {
     this._heart.classList.toggle('cards__heart_active');
 
-    // console.log('cardId = ',cardId);
-    // console.log('1 - cardLikes = ',cardLikes);
-    // console.log('1 - cardLikes.length = ',cardLikes.length);
-    // debugger
+    console.log('api = ',api);
+    console.log('this = ',this);
+    console.log('передаются в ф-ю  cardId = ',cardId);
+    console.log('передаются в ф-ю  cardLikes = ',cardLikes);
 
     const even = (element) => element._id == user;
     // cardLikes.some(even);
     console.log('cardLikes.some(even) = ',cardLikes.some(even));
 
-    let heartCounter = this._counter.textContent;
-    let newHeartCounter;
 
     if( cardLikes.some(even)){
-        // debugger
-            //отправить на сервер новый уменьшеный на 1 лайк
-
+            //стереть из массива лайков карточки данные юзера лайкнувшего карточку
             api.deleteLike(cardId)
-            .then(()=>{
-                this._counter.textContent = cardLikes.length;
+            .then((data)=>{
+                console.log('postLike:  data = ',data);
+                console.log('postLike:  data.likes = ',data.likes);
+                this._counter.textContent = data.likes.length;
+
             })
             .catch(err => console.log(err));
     } else {
-           //отправить на сервер новый увеличеный на 1 лайк
-
+           //записать в массив лайков карточки данные юзера лайкнувшего карточку
          api.postLike(cardId)
-         .then(()=>{
-             this._counter.textContent = cardLikes.length;
+         .then((data)=>{
+            // console.log('postLike:  data = ',data);
+            // console.log('postLike:  data.likes = ',data.likes);
+             this._counter.textContent = data.likes.length;
+            //  this._counter.textContent = 30;
+
          })
          .catch(err => console.log(err));
     }
@@ -168,7 +170,6 @@ userApi.getUser()
         avatar = data.avatar;
         currentUser.setUserAvatar(avatar);
         user = data._id;
-        console.log('userApi.getUser(): avatar = ',avatar);
     })
     .catch(err => console.log(err));
 
@@ -187,11 +188,10 @@ function openPopupAvatarEdit() {
     editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
     const currentUserAvatar = currentUser.getUserAvatar();// получили данные текущего аватара кот выведены на стр
 
-    console.log('avatar = ',avatar);
-    console.log('currentUserAvatar = ',currentUserAvatar);
+    // console.log('avatar = ',avatar);
+    // console.log('currentUserAvatar = ',currentUserAvatar);
 
     //  передаем значение полей из формы
-    // avatarInput.value = avatar;
     avatarInput.value = currentUserAvatar.avatar;
 
     userAvatarPopup.openPopup(); // <==  открываем попап ==
