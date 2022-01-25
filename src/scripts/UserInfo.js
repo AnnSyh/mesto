@@ -36,9 +36,6 @@ console.log('getUserInfo(): this = ',this);
 	}
 
 	setUserAvatar( avatar ) {
-		console.log('setUserAvatar( avatar ): avatar = ',avatar);
-		console.log('setUserAvatar( avatar ): this._userAvatarSelector = ',this._userAvatarSelector);
-
 		this._userAvatarSelector.src = avatar;
 	}
 }

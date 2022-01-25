@@ -172,7 +172,9 @@ let avatar;
 userApi.getUser()
     .then((data) => {
         currentUser.setUserInfo({ name: data.name, about: data.about});
+        // currentUser.setUserAvatar('https://www.zarubejom.ru/wp-content/uploads/2020/02/%D1%83567787865.jpg');
         avatar = data.avatar;
+        currentUser.setUserAvatar(avatar);
         user = data._id;
         console.log('userApi.getUser(): avatar = ',avatar);
     })
