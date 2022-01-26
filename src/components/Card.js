@@ -28,7 +28,7 @@ _handleCardLikes() {
 
 	const even = (element) => (element._id == this._user);
 	if( this._likes.some(even)){
-     console.log('этот пользователь уже лайкал');
+    //  console.log('этот пользователь уже лайкал');
 			this._api
 			.deleteLike(this._id)
 			.then((data)=>{
@@ -37,7 +37,7 @@ _handleCardLikes() {
 	      this._likes = data.likes; // обновляем массив лайков после клика
       });
 	} else {
-		console.log('этот пользователь еще не лайкал');
+		// console.log('этот пользователь еще не лайкал');
 		this._api
 	 .postLike(this._id)
 	 .then((data)=>{
@@ -58,12 +58,18 @@ _handleCardLikes() {
 
 		confirmBtn.addEventListener('click', (evt) => {
 			evt.preventDefault();//открываем окно подтверждения
-// debugger
-			this._api.deleteCard(this._id)
+debugger
+      confirmBtn.textContent = 'Удаляется...'
+
+console.log('this._api = ',this._api)
+
+			this._api
+			.deleteCard(this._id)
 			.then(()=>{
 				this._view.remove(this._id); //удаляем карточку
 			})
-			.catch(err => console.log(`WASTED - ${err}`));
+			.catch(error => console.log(`WASTED - ${error}`))
+			.finally(() => (confirmBtn.textContent = 'Да'));
 
 			this._closeConfirm();//закрываем окно подтверждения
 		});
@@ -72,32 +78,26 @@ _handleCardLikes() {
 	setEventListeners() {
 		this._image.addEventListener('click', () => this._handleCardClick(this._text, this._link));
 		this._trash.addEventListener('click', (evt) => this._removeCard(evt));
-		// this._heart.addEventListener('click', () => { this._handleCardLikes(this._id,this._likes) });
 		this._heart.addEventListener('click', () => { this._handleCardLikes()});
 	}
 
 	_isLiked(card){
-		console.log('	isLiked()   card = ',card);
 		// проверяет поставлен ли мной лайк или нет
 		card._likes.forEach((element)=>{
-			   console.log('element._id = ',element._id);
-			   console.log('this._user = ',this._user);
 
         if(element._id == this._user){
-					console.log('лайки содержат текущего юзера');
+					// console.log('лайки содержат текущего юзера');
           this._heart.classList.add('cards__heart_active');
 				} else {
-					console.log('лайки не содержат текущего юзера');
+					// console.log('лайки не содержат текущего юзера');
 					this._heart.classList.remove('cards__heart_active');
 				}
 		});
 	}
 
 	render() {
-		console.log('render() !!!   this = ',this);
 		this._createView();
 		// debugger
-		// console.log('this._likes = ',this._likes);
 
 		this._image = this._view.querySelector('.cards__img');
 		this._trash = this._view.querySelector('.cards__trash');
@@ -115,7 +115,7 @@ _handleCardLikes() {
 
 // debugger
 		let myCard = (this._owner == this._user);
-		console.log('myCard = ',myCard );
+		// console.log('myCard = ',myCard );
     if(!myCard){
 	         this._trash = this._view.querySelector('.cards__trash').classList.add("hidden");
     }

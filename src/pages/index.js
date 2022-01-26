@@ -144,9 +144,6 @@ function openPopupAvatarEdit() {
     editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
     const currentUserAvatar = currentUser.getUserAvatar();// получили данные текущего аватара кот выведены на стр
 
-    // console.log('avatar = ',avatar);
-    // console.log('currentUserAvatar = ',currentUserAvatar);
-
     //  передаем значение полей из формы
     avatarInput.value = currentUserAvatar.avatar;
 
@@ -204,23 +201,26 @@ function handleProfileFormSubmit(evt, { title, subtitle }) {
     currentUser.setUserInfo({ name: title, about: subtitle });
 
     //отправляем новые данные пользователя на сервер
-
+    popupEditProfileSelector.querySelector('.popup__btn').textContent = 'Сохраняется...';
     userApi.postUser({ name: title, about: subtitle })
     .then(data => {
         currentUser.setUserInfo({ name: title, about: subtitle });
     })
-    .catch(err => console.log(`WASTED - ${err}`));
+    .catch(err => console.log(`WASTED - ${err}`))
+    .finally(() => (popupEditProfileSelector.querySelector('.popup__btn').textContent = 'Сохранить'));
 }
 
 function hanldeAddPlaceFormSubmit() {
     //создаем нов карточку в соот с данными забитыми в форму
     //отправляем данные новой карточки на сервер
 
+    popupEditProfileSelector.querySelector('.popup__btn').textContent = 'Сохраняется...';
     api.postCreateCard({name: placeNameInput.value, link: placeImgInput.value})
     .then((data) => {
         cardList.addItem(createCard(data,user).render(), 'prepend');
     })
-    .catch(err => console.log(`WASTED - ${err}`));
+    .catch(err => console.log(`WASTED - ${err}`))
+    .finally(() => (popupEditProfileSelector.querySelector('.popup__btn').textContent = 'Сохранить'));
 
 }
 
@@ -228,8 +228,3 @@ function hanldeAddPlaceFormSubmit() {
 profileBtnEdit.addEventListener('click', openPopupProfileEdit);
 profileAvatarEdit.addEventListener('click', openPopupAvatarEdit);
 profileBtnAdd.addEventListener('click', openPopupProfileAdd);
-
-//событие на загрузку стр
-document.addEventListener('load', () =>{
-    console.log('load!!!')
-} )

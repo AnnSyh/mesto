@@ -7,13 +7,9 @@ export class UserInfo {
 		this._userAboutSelector = userAboutSelector;
 		this._userAvatarSelector = document.querySelector('.profile__img');
 
-
-
 		this._containerProfileName = document.querySelector('.' + this._userNameSelector);
 		this._containerProfileJob = document.querySelector('.' + this._userAboutSelector);
-
-
-console.log('getUserInfo(): this = ',this);
+// console.log('getUserInfo(): this = ',this);
 	}
 
 	getUserInfo() {

@@ -12,8 +12,6 @@ export class Api {
   constructor({ url, headers }) {
     this._url = url;
     this._headers = headers;
-
-    console.log('this._url = ',this._url);
   }
 
   getUser() {
@@ -24,7 +22,6 @@ export class Api {
       .then(onError);
   }
   postUser(user){
-    console.log('Api: postUser(user)');
     return fetch(this._url, {
       method: 'PATCH',
       headers: this._headers,
@@ -33,17 +30,12 @@ export class Api {
       .then(onError);
   }
   postAvatar(avatar){
-    console.log('Api: postAvatar(avatar)  this._url = ',this._url);
-    console.log('Api: postAvatar(avatar)  avatar = ',avatar);
-    console.log('Api: postAvatar(avatar): avatar.avatar-src = ',avatar['avatar-src']);
-
     return fetch(`${this._url}/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         avatar: avatar['avatar-src']
       })
-
     })
       .then(onError);
   }
@@ -63,7 +55,7 @@ export class Api {
   }
 
   deleteCard(id) {
-    console.log('url = ',`${this._url}/${id}`);
+    // console.log('url = ',`${this._url}/${id}`);
     return fetch(`${this._url}/${id}`, {
       method: 'DELETE',
       headers: this._headers
@@ -72,9 +64,7 @@ export class Api {
   }
 
   postLike(id) {
-    console.log(' postLike(id)');
-    // debugger
-    console.log('url = ',`${this._url}/${id}/likes`);
+    // console.log('url = ',`${this._url}/${id}/likes`);
     return fetch(`${this._url}/${id}/likes`, {
       method: 'PUT',
       headers: this._headers,
@@ -83,7 +73,6 @@ export class Api {
   }
 
   deleteLike(id) {
-    console.log(' deleteLike(id)');
     // debugger
     return fetch(`${this._url}/${id}/likes`, {
       method: 'DELETE',

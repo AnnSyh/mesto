@@ -54,7 +54,7 @@ export class FormValidator {
 		this._inputList.forEach((inputElement) => {
 			inputElement.addEventListener('input', () => {
 				this._checkInputValidity(inputElement);
-				// чтобы проверять его при изменении любого из 
+				// чтобы проверять его при изменении любого из
 				this.toggleButtonState();
 			});
 		});
@@ -66,7 +66,7 @@ export class FormValidator {
 
 	_hasInvalidInput = () => {
 		return Array.from(this._inputList).some((inputElement) => {
-			console.log('!inputElement.validity.valid = ', !inputElement.validity.valid);
+			// console.log('!inputElement.validity.valid = ', !inputElement.validity.valid);
 			return !inputElement.validity.valid;
 		});
 	};
@@ -79,7 +79,7 @@ export class FormValidator {
 
 	//В нем Вы будете пробегаться по  this._inputList и очищать ошибки с инпутов.
 	resetValidation = () => {
-		this._formElement.reset(); // <==очищаем форму ==		
+		this._formElement.reset(); // <==очищаем форму ==
 		this.toggleButtonState(); // <== управляем кнопкой ==
 		//Очищаем ошибки
 		this._inputList.forEach((inputElement) => {
