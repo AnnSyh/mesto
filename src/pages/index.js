@@ -21,24 +21,8 @@ const curentPopupCaption = curentPopup.querySelector('.popup__caption');
 const cardsListContainer = document.querySelector('.list-template-place');
 const cardTemplate = document.querySelector('.card-template');
 
-const apiNew = new Api({
-    url: 'https://mesto.nomoreparties.co/v1/cohort-34/cards',
-    headers: {
-        authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e',
-        'Content-Type': 'application/json'
-    }
-});
-
 const api = new Api({
-    url: 'https://mesto.nomoreparties.co/v1/cohort-34/cards',
-    headers: {
-        authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e',
-        'Content-Type': 'application/json'
-    }
-});
-
-const userApi = new Api({
-    url: 'https://mesto.nomoreparties.co/v1/cohort-34/users/me',
+    url: 'https://mesto.nomoreparties.co/v1/cohort-34',
     headers: {
         authorization: '1690dfea-cbda-42f6-a87e-a16c1f76892e',
         'Content-Type': 'application/json'
@@ -120,7 +104,7 @@ let user;
 let avatar;
 
 //запрос к серверу получаю нач данные для профайла пользователя
-userApi.getUser()
+api.getUser()
     .then((data) => {
         currentUser.setUserInfo({ name: data.name, about: data.about});
         avatar = data.avatar;
@@ -187,9 +171,9 @@ function handleAvatarFormSubmit(evt, avatar) {
     evt.preventDefault();
     //изменяем данные текущего юзера в соот с данными забитыми в форму
     //отправляем новые данные пользователя на сервер
-    userApi.postAvatar(avatar)
+    api.postAvatar(avatar)
     .then(data => {
-        // console.log('userApi.postAvatar(avatar)');
+        // console.log('api.postAvatar(avatar)');
         currentUser.setUserAvatar(avatar['avatar-src']);
     })
     .catch(err => console.log(`WASTED - ${err}`));
@@ -202,7 +186,7 @@ function handleProfileFormSubmit(evt, { title, subtitle }) {
 
     //отправляем новые данные пользователя на сервер
     popupEditProfileSelector.querySelector('.popup__btn').textContent = 'Сохраняется...';
-    userApi.postUser({ name: title, about: subtitle })
+    api.postUser({ name: title, about: subtitle })
     .then(data => {
         currentUser.setUserInfo({ name: title, about: subtitle });
     })
