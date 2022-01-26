@@ -8,7 +8,7 @@ export class Card {
 		this._owner = card.owner._id;
 		this._id = card._id;
 		this._likes = card.likes;
-// debugger
+
 		this._template = template;
 		this._handleCardClick = handleCardClick;
 		this._openConfirm = openConfirm;
@@ -16,58 +16,38 @@ export class Card {
 
 		this._user = user;
 		this._api = api;
-
-		console.log('this = ',this);
-		console.log('this._likes = ',this._likes);
-
 	}
 
 	_createView() {
 		this._view = this._template.content.querySelector('.cards__item').cloneNode(true);
 	}
 
-
-
-
-
-//новый массив лайков после клика
-
-
 	// кликаем лайки
-_handleCardLikes(cardId,cardLikes) {
-	console.log('	_handleCardLikes(cardId,cardLikes)');
-	console.log('	cardId = ',cardId);
-	console.log('	изначальное кол-во cardLikes = ',cardLikes);
-
+_handleCardLikes() {
+	this._heart.classList.toggle('cards__heart_active'); //меняем акт класс сердечка
 
 	const even = (element) => (element._id == this._user);
-	if( cardLikes.some(even)){
-					//стереть из массива лайков карточки данные юзера лайкнувшего карточку
-					this._api
-					    .deleteLike(cardId)
-					    .then((data)=>{
-						// debugger
-						console.log('api.deleteLike = ',this._heart);
-						this._heart.classList.remove('cards__heart_active'); //добавляем акт класс сердечка
-						this._counter.textContent = data.likes.length;
-						console.log('новое кол-во data.likes = ',data.likes);
-						this._isLikes();
-					})
-					.catch(err => console.log(`WASTED - ${err}`));
+	if( this._likes.some(even)){
+     console.log('этот пользователь уже лайкал');
+			this._api
+			.deleteLike(this._id)
+			.then((data)=>{
+	      this._heart.classList.remove('cards__heart_active'); //добавляем акт класс сердечка
+	      this._counter.textContent = data.likes.length; // выводим кол-во кликов в карточку
+	      this._likes = data.likes; // обновляем массив лайков после клика
+      });
 	} else {
-				 //записать в массив лайков карточки данные юзера лайкнувшего карточку
-			 this._api
-			 .postLike(cardId)
-			 .then((data)=>{
-				// debugger
-				console.log('api.postLike = ',this._heart);
-				   this._heart.classList.add('cards__heart_active');//удаляем акт класс сердечка
-					 this._counter.textContent = data.likes.length;
-					 console.log('новое кол-во data.likes = ',data.likes);
-					 this._isLikes();
-			 })
-			 .catch(err => console.log(`WASTED - ${err}`));
+		console.log('этот пользователь еще не лайкал');
+		this._api
+	 .postLike(this._id)
+	 .then((data)=>{
+			 this._heart.classList.add('cards__heart_active');//удаляем акт класс сердечка
+			 this._counter.textContent = data.likes.length;  // выводим кол-во кликов в карточку
+			 this._likes = data.likes; // обновляем массив лайков после клика
+	  })
+	  .catch(err => console.log(`WASTED - ${err}`));
 	}
+
 }
 
 	_removeCard = (evt) => {
@@ -92,26 +72,29 @@ _handleCardLikes(cardId,cardLikes) {
 	setEventListeners() {
 		this._image.addEventListener('click', () => this._handleCardClick(this._text, this._link));
 		this._trash.addEventListener('click', (evt) => this._removeCard(evt));
-		this._heart.addEventListener('click', () => { this._handleCardLikes(this._id,this._likes) });
+		// this._heart.addEventListener('click', () => { this._handleCardLikes(this._id,this._likes) });
+		this._heart.addEventListener('click', () => { this._handleCardLikes()});
 	}
 
-
-	_isLikes(){
-		console.log('	isLikes()');
+	_isLiked(card){
+		console.log('	isLiked()   card = ',card);
 		// проверяет поставлен ли мной лайк или нет
+		card._likes.forEach((element)=>{
+			   console.log('element._id = ',element._id);
+			   console.log('this._user = ',this._user);
 
-			const even = (element) => (element._id == this._user);
-
-			if ( this._likes.some(even) ){
-				console.log('лайки не содержат текущего юзера');
-			} else {
-				console.log('лайки содержат текущего юзера');
-			}
-
+        if(element._id == this._user){
+					console.log('лайки содержат текущего юзера');
+          this._heart.classList.add('cards__heart_active');
+				} else {
+					console.log('лайки не содержат текущего юзера');
+					this._heart.classList.remove('cards__heart_active');
+				}
+		});
 	}
 
 	render() {
-		console.log('render() !!!');
+		console.log('render() !!!   this = ',this);
 		this._createView();
 		// debugger
 		// console.log('this._likes = ',this._likes);
@@ -131,15 +114,12 @@ _handleCardLikes(cardId,cardLikes) {
 		this.setEventListeners();
 
 // debugger
-
 		let myCard = (this._owner == this._user);
 		console.log('myCard = ',myCard );
     if(!myCard){
 	         this._trash = this._view.querySelector('.cards__trash').classList.add("hidden");
     }
-
-		// this._isLikes();
-
+		this._isLiked(this); //проверяю есть ли лайкнутые пользователем карточки и закрашиваю сердечки в случае если есть
 		return this._view;
 	}
 
