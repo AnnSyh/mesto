@@ -9,6 +9,8 @@ export class Card {
 		this._id = card._id;
 		this._likes = card.likes;
 
+		// const confirmBtn = document.querySelector('.confirmation-btn');
+
 
 		this._template = template;
 		this._handleCardClick = handleCardClick;
@@ -51,32 +53,35 @@ _handleCardLikes() {
 
 }
 
+
+
+_confirmFunctionDelete(evt){
+	console.log('confirmFunctionDelete');
+	evt.preventDefault();// убираем авт отправление формы
+	const confirmBtn = document.querySelector('.confirmation-btn');
+	// debugger
+				confirmBtn.textContent = 'Удаляется...';
+
+				this._api
+				.deleteCard(this._id)  //удаляем карточку из базы
+				.then((data)=>{
+					this._view.remove(); //удаляем  карточку из dom
+					this._view = null;
+				})
+				.catch(error => console.log(`WASTED - ${error}`))
+				.finally(() => confirmBtn.textContent = 'Да');
+
+				this._closeConfirm();//закрываем окно подтверждения
+}
+
 	_removeCard = (evt) => {
 		console.log('_removeCard: this._cardId = ',this._id);
 
 		this._openConfirm();//открываем окно подтверждения
 		const confirmBtn = document.querySelector('.confirmation-btn');
 
-		const confirmFunctionTest = (evt) => {
-			console.log('confirmFunctionTest');
-			evt.preventDefault();// убираем авт отправление формы
-			// debugger
-						confirmBtn.textContent = 'Удаляется...';
-
-						this._api
-						.deleteCard(this._id)  //удаляем карточку из базы
-						.then((data)=>{
-							this._view.remove(); //удаляем  карточку из dom
-							this._view = null;
-						})
-						.catch(error => console.log(`WASTED - ${error}`))
-						.finally(() => confirmBtn.textContent = 'Да');
-
-						this._closeConfirm();//закрываем окно подтверждения
-		}
-// debugger
-		confirmBtn.addEventListener('click', (evt) => confirmFunctionTest(evt));
-		confirmBtn.removeEventListener('click', (evt) => confirmFunctionTest(evt));
+		confirmBtn.addEventListener('click',  this._confirmFunctionDelete(evt));
+		confirmBtn.removeEventListener('click', this._confirmFunctionDelete(evt));
 	}
 
 	setEventListeners() {
@@ -118,7 +123,6 @@ _handleCardLikes() {
 		this._likesSelector.textContent = this._likes.length;
 
 		this.setEventListeners();
-		// this._btn.removeEventListener('click', (evt) => confirmFunctionTest(evt));
 
 
 // debugger
