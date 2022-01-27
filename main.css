@@ -4,13 +4,16 @@
 
 .content__section{margin:0 auto;width:100%}
 .section{box-sizing:border-box}
+.hidden{display:none}
 .profile{align-items:center;display:flex;flex-direction:column;justify-content:space-between;margin-bottom:36px;padding:0 20px}@media screen and (min-width:768px){.profile{flex-direction:row;margin-bottom:50px}}@media screen and (min-width:930px){.profile{padding:0}}
 .profile__user{align-items:center;display:flex;flex-direction:column;justify-content:flex-start;margin-bottom:33px}@media screen and (min-width:768px){.profile__user{flex-direction:row;margin-bottom:0}}
 .profile__info{margin-right:0;text-align:center}@media screen and (min-width:768px){.profile__info{display:flex;flex-direction:column;margin-right:30px;text-align:left}}
-.profile__img{border-radius:50%;height:auto;margin-bottom:25px;max-width:120px;width:100%}@media screen and (min-width:768px){.profile__img{height:120px;margin-bottom:0;margin-right:30px;width:120px}}
+.profile__img{border-radius:50%;height:auto;margin-bottom:25px;max-width:120px;-o-object-fit:cover;object-fit:cover;position:relative;width:100%;z-index:-1}@media screen and (min-width:768px){.profile__img{height:120px;margin-bottom:0;width:120px}}
+.profile__pic{position:relative}@media screen and (min-width:768px){.profile__pic{margin-right:30px}}.btn-avatar-edit button{opacity:0}.btn-avatar-edit:hover{background-repeat:repeat;cursor:pointer}.btn-avatar-edit:hover button{cursor:pointer;opacity:1}
 .profile__btn{align-items:center;background:transparent;border:1px solid #fff;color:#fff;cursor:pointer;display:flex;height:50px;justify-content:center;position:relative;width:100%}@media screen and (min-width:480px){.profile__btn{max-width:150px;width:150px}}
 .profile__btn_user-add{border-radius:2px;position:relative}.profile__btn_user-add:after,.profile__btn_user-add:before{background:#fff;content:"";height:3px;position:absolute;width:23px}.profile__btn_user-add:after{transform:rotate(90deg)}.profile__btn_user-add:before{transform:rotate(180deg)}
 .profile__btn_user-edit{height:20px;margin-left:20px;position:relative;width:20px}.profile__btn_user-edit:after,.profile__btn_user-edit:before{background:#fff;content:"";height:2px;position:absolute;width:2px}.profile__btn_user-edit:before{right:0;top:7px;transform:rotate(-45deg);width:15px}.profile__btn_user-edit:after{bottom:2px;left:2px}@media screen and (min-width:480px){.profile__btn_user-edit{height:24px;margin-left:24px;width:24px}.profile__btn_user-edit:after,.profile__btn_user-edit:before{height:3px;width:3px}.profile__btn_user-edit:before{right:2px;top:8px;transform:rotate(-45deg);width:15px}.profile__btn_user-edit:after{bottom:3px;left:3px}}
+.profile__btn_avatar-edit{border:none;left:calc(50% - 10px);margin:0;position:absolute;top:calc(50% - 10px)}
 .profile__edit{align-items:center;display:flex;margin-bottom:10px}
 .profile__name{font-size:27px;font-weight:500;line-height:32px;margin:0;max-width:200px}@media screen and (min-width:480px){.profile__name{font-size:42px;line-height:48px;max-width:345px}}@media screen and (min-width:1200px){.profile__name{max-width:490px}}
 .profile__job{font-size:14px;font-weight:400;line-height:16px;margin:8px 0 0;max-width:240px}@media screen and (min-width:480px){.profile__job{font-size:18px;line-height:18px;margin:auto 0 0;max-width:345px}}@media screen and (min-width:1200px){.profile__job{max-width:490px}}
@@ -25,6 +28,7 @@
 .cards__item{background-color:#fff;border-radius:10px;display:flex;flex-direction:column;list-style-type:none;margin:0;padding:0}
 .cards__title{color:#000;font-size:24px;font-weight:900;line-height:27px;margin:0}
 .cards__text{align-items:center;display:flex;justify-content:space-between;margin-top:auto;max-width:240px;padding:26px 19px}@media screen and (min-width:480px){.cards__text{max-width:100%;padding:24px}}
+.cards__heart-counter{color:#000;font-size:13px;font-weight:400;line-height:16px;text-align:center}
 .cards__heart{background-color:transparent;background-image:url(images/heart.1ad06e85f169668a1f36.svg);background-position:0 0;background-repeat:no-repeat;background-size:cover;border:none;cursor:pointer;height:19px;min-width:22px;width:22px}.cards__heart:hover{opacity:.5}.cards__heart:active{background-image:url(images/heart-active.35948469632d0421d697.svg);opacity:1}
 .cards__heart_active{background-image:url(images/heart-active.35948469632d0421d697.svg);opacity:1}
 .cards__trash{background-color:transparent;background-image:url(images/trash.ce3b64935accf9b8212e.svg);background-position:0 0;background-repeat:no-repeat;background-size:cover;border:none;cursor:pointer;height:19px;position:absolute;right:20px;top:20px;width:18px}.cards__trash:hover{opacity:.5}.cards__trash:active{opacity:1}
