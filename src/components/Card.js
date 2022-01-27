@@ -76,7 +76,7 @@ _handleCardLikes() {
 		}
 // debugger
 		confirmBtn.addEventListener('click', (evt) => confirmFunctionTest(evt));
-		// confirmBtn.removeEventListener('click', (evt) => confirmFunctionTest(evt));
+		confirmBtn.removeEventListener('click', (evt) => confirmFunctionTest(evt));
 	}
 
 	setEventListeners() {
