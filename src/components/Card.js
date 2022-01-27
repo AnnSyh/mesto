@@ -9,6 +9,7 @@ export class Card {
 		this._id = card._id;
 		this._likes = card.likes;
 
+
 		this._template = template;
 		this._handleCardClick = handleCardClick;
 		this._openConfirm = openConfirm;
@@ -53,29 +54,33 @@ _handleCardLikes() {
 	_removeCard = (evt) => {
 		console.log('_removeCard: this._cardId = ',this._id);
 
-		this._openConfirm();
+		this._openConfirm();//открываем окно подтверждения
 		const confirmBtn = document.querySelector('.confirmation-btn');
 
-		confirmBtn.addEventListener('click', (evt) => {
-			evt.preventDefault();//открываем окно подтверждения
-debugger
-      confirmBtn.textContent = 'Удаляется...'
+		const confirmFunctionTest = (evt) => {
+			console.log('confirmFunctionTest');
+			evt.preventDefault();// убираем авт отправление формы
+			// debugger
+						confirmBtn.textContent = 'Удаляется...';
 
-console.log('this._api = ',this._api)
+						this._api
+						.deleteCard(this._id)  //удаляем карточку из базы
+						.then((data)=>{
+							this._view.remove(); //удаляем  карточку из dom
+							this._view = null;
+						})
+						.catch(error => console.log(`WASTED - ${error}`))
+						.finally(() => confirmBtn.textContent = 'Да');
 
-			this._api
-			.deleteCard(this._id)
-			.then(()=>{
-				this._view.remove(this._id); //удаляем карточку
-			})
-			.catch(error => console.log(`WASTED - ${error}`))
-			.finally(() => (confirmBtn.textContent = 'Да'));
-
-			this._closeConfirm();//закрываем окно подтверждения
-		});
+						this._closeConfirm();//закрываем окно подтверждения
+		}
+// debugger
+		confirmBtn.addEventListener('click', (evt) => confirmFunctionTest(evt));
+		// confirmBtn.removeEventListener('click', (evt) => confirmFunctionTest(evt));
 	}
 
 	setEventListeners() {
+		console.log('setEventListeners()');
 		this._image.addEventListener('click', () => this._handleCardClick(this._text, this._link));
 		this._trash.addEventListener('click', (evt) => this._removeCard(evt));
 		this._heart.addEventListener('click', () => { this._handleCardLikes()});
@@ -99,6 +104,7 @@ console.log('this._api = ',this._api)
 		this._createView();
 		// debugger
 
+		this._btn = this._view.querySelector('.confirmation-btn');
 		this._image = this._view.querySelector('.cards__img');
 		this._trash = this._view.querySelector('.cards__trash');
 		this._heart = this._view.querySelector('.cards__heart');
@@ -112,6 +118,8 @@ console.log('this._api = ',this._api)
 		this._likesSelector.textContent = this._likes.length;
 
 		this.setEventListeners();
+		// this._btn.removeEventListener('click', (evt) => confirmFunctionTest(evt));
+
 
 // debugger
 		let myCard = (this._owner == this._user);

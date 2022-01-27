@@ -57,7 +57,9 @@ export class Api {
   }
 
   deleteCard(id) {
-    // console.log('url = ',`${this._url}/${id}`);
+    console.log('deleteCard(id)');
+    // debugger
+    console.log('url = ',`${this._url}/${id}`);
     return fetch(`${this._url}/cards/${id}`, {
       method: 'DELETE',
       headers: this._headers
