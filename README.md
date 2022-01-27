@@ -1,8 +1,9 @@
 ##### Анна Борисовна Сухаревская
 
-##### sprint 8
+##### sprint 9
 
 # Учебный шаблон проекта: Место
+от Яндекс.Практикума
 
 ### Обзор
 
@@ -31,4 +32,4 @@ Webpack
 
 ##### Просмотр:
 
-https://annsyh.github.io/mesto/index.html
+https://annsyh.github.io/mesto/
