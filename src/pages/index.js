@@ -30,7 +30,7 @@ const api = new Api({
 });
 
 //создаем инструкции для списка
-const createCard = (...args) => new Card(cardTemplate, handleCardClick, openConfirm, closeConfirm, ...args, api);
+const createCard = (...args) => new Card(cardTemplate, handleCardClick,handleConfirmDelete, openConfirm, closeConfirm, ...args, api);
 
 let currentCardId;
 function renderer(item) {
@@ -84,6 +84,8 @@ const profileBtnAdd = document.querySelector('.profile__btn_user-add');
 const popupEditProfileSelector = document.querySelector('.edit-profile__popup');
 const popupEditProfileAvatar = document.querySelector('.new-avatar__popup');
 const popupAddPlaceSelector = document.querySelector('.add-plaсe__popup');
+//кнопка окна подтверждения
+const confirmBtn = document.querySelector('.confirmation-btn');
 
 //открытие попапа с предупреждением
 const popupConfirmation = new Popup(curentPopupConfirmation, openConfirm, closeConfirm);// <==  создаем эл-т класса Popup
@@ -98,6 +100,37 @@ function closeConfirm(evt) {
 const popupImage = new PopupWithImage(curentPopup, curentPopupCaption, curentPopupImg);  // <==  создаем эл-т класса PopupWithImage ==
 function handleCardClick(text, link) {
     popupImage.openPopup(text, link); // <==  открываем попап ==
+}
+
+function handleConfirmDelete() {
+        popupConfirmation.openPopup();             //открываем окно подтверждения
+
+
+            console.log('submit form');
+
+
+console.log('1-this._id = ', this._id);
+
+            confirmBtn.onclick = (evt) => { // убираем авт отправление формы
+
+console.log('21-this._id = ', this._id)
+
+                evt.preventDefault();
+                confirmBtn.textContent = 'Удаляется...';
+                api
+                    .deleteCard(this._id)                 //удаляем карточку из базы
+                    .then((data) => {
+                      this._view.remove(); //удаляем  карточку из dom
+                      popupConfirmation.closePopup();     //закрываем окно подтверждения
+                    })
+                    .catch((error) => console.log(`Ошибка ${error}`))
+                    .finally(() => confirmBtn.textContent = 'Да');
+              };
+
+
+
+
+
 }
 
 let user;

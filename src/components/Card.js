@@ -4,6 +4,7 @@ export class Card {
   constructor(
     template,
     handleCardClick,
+		handleConfirmDelete,
     openConfirm,
     closeConfirm,
     card,
@@ -19,6 +20,7 @@ export class Card {
 
     this._template = template;
     this._handleCardClick = handleCardClick;
+    this._handleConfirmDelete = handleConfirmDelete;
     this._openConfirm = openConfirm;
     this._closeConfirm = closeConfirm;
 
@@ -59,88 +61,17 @@ export class Card {
     }
   }
 
-  // _confirmFunctionDelete(evt){
-  // 	console.log('confirmFunctionDelete');
-
-  // 	const confirmBtn = document.querySelector('.confirmation-btn');
-  // 	// debugger
-  // 				confirmBtn.textContent = 'Удаляется...';
-
-  // 				this._api
-  // 				.deleteCard(this._id)  //удаляем карточку из базы
-  // 				.then((data)=>{
-  // 					this._view.remove(); //удаляем  карточку из dom
-  // 					this._view = null;
-  // 				})
-  // 				.catch(error => console.log(`WASTED - ${error}`))
-  // 				.finally(() => confirmBtn.textContent = 'Да');
-
-  // 				this._closeConfirm();//закрываем окно подтверждения
-  // }
-
-  // 	_removeCard = (evt) => {
-  // 		debugger
-  // 		console.log('_removeCard: this._cardId = ',this._id);
-
-  // 		this._openConfirm();//открываем окно подтверждения
-  // 		evt.preventDefault();// убираем авт отправление формы
-  // 		const confirmBtn = document.querySelector('.confirmation-btn');
-
-  // 		confirmBtn.addEventListener('click',  this._confirmFunctionDelete(evt));
-  // 		confirmBtn.removeEventListener('click', this._confirmFunctionDelete(evt));
-  // 	}
-
-  deleteCardApi() {
-    // confirmBtn.textContent = "Удаляется...";
-    this._confirmBtn.textContent = "Удаляется...";
-    this._api
-      .deleteCard(this._id) //удаляем карточку из базы
-      .then((data) => {
-				  // !!!вот тут надо будет снять обработчик!!!
-						// this.removeEventListener("click", (evt) => confirmFunctionDelete(evt));//снимаем обработчик
-
-        this._view.remove(); //удаляем  карточку из dom
-        this._view = null;
-      })
-      .catch((error) => console.log(`WASTED - ${error}`))
-      .finally(() => (this._confirmBtn.textContent = "Да"));
-  }
-
-
-  _removeCard = (evt) => {
-    this._openConfirm(); //открываем окно подтверждения
-
-    const confirmFunctionDelete = (evt) => {
-
-      console.log("confirmFunctionDelete");
-      evt.preventDefault(); // убираем авт отправление формы
-
-      this.deleteCardApi();
-
-			console.log('убрать обработчик!');// !!!убираем обработчик!!!
-			// this.removeEventListener("click", (evt) => confirmFunctionDelete(evt));
-
-      this._closeConfirm(); //закрываем окно подтверждения
-    };
-
-    this._confirmBtn.addEventListener("click", (evt) => confirmFunctionDelete(evt));
-			// this.removeEventListener("click", (evt) => confirmFunctionDelete(evt));//снимаем обработчик
-
-  };
-
   setEventListeners() {
     console.log("setEventListeners()");
     this._image.addEventListener("click", () =>
       this._handleCardClick(this._text, this._link)
     );
-    this._trash.addEventListener("click", (evt) => this._removeCard(evt));
+    // this._trash.addEventListener("click", (evt) => this._removeCard(evt));
+    this._trash.addEventListener("click", () =>  this._handleConfirmDelete());
 
-		console.log('повесить обработчик!'); // !!!навешиваем обработчик!!!
-		//  this._confirmBtn.addEventListener("click", (evt) => confirmFunctionDelete(evt));
+		// console.log('повесить обработчик!'); // !!!навешиваем обработчик!!!
 
-    this._heart.addEventListener("click", () => {
-      this._handleCardLikes();
-    });
+    this._heart.addEventListener("click", () =>  this._handleCardLikes() );
   }
 
   _isLiked(card) {
@@ -186,4 +117,9 @@ export class Card {
     this._isLiked(this); //проверяю есть ли лайкнутые пользователем карточки и закрашиваю сердечки в случае если есть
     return this._view;
   }
+
+	  //Удаление
+		_handleCardDelete() {
+			this._view.remove();
+		}
 }
