@@ -15,7 +15,6 @@ export class Api {
   }
 
   getUser() {
-    console.log('getUser()');
     return fetch(`${this._url}/users/me`, {
       headers: this._headers,
       body: JSON.stringify()
@@ -23,7 +22,6 @@ export class Api {
       .then(onError);
   }
   postUser(user){
-    console.log('postUser(user)');
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
@@ -57,9 +55,6 @@ export class Api {
   }
 
   deleteCard(id) {
-    console.log('deleteCard(id)');
-    // debugger
-    console.log('url = ',`${this._url}/${id}`);
     return fetch(`${this._url}/cards/${id}`, {
       method: 'DELETE',
       headers: this._headers
@@ -68,7 +63,6 @@ export class Api {
   }
 
   postLike(id) {
-    // console.log('url = ',`${this._url}/${id}/likes`);
     return fetch(`${this._url}/cards/${id}/likes`, {
       method: 'PUT',
       headers: this._headers,
@@ -77,7 +71,6 @@ export class Api {
   }
 
   deleteLike(id) {
-    // debugger
     return fetch(`${this._url}/cards/${id}/likes`, {
       method: 'DELETE',
       headers: this._headers,
@@ -85,5 +78,4 @@ export class Api {
       .then(onError);
   }
 
-  // другие методы работы с API
 }

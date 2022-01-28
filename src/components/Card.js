@@ -4,7 +4,7 @@ export class Card {
   constructor(
     template,
     handleCardClick,
-		handleConfirmDelete,
+    handleConfirmDelete,
     openConfirm,
     closeConfirm,
     card,
@@ -27,7 +27,7 @@ export class Card {
     this._user = user;
     this._api = api;
 
-		this._confirmBtn = document.querySelector('.confirmation-btn');
+    this._confirmBtn = document.querySelector(".confirmation-btn");
   }
 
   _createView() {
@@ -61,19 +61,16 @@ export class Card {
     }
   }
 
+//навешиваем события на элементы карточек
   setEventListeners() {
-    console.log("setEventListeners()");
     this._image.addEventListener("click", () =>
       this._handleCardClick(this._text, this._link)
     );
-    // this._trash.addEventListener("click", (evt) => this._removeCard(evt));
-    this._trash.addEventListener("click", () =>  this._handleConfirmDelete());
-
-		// console.log('повесить обработчик!'); // !!!навешиваем обработчик!!!
-
-    this._heart.addEventListener("click", () =>  this._handleCardLikes() );
+    this._trash.addEventListener("click", () => this._handleConfirmDelete());
+    this._heart.addEventListener("click", () => this._handleCardLikes());
   }
 
+//отмечаем лайкнутые карточки
   _isLiked(card) {
     // проверяет поставлен ли мной лайк или нет
     card._likes.forEach((element) => {
@@ -89,7 +86,6 @@ export class Card {
 
   render() {
     this._createView();
-    // debugger
 
     this._btn = this._view.querySelector(".confirmation-btn");
     this._image = this._view.querySelector(".cards__img");
@@ -104,10 +100,10 @@ export class Card {
     this._image.src = this._link;
     this._likesSelector.textContent = this._likes.length;
 
-    this.setEventListeners();//навешиваем обработчики
+    this.setEventListeners(); //навешиваем обработчики
 
     // debugger
-    let myCard = this._owner == this._user;
+    let myCard = (this._owner == this._user);
     // console.log('myCard = ',myCard );
     if (!myCard) {
       this._trash = this._view
@@ -118,8 +114,4 @@ export class Card {
     return this._view;
   }
 
-	  //Удаление
-		_handleCardDelete() {
-			this._view.remove();
-		}
 }
