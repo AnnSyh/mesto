@@ -120,6 +120,7 @@ function handleCardClick(text, link) {
   popupImage.openPopup(text, link); // <==  открываем попап ==
 }
 
+//подтверждение удаления
 function handleConfirmDelete() {
   popupConfirmation.openPopup(); //открываем окно подтверждения
   confirmBtn.onclick = (evt) => {
