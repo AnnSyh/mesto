@@ -43,11 +43,14 @@ export class Card {
     const even = (element) => element._id == this._user;
     if (this._likes.some(even)) {
       //  console.log('этот пользователь уже лайкал');
-      this._api.deleteLike(this._id).then((data) => {
+      this._api
+      .deleteLike(this._id)
+      .then((data) => {
         this._heart.classList.remove("cards__heart_active"); //добавляем акт класс сердечка
         this._counter.textContent = data.likes.length; // выводим кол-во кликов в карточку
         this._likes = data.likes; // обновляем массив лайков после клика
-      });
+      })
+      .catch((err) => console.log(`WASTED - ${err}`));
     } else {
       // console.log('этот пользователь еще не лайкал');
       this._api
@@ -61,7 +64,7 @@ export class Card {
     }
   }
 
-//навешиваем события на элементы карточек
+  //навешиваем события на элементы карточек
   setEventListeners() {
     this._image.addEventListener("click", () =>
       this._handleCardClick(this._text, this._link)
@@ -70,7 +73,7 @@ export class Card {
     this._heart.addEventListener("click", () => this._handleCardLikes());
   }
 
-//отмечаем лайкнутые карточки
+  //отмечаем лайкнутые карточки
   _isLiked(card) {
     // проверяет поставлен ли мной лайк или нет
     card._likes.forEach((element) => {
@@ -103,7 +106,7 @@ export class Card {
     this.setEventListeners(); //навешиваем обработчики
 
     // debugger
-    let myCard = (this._owner == this._user);
+    let myCard = this._owner == this._user;
     // console.log('myCard = ',myCard );
     if (!myCard) {
       this._trash = this._view
@@ -113,5 +116,4 @@ export class Card {
     this._isLiked(this); //проверяю есть ли лайкнутые пользователем карточки и закрашиваю сердечки в случае если есть
     return this._view;
   }
-
 }

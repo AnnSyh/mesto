@@ -6,6 +6,7 @@ import { FormValidator } from "../components/FormValidator.js";
 import { Section } from "../components/Section.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
+import { PopupConfirmForm } from "../components/PopupConfirmForm.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
 
@@ -55,6 +56,17 @@ function renderer(item) {
 //создаем пустой список в который далее будем вставлять карточки
 const cardList = new Section({ data: [], renderer }, cardsListContainer);
 
+//Создаем экземпляр класса currentUser
+const currentUser = new UserInfo("profile__name", "profile__job");
+
+//обьеденяю запрос  данных профиля и получения карточек
+// Promise.all([getUser(), getInitialCards()])
+//   .then(([userData, initialCards]) => {
+//     currentUser.setUserInfo(userData);       // тут установка данных пользователя
+//     cardList.renderItems(initialCards);   // и тут отрисовка карточек
+//   })
+//   .catch((err) => console.log(`WASTED - ${err}`));
+
 //запрос к серверу получаю начальный набор карточек с сервера
 api
   .getInitialCards()
@@ -63,6 +75,20 @@ api
     cardList.renderItems(data);
   })
   .catch((err) => console.log(`WASTED - ${err}`));
+
+
+  //запрос к серверу получаю нач данные для профайла пользователя
+api
+.getUser()
+.then((data) => {
+  currentUser.setUserInfo({ name: data.name, about: data.about });
+  avatar = data.avatar;
+  currentUser.setUserAvatar(avatar);
+  user = data._id;
+})
+.catch((err) => console.log(`WASTED - ${err}`));
+
+
 
 //Валидация форм
 // Находим формы в DOM
@@ -98,11 +124,8 @@ const popupAddPlaceSelector = document.querySelector(".add-plaсe__popup");
 const confirmBtn = document.querySelector(".confirmation-btn");
 
 //открытие попапа с предупреждением
-const popupConfirmation = new Popup(
-  curentPopupConfirmation,
-  openConfirm,
-  closeConfirm
-); // <==  создаем эл-т класса Popup
+const popupConfirmation = new Popup( curentPopupConfirmation, openConfirm, closeConfirm); // <==  создаем эл-т класса Popup
+
 function openConfirm(evt) {
   popupConfirmation.openPopup(); // <==  открываем попап ==
 }
@@ -111,11 +134,8 @@ function closeConfirm(evt) {
 }
 
 //открытие попапа с картинкой для карточки (мягкое связывание)
-const popupImage = new PopupWithImage(
-  curentPopup,
-  curentPopupCaption,
-  curentPopupImg
-); // <==  создаем эл-т класса PopupWithImage ==
+const popupImage = new PopupWithImage( curentPopup, curentPopupCaption, curentPopupImg); // <==  создаем эл-т класса PopupWithImage ==
+
 function handleCardClick(text, link) {
   popupImage.openPopup(text, link); // <==  открываем попап ==
 }
@@ -140,37 +160,19 @@ function handleConfirmDelete() {
 let user;
 let avatar;
 
-//запрос к серверу получаю нач данные для профайла пользователя
-api
-  .getUser()
-  .then((data) => {
-    currentUser.setUserInfo({ name: data.name, about: data.about });
-    avatar = data.avatar;
-    currentUser.setUserAvatar(avatar);
-    user = data._id;
-  })
-  .catch((err) => console.log(`WASTED - ${err}`));
 
-const userInfoPopup = new PopupWithForm(
-  popupEditProfileSelector,
-  handleProfileFormSubmit
-); // <==  создаем эл-т класса PopupWithForm ==
-const userAvatarPopup = new PopupWithForm(
-  popupEditProfileAvatar,
-  handleAvatarFormSubmit
-); // <==  создаем эл-т класса PopupWithForm ==
+const userInfoPopup = new PopupWithForm( popupEditProfileSelector, handleProfileFormSubmit); // <==  создаем эл-т класса PopupWithForm ==
 
-const currentUser = new UserInfo("profile__name", "profile__job");
+const userAvatarPopup = new PopupWithForm( popupEditProfileAvatar, handleAvatarFormSubmit); // <==  создаем эл-т класса PopupWithForm ==
+
 
 //открываем попап для редактирования  аватара
 //надо сделать проверку пользователя - редактировать может только авторизированный пользователь ???
 function openPopupAvatarEdit() {
   editFormValidator.resetValidation(); // <== очищаем поля формы, ошибки и дизеблим кнопку сабмита перед открытием
   const currentUserAvatar = currentUser.getUserAvatar(); // получили данные текущего аватара кот выведены на стр
-
   //  передаем значение полей из формы
   avatarInput.value = currentUserAvatar.avatar;
-
   userAvatarPopup.openPopup(); // <==  открываем попап ==
   editFormValidator.toggleButtonState(); // проверить состояние кнопки при открытии формы
 }
@@ -182,16 +184,12 @@ function openPopupProfileEdit() {
   const currentUserInfo = currentUser.getUserInfo(); // получили данные текущего юзера кот выведены на стр
   nameInput.value = currentUserInfo.name; // передали эти данные в поля формы
   jobInput.value = currentUserInfo.about;
-
   userInfoPopup.openPopup(); // <==  открываем попап ==
   editFormValidator.toggleButtonState(); // проверить состояние кнопки при открытии формы
 }
 
 //открываем попап для добавления нового места
-const newCardPopup = new PopupWithForm(
-  popupAddPlaceSelector,
-  hanldeAddPlaceFormSubmit
-); // <==  создаем эл-т класса PopupWithForm ==
+const newCardPopup = new PopupWithForm( popupAddPlaceSelector, hanldeAddPlaceFormSubmit); // <==  создаем эл-т класса PopupWithForm ==
 function openPopupProfileAdd() {
   cardFormValidator.resetValidation(); // <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
   newCardPopup.openPopup(); // <==  открываем попап ==
@@ -205,7 +203,7 @@ function hanldeConfirmFormSubmit(evt) {
     ".confirmation .popup__btn"
   );
   submitConfirmationBtn.addEventListener(
-    "click",
+    "click"
     // console.log("click confirmation .popup__btn")
   );
 }

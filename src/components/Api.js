@@ -1,6 +1,6 @@
 'use strict'
 
-const onError = res => {
+const handleError = res => {
   if (res.ok) {
     return res.json();
   }
@@ -14,20 +14,33 @@ export class Api {
     this._headers = headers;
   }
 
+  getAllData() {
+    return Promise.all([this.getUser(), this.getInitialCards()])
+  }
+
   getUser() {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers,
       body: JSON.stringify()
     })
-      .then(onError);
+      .then(handleError);
   }
+
+
+  getInitialCards() {
+    return fetch(`${this._url}/cards`, { headers: this._headers })
+      .then(handleError);
+  }
+
+
+
   postUser(user){
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify(user)
     })
-      .then(onError);
+      .then(handleError);
   }
   postAvatar(avatar){
     return fetch(`${this._url}/users/me/avatar`, {
@@ -37,13 +50,9 @@ export class Api {
         avatar: avatar['avatar-src']
       })
     })
-      .then(onError);
+      .then(handleError);
   }
 
-  getInitialCards() {
-    return fetch(`${this._url}/cards`, { headers: this._headers })
-      .then(onError);
-  }
 
   postCreateCard(card) {
     return fetch(`${this._url}/cards`, {
@@ -51,7 +60,7 @@ export class Api {
       headers: this._headers,
       body: JSON.stringify(card)
     })
-      .then(onError);
+      .then(handleError);
   }
 
   deleteCard(id) {
@@ -59,7 +68,7 @@ export class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(onError);
+      .then(handleError);
   }
 
   postLike(id) {
@@ -67,7 +76,7 @@ export class Api {
       method: 'PUT',
       headers: this._headers,
     })
-      .then(onError);
+      .then(handleError);
   }
 
   deleteLike(id) {
@@ -75,7 +84,7 @@ export class Api {
       method: 'DELETE',
       headers: this._headers,
     })
-      .then(onError);
+      .then(handleError);
   }
 
 }

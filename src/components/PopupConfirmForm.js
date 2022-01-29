@@ -1,12 +1,11 @@
 'use strict'
 import { Popup } from './Popup.js';
 
-export class PopupWithForm extends Popup {
+export class PopupConfirmForm extends Popup {
 
     constructor(popup, handleFormSubmit) {
         super(popup);
-        this._form = this._popup.querySelector('.form');
-        this._inputList = this._form.querySelectorAll('.popup__input');
+        this._form = this.popup.querySelector('.form');
         this._handleFormSubmit = handleFormSubmit;
     }
 
