@@ -76,19 +76,16 @@ api
   })
   .catch((err) => console.log(`WASTED - ${err}`));
 
-
-  //запрос к серверу получаю нач данные для профайла пользователя
+//запрос к серверу получаю нач данные для профайла пользователя
 api
-.getUser()
-.then((data) => {
-  currentUser.setUserInfo({ name: data.name, about: data.about });
-  avatar = data.avatar;
-  currentUser.setUserAvatar(avatar);
-  user = data._id;
-})
-.catch((err) => console.log(`WASTED - ${err}`));
-
-
+  .getUser()
+  .then((data) => {
+    currentUser.setUserInfo({ name: data.name, about: data.about });
+    avatar = data.avatar;
+    currentUser.setUserAvatar(avatar);
+    user = data._id;
+  })
+  .catch((err) => console.log(`WASTED - ${err}`));
 
 //Валидация форм
 // Находим формы в DOM
@@ -124,7 +121,11 @@ const popupAddPlaceSelector = document.querySelector(".add-plaсe__popup");
 const confirmBtn = document.querySelector(".confirmation-btn");
 
 //открытие попапа с предупреждением
-const popupConfirmation = new Popup( curentPopupConfirmation, openConfirm, closeConfirm); // <==  создаем эл-т класса Popup
+const popupConfirmation = new Popup(
+  curentPopupConfirmation,
+  openConfirm,
+  closeConfirm
+); // <==  создаем эл-т класса Popup
 
 function openConfirm(evt) {
   popupConfirmation.openPopup(); // <==  открываем попап ==
@@ -134,7 +135,11 @@ function closeConfirm(evt) {
 }
 
 //открытие попапа с картинкой для карточки (мягкое связывание)
-const popupImage = new PopupWithImage( curentPopup, curentPopupCaption, curentPopupImg); // <==  создаем эл-т класса PopupWithImage ==
+const popupImage = new PopupWithImage(
+  curentPopup,
+  curentPopupCaption,
+  curentPopupImg
+); // <==  создаем эл-т класса PopupWithImage ==
 
 function handleCardClick(text, link) {
   popupImage.openPopup(text, link); // <==  открываем попап ==
@@ -160,11 +165,15 @@ function handleConfirmDelete() {
 let user;
 let avatar;
 
+const userInfoPopup = new PopupWithForm(
+  popupEditProfileSelector,
+  handleProfileFormSubmit
+); // <==  создаем эл-т класса PopupWithForm ==
 
-const userInfoPopup = new PopupWithForm( popupEditProfileSelector, handleProfileFormSubmit); // <==  создаем эл-т класса PopupWithForm ==
-
-const userAvatarPopup = new PopupWithForm( popupEditProfileAvatar, handleAvatarFormSubmit); // <==  создаем эл-т класса PopupWithForm ==
-
+const userAvatarPopup = new PopupWithForm(
+  popupEditProfileAvatar,
+  handleAvatarFormSubmit
+); // <==  создаем эл-т класса PopupWithForm ==
 
 //открываем попап для редактирования  аватара
 //надо сделать проверку пользователя - редактировать может только авторизированный пользователь ???
@@ -189,7 +198,10 @@ function openPopupProfileEdit() {
 }
 
 //открываем попап для добавления нового места
-const newCardPopup = new PopupWithForm( popupAddPlaceSelector, hanldeAddPlaceFormSubmit); // <==  создаем эл-т класса PopupWithForm ==
+const newCardPopup = new PopupWithForm(
+  popupAddPlaceSelector,
+  hanldeAddPlaceFormSubmit
+); // <==  создаем эл-т класса PopupWithForm ==
 function openPopupProfileAdd() {
   cardFormValidator.resetValidation(); // <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
   newCardPopup.openPopup(); // <==  открываем попап ==
@@ -213,12 +225,21 @@ function handleAvatarFormSubmit(evt, avatar) {
   evt.preventDefault();
   //изменяем данные текущего юзера в соот с данными забитыми в форму
   //отправляем новые данные пользователя на сервер
+  popupEditProfileAvatar.querySelector(".popup__btn").textContent =
+  "Сохраняется...";
   api
     .postAvatar(avatar)
     .then((data) => {
       currentUser.setUserAvatar(avatar["avatar-src"]);
+      // debugger
+      userAvatarPopup.closePopup();
     })
-    .catch((err) => console.log(`WASTED - ${err}`));
+    .catch((err) => console.log(`WASTED - ${err}`))
+    .finally(
+      () =>
+        (popupEditProfileAvatar.querySelector(".popup__btn").textContent =
+          "Сохранить")
+    );
 }
 
 function handleProfileFormSubmit(evt, { title, subtitle }) {
@@ -232,6 +253,8 @@ function handleProfileFormSubmit(evt, { title, subtitle }) {
     .postUser({ name: title, about: subtitle })
     .then((data) => {
       currentUser.setUserInfo({ name: title, about: subtitle });
+      // debugger
+      userInfoPopup.closePopup();
     })
     .catch((err) => console.log(`WASTED - ${err}`))
     .finally(
@@ -245,17 +268,19 @@ function hanldeAddPlaceFormSubmit() {
   //создаем нов карточку в соот с данными забитыми в форму
   //отправляем данные новой карточки на сервер
 
-  popupEditProfileSelector.querySelector(".popup__btn").textContent =
+  popupAddPlaceSelector.querySelector(".popup__btn").textContent =
     "Сохраняется...";
   api
     .postCreateCard({ name: placeNameInput.value, link: placeImgInput.value })
     .then((data) => {
       cardList.addItem(createCard(data, user).render(), "prepend");
+      // debugger
+      newCardPopup.closePopup();
     })
     .catch((err) => console.log(`WASTED - ${err}`))
     .finally(
       () =>
-        (popupEditProfileSelector.querySelector(".popup__btn").textContent =
+        (popupAddPlaceSelector.querySelector(".popup__btn").textContent =
           "Сохранить")
     );
 }
