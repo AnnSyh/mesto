@@ -42,12 +42,9 @@ const createCard = (...args) =>
     api
   );
 
-
-
 function renderer(item) {
-
-  console.log('renderer: user = ',user);
-// debugger
+  console.log("renderer: user = ", user);
+  // debugger
 
   //проверка пользователя
   currentCardId = item._id;
@@ -75,7 +72,6 @@ const currentUser = new UserInfo("profile__name", "profile__job");
 //     console.log('getUser: userData = ',userData);
 //     console.log('user = ',userData._id);
 
-
 //     cardList.renderItems(CardsData); //  тут отрисовка карточек
 //     currentUser.setUserInfo({ name: userData.name, about: userData.about }); // тут установка данных пользователя
 //     avatar = userData.avatar;
@@ -88,7 +84,7 @@ const currentUser = new UserInfo("profile__name", "profile__job");
 api
   .getInitialCards()
   .then((data) => {
-  console.log('getInitialCards: data = ',data);
+    console.log("getInitialCards: data = ", data);
     //создаем список
     cardList.renderItems(data);
   })
@@ -97,7 +93,7 @@ api
 api
   .getUser()
   .then((data) => {
-    console.log('getUser: data = ',data);
+    console.log("getUser: data = ", data);
     currentUser.setUserInfo({ name: data.name, about: data.about });
     avatar = data.avatar;
     currentUser.setUserAvatar(avatar);
@@ -140,8 +136,8 @@ const popupAddPlaceSelector = document.querySelector(".add-plaсe__popup");
 //кнопка окна подтверждения
 const confirmBtn = document.querySelector(".confirmation-btn");
 
-//открытие попапа с предупреждением
-const popupConfirmation = new Popup(
+//открытие попапа с предупреждением через новый класс PopupConfirmForm
+const popupConfirmation = new PopupConfirmForm(
   curentPopupConfirmation,
   openConfirm,
   closeConfirm
