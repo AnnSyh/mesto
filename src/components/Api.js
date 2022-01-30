@@ -14,10 +14,6 @@ export class Api {
     this._headers = headers;
   }
 
-  getAllData() {
-    return Promise.all([this.getUser(), this.getInitialCards()])
-  }
-
   getUser() {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers,

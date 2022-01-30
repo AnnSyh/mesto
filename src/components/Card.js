@@ -27,6 +27,11 @@ export class Card {
     this._user = user;
     this._api = api;
 
+    console.log('constructor: this._user = ',this._user);
+    // console.log('this._api = ',this._api);
+    // console.log('this._card = ',this._card);
+    console.log('constructor: this._owner = ',this._owner);
+
     this._confirmBtn = document.querySelector(".confirmation-btn");
   }
 
@@ -104,6 +109,10 @@ export class Card {
     this._likesSelector.textContent = this._likes.length;
 
     this.setEventListeners(); //навешиваем обработчики
+
+
+    console.log('render(): this._user = ',this._user);
+    console.log('render(): this._owner = ',this._owner);
 
     // debugger
     let myCard = this._owner == this._user;

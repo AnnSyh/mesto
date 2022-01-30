@@ -13,15 +13,16 @@ import { Api } from "../components/Api.js";
 import "../pages/index.css";
 import { Popup } from "../components/Popup.js";
 
-const curentPopupConfirmation = document.querySelector(".confirmation__popup");
+let user;
+let avatar;
+let currentCardId;
 
+const curentPopupConfirmation = document.querySelector(".confirmation__popup");
 const curentPopup = document.querySelector(".open-img__popup");
 const curentPopupImg = curentPopup.querySelector(".popup__img");
 const curentPopupCaption = curentPopup.querySelector(".popup__caption");
-
 const cardsListContainer = document.querySelector(".list-template-place");
 const cardTemplate = document.querySelector(".card-template");
-
 const api = new Api({
   url: "https://mesto.nomoreparties.co/v1/cohort-34",
   headers: {
@@ -29,7 +30,6 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
-
 //создаем инструкции для списка
 const createCard = (...args) =>
   new Card(
@@ -42,8 +42,13 @@ const createCard = (...args) =>
     api
   );
 
-let currentCardId;
+
+
 function renderer(item) {
+
+  console.log('renderer: user = ',user);
+// debugger
+
   //проверка пользователя
   currentCardId = item._id;
   // Создаем карточку и возвращаем ее шаблон
@@ -59,33 +64,48 @@ const cardList = new Section({ data: [], renderer }, cardsListContainer);
 //Создаем экземпляр класса currentUser
 const currentUser = new UserInfo("profile__name", "profile__job");
 
+// api.getInitialCards()  - запрос к серверу получаю начальный набор карточек с сервера
+// api.getUser()          - запрос к серверу получаю нач данные для профайла пользователя
 //обьеденяю запрос  данных профиля и получения карточек
-// Promise.all([getUser(), getInitialCards()])
-//   .then(([userData, initialCards]) => {
-//     currentUser.setUserInfo(userData);       // тут установка данных пользователя
-//     cardList.renderItems(initialCards);   // и тут отрисовка карточек
+
+// Promise.all([api.getInitialCards(), api.getUser()])
+//   .then(([CardsData, userData]) => {
+
+//     console.log('getInitialCards: CardsData = ',CardsData);
+//     console.log('getUser: userData = ',userData);
+//     console.log('user = ',userData._id);
+
+
+//     cardList.renderItems(CardsData); //  тут отрисовка карточек
+//     currentUser.setUserInfo({ name: userData.name, about: userData.about }); // тут установка данных пользователя
+//     avatar = userData.avatar;
+//     currentUser.setUserAvatar(avatar);
+//     user = userData._id;
 //   })
 //   .catch((err) => console.log(`WASTED - ${err}`));
 
-//запрос к серверу получаю начальный набор карточек с сервера
+// ---------------------------------
 api
   .getInitialCards()
   .then((data) => {
+  console.log('getInitialCards: data = ',data);
     //создаем список
     cardList.renderItems(data);
   })
   .catch((err) => console.log(`WASTED - ${err}`));
 
-//запрос к серверу получаю нач данные для профайла пользователя
 api
   .getUser()
   .then((data) => {
+    console.log('getUser: data = ',data);
     currentUser.setUserInfo({ name: data.name, about: data.about });
     avatar = data.avatar;
     currentUser.setUserAvatar(avatar);
     user = data._id;
   })
   .catch((err) => console.log(`WASTED - ${err}`));
+
+// ---------------------------------
 
 //Валидация форм
 // Находим формы в DOM
@@ -162,9 +182,6 @@ function handleConfirmDelete() {
   };
 }
 
-let user;
-let avatar;
-
 const userInfoPopup = new PopupWithForm(
   popupEditProfileSelector,
   handleProfileFormSubmit
@@ -226,7 +243,7 @@ function handleAvatarFormSubmit(evt, avatar) {
   //изменяем данные текущего юзера в соот с данными забитыми в форму
   //отправляем новые данные пользователя на сервер
   popupEditProfileAvatar.querySelector(".popup__btn").textContent =
-  "Сохраняется...";
+    "Сохраняется...";
   api
     .postAvatar(avatar)
     .then((data) => {
