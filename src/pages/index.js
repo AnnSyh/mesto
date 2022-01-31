@@ -256,20 +256,23 @@ function hanldeAddPlaceFormSubmit() {
   //создаем нов карточку в соот с данными взятыми из БД (забитыми в форму)
   //отправляем данные новой карточки на сервер
 
-  popupAddPlaceSelector.querySelector(".popup__btn").textContent =
-    "Сохраняется...";
+  popupAddPlaceSelector.querySelector(".popup__btn").textContent = "Сохраняется...";
   api
-    .postCreateCard({ name: placeNameInput.value, link: placeImgInput.value })
+    .postCreateCard(this.getInputValues())
     .then((data) => {
+
+console.log('hanldeAddPlaceFormSubmit(): data = ',data);
+console.log('this = ',this);
+console.log('this._headers = ',this._headers);
+console.log('this.getInputValues() = ',this.getInputValues());
+
       cardList.addItem(createCard(data, user).render(), "prepend");
       debugger
       newCardPopup.closePopup();
     })
     .catch((err) => console.log(`WASTED - ${err}`))
     .finally(
-      () =>
-        (popupAddPlaceSelector.querySelector(".popup__btn").textContent =
-          "Сохранить")
+      () => (popupAddPlaceSelector.querySelector(".popup__btn").textContent = "Сохранить")
     );
 }
 
