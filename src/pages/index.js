@@ -185,11 +185,7 @@ function openPopupProfileEdit() {
   editFormValidator.toggleButtonState(); // проверить состояние кнопки при открытии формы
 }
 
-//открываем попап для добавления нового места
-const newCardPopup = new PopupWithForm(
-  popupAddPlaceSelector,
-  hanldeAddPlaceFormSubmit
-); // <==  создаем эл-т класса PopupWithForm ==
+
 function openPopupProfileAdd() {
   cardFormValidator.resetValidation(); // <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
   newCardPopup.openPopup(); // <==  открываем попап ==
@@ -252,22 +248,31 @@ function handleProfileFormSubmit(evt, { title, subtitle }) {
     );
 }
 
-function hanldeAddPlaceFormSubmit() {
+
+//открываем попап для добавления нового места
+const newCardPopup = new PopupWithForm(
+  popupAddPlaceSelector,
+  hanldeAddPlaceFormSubmit
+); // <==  создаем эл-т класса PopupWithForm ==
+
+
+function hanldeAddPlaceFormSubmit(values) {
   //создаем нов карточку в соот с данными взятыми из БД (забитыми в форму)
   //отправляем данные новой карточки на сервер
 
+  console.log('values = ',values);
+debugger
   popupAddPlaceSelector.querySelector(".popup__btn").textContent = "Сохраняется...";
   api
-    .postCreateCard(this.getInputValues())
+    .postCreateCard(values)
     .then((data) => {
 
 console.log('hanldeAddPlaceFormSubmit(): data = ',data);
 console.log('this = ',this);
-console.log('this._headers = ',this._headers);
 console.log('this.getInputValues() = ',this.getInputValues());
 
       cardList.addItem(createCard(data, user).render(), "prepend");
-      debugger
+      // debugger
       newCardPopup.closePopup();
     })
     .catch((err) => console.log(`WASTED - ${err}`))
