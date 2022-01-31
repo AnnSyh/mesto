@@ -65,43 +65,18 @@ const currentUser = new UserInfo("profile__name", "profile__job");
 // api.getUser()          - запрос к серверу получаю нач данные для профайла пользователя
 //обьеденяю запрос  данных профиля и получения карточек
 
-// Promise.all([api.getInitialCards(), api.getUser()])
-//   .then(([CardsData, userData]) => {
+Promise.all([api.getInitialCards(), api.getUser()])
+  .then(([CardsData, userData]) => {
 
-//     console.log('getInitialCards: CardsData = ',CardsData);
-//     console.log('getUser: userData = ',userData);
-//     console.log('user = ',userData._id);
+    user = userData._id;
 
-//     cardList.renderItems(CardsData); //  тут отрисовка карточек
-//     currentUser.setUserInfo({ name: userData.name, about: userData.about }); // тут установка данных пользователя
-//     avatar = userData.avatar;
-//     currentUser.setUserAvatar(avatar);
-//     user = userData._id;
-//   })
-//   .catch((err) => console.log(`WASTED - ${err}`));
-
-// ---------------------------------
-api
-  .getInitialCards()
-  .then((data) => {
-    console.log("getInitialCards: data = ", data);
-    //создаем список
-    cardList.renderItems(data);
-  })
-  .catch((err) => console.log(`WASTED - ${err}`));
-
-api
-  .getUser()
-  .then((data) => {
-    console.log("getUser: data = ", data);
-    currentUser.setUserInfo({ name: data.name, about: data.about });
-    avatar = data.avatar;
+    cardList.renderItems(CardsData); //  тут отрисовка карточек
+    currentUser.setUserInfo({ name: userData.name, about: userData.about }); // тут установка данных пользователя
+    avatar = userData.avatar;
     currentUser.setUserAvatar(avatar);
-    user = data._id;
   })
   .catch((err) => console.log(`WASTED - ${err}`));
 
-// ---------------------------------
 
 //Валидация форм
 // Находим формы в DOM
@@ -278,7 +253,7 @@ function handleProfileFormSubmit(evt, { title, subtitle }) {
 }
 
 function hanldeAddPlaceFormSubmit() {
-  //создаем нов карточку в соот с данными забитыми в форму
+  //создаем нов карточку в соот с данными взятыми из БД (забитыми в форму)
   //отправляем данные новой карточки на сервер
 
   popupAddPlaceSelector.querySelector(".popup__btn").textContent =
@@ -287,7 +262,7 @@ function hanldeAddPlaceFormSubmit() {
     .postCreateCard({ name: placeNameInput.value, link: placeImgInput.value })
     .then((data) => {
       cardList.addItem(createCard(data, user).render(), "prepend");
-      // debugger
+      debugger
       newCardPopup.closePopup();
     })
     .catch((err) => console.log(`WASTED - ${err}`))
