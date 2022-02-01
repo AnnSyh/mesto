@@ -108,6 +108,10 @@ const profileBtnAdd = document.querySelector(".profile__btn_user-add");
 const popupEditProfileSelector = document.querySelector(".edit-profile__popup");
 const popupEditProfileAvatar = document.querySelector(".new-avatar__popup");
 const popupAddPlaceSelector = document.querySelector(".add-plaсe__popup");
+
+const editProfileBtn = popupEditProfileAvatar.querySelector(".popup__btn");
+
+
 //кнопка окна подтверждения
 const confirmBtn = document.querySelector(".confirmation-btn");
 
@@ -209,7 +213,7 @@ function handleAvatarFormSubmit(evt, avatar) {
   evt.preventDefault();
   //изменяем данные текущего юзера в соот с данными забитыми в форму
   //отправляем новые данные пользователя на сервер
-  popupEditProfileAvatar.querySelector(".popup__btn").textContent =
+  editProfileBtn.textContent =
     "Сохраняется...";
   api
     .postAvatar(avatar)
@@ -221,12 +225,16 @@ function handleAvatarFormSubmit(evt, avatar) {
     .catch((err) => console.log(`WASTED - ${err}`))
     .finally(
       () =>
-        (popupEditProfileAvatar.querySelector(".popup__btn").textContent =
+        (editProfileBtn.textContent =
           "Сохранить")
     );
 }
 
 function handleProfileFormSubmit(evt, { title, subtitle }) {
+  debugger
+  console.log('function handleProfileFormSubmit')
+  console.log('title = ',title)
+  console.log('subtitle = ',subtitle)
   //изменяем данные текущего юзера в соот с данными забитыми в форму
   currentUser.setUserInfo({ name: title, about: subtitle });
 
@@ -256,7 +264,7 @@ const newCardPopup = new PopupWithForm(
 ); // <==  создаем эл-т класса PopupWithForm ==
 
 
-function hanldeAddPlaceFormSubmit(values) {
+function hanldeAddPlaceFormSubmit(evt,values) {
   //создаем нов карточку в соот с данными взятыми из БД (забитыми в форму)
   //отправляем данные новой карточки на сервер
 

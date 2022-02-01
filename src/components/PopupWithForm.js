@@ -20,9 +20,10 @@ export class PopupWithForm extends Popup {
     return this._formValues;
   }
 
-  _handler = () => {
-    this._handleFormSubmit(this.getInputValues());
+  _handler = (evt) => {
+    this._handleFormSubmit(evt, this.getInputValues());
   };
+
 
   setEventListeners() {
     super.setEventListeners();
