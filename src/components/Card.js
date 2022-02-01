@@ -27,9 +27,6 @@ export class Card {
     this._user = user;
     this._api = api;
 
-    // console.log('constructor: this._user = ',this._user);
-    // console.log('constructor: this._owner = ',this._owner);
-
     this._confirmBtn = document.querySelector(".confirmation-btn");
   }
 

@@ -43,9 +43,7 @@ const createCard = (...args) =>
   );
 
 function renderer(item) {
-  console.log("renderer: user = ", user);
   // debugger
-
   //проверка пользователя
   currentCardId = item._id;
   // Создаем карточку и возвращаем ее шаблон
@@ -115,12 +113,16 @@ const editProfileBtn = popupEditProfileAvatar.querySelector(".popup__btn");
 //кнопка окна подтверждения
 const confirmBtn = document.querySelector(".confirmation-btn");
 
+
+
+
 //открытие попапа с предупреждением через новый класс PopupConfirmForm
 const popupConfirmation = new PopupConfirmForm(
   curentPopupConfirmation,
   openConfirm,
   closeConfirm
 ); // <==  создаем эл-т класса Popup
+popupConfirmation.setEventListeners(); //установка поведения при клике на X и на overlay
 
 function openConfirm(evt) {
   popupConfirmation.openPopup(); // <==  открываем попап ==
@@ -135,6 +137,7 @@ const popupImage = new PopupWithImage(
   curentPopupCaption,
   curentPopupImg
 ); // <==  создаем эл-т класса PopupWithImage ==
+popupImage.setEventListeners(); //установка поведения при клике на X и на overlay
 
 function handleCardClick(text, link) {
   popupImage.openPopup(text, link); // <==  открываем попап ==
@@ -161,11 +164,13 @@ const userInfoPopup = new PopupWithForm(
   popupEditProfileSelector,
   handleProfileFormSubmit
 ); // <==  создаем эл-т класса PopupWithForm ==
+userInfoPopup.setEventListeners(); //установка поведения при клике на X и на overlay
 
 const userAvatarPopup = new PopupWithForm(
   popupEditProfileAvatar,
   handleAvatarFormSubmit
 ); // <==  создаем эл-т класса PopupWithForm ==
+userAvatarPopup.setEventListeners(); //установка поведения при клике на X и на overlay
 
 //открываем попап для редактирования  аватара
 //надо сделать проверку пользователя - редактировать может только авторизированный пользователь ???
@@ -219,7 +224,6 @@ function handleAvatarFormSubmit(evt, avatar) {
     .postAvatar(avatar)
     .then((data) => {
       currentUser.setUserAvatar(avatar["avatar-src"]);
-      // debugger
       userAvatarPopup.closePopup();
     })
     .catch((err) => console.log(`WASTED - ${err}`))
@@ -231,10 +235,6 @@ function handleAvatarFormSubmit(evt, avatar) {
 }
 
 function handleProfileFormSubmit(evt, { title, subtitle }) {
-  debugger
-  console.log('function handleProfileFormSubmit')
-  console.log('title = ',title)
-  console.log('subtitle = ',subtitle)
   //изменяем данные текущего юзера в соот с данными забитыми в форму
   currentUser.setUserInfo({ name: title, about: subtitle });
 
@@ -245,7 +245,6 @@ function handleProfileFormSubmit(evt, { title, subtitle }) {
     .postUser({ name: title, about: subtitle })
     .then((data) => {
       currentUser.setUserInfo({ name: title, about: subtitle });
-      // debugger
       userInfoPopup.closePopup();
     })
     .catch((err) => console.log(`WASTED - ${err}`))
@@ -262,22 +261,15 @@ const newCardPopup = new PopupWithForm(
   popupAddPlaceSelector,
   hanldeAddPlaceFormSubmit
 ); // <==  создаем эл-т класса PopupWithForm ==
-
+newCardPopup.setEventListeners(); //установка поведения при клике на X и на overlay
 
 function hanldeAddPlaceFormSubmit(evt,values) {
   //создаем нов карточку в соот с данными взятыми из БД (забитыми в форму)
   //отправляем данные новой карточки на сервер
-
-  console.log('values = ',values);
-debugger
   popupAddPlaceSelector.querySelector(".popup__btn").textContent = "Сохраняется...";
   api
     .postCreateCard(values)
     .then((data) => {
-
-console.log('hanldeAddPlaceFormSubmit(): data = ',data);
-console.log('this = ',this);
-console.log('this.getInputValues() = ',this.getInputValues());
 
       cardList.addItem(createCard(data, user).render(), "prepend");
       // debugger

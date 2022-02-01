@@ -3,7 +3,6 @@ import { Popup } from "./Popup.js";
 
 export class PopupConfirmForm extends Popup {
   constructor(popup, handleFormSubmit) {
-    console.log('PopupConfirmForm');
     super(popup);
     this._form = this._popup.querySelector("form");
     this._handleFormSubmit = handleFormSubmit;

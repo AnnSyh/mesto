@@ -66,7 +66,6 @@ export class FormValidator {
 
 	_hasInvalidInput = () => {
 		return Array.from(this._inputList).some((inputElement) => {
-			// console.log('!inputElement.validity.valid = ', !inputElement.validity.valid);
 			return !inputElement.validity.valid;
 		});
 	};
@@ -88,9 +87,6 @@ export class FormValidator {
 	};
 
 	toggleButtonState = () => {
-		// debugger
-		// console.log('this = ', this._formElement);
-
 		const isFormValid = this._formElement.checkValidity(); // флаг валидности формы
 		// const isFormValid = this._hasInvalidInput();// флаг валидности формы
 		this._submitButton.classList.toggle(this._inactiveButtonClass, !isFormValid); //переключение класса активности кнопки сабмита в зависимости от флага валидности формы
