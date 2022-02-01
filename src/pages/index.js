@@ -198,7 +198,6 @@ function openPopupProfileEdit() {
 
 //открываем попап для добавления новой карточки
 function openPopupProfileAdd() {
-  console.log('openPopupProfileAdd()');
   cardFormValidator.resetValidation(); // <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
   newCardPopup.openPopup(); // <==  открываем попап ==
 }
