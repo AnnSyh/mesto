@@ -11,7 +11,7 @@ export class Popup {
 
   openPopup() {
     this._popup.classList.add("popup_opened");
-    // this.setEventListeners(); //установка поведения при клике на X и нажатии на overlay
+    // this.setEventListeners(); //установка поведения при клике на X и нажатии на overlay убираю отсюдачто-бы не копилисьсобытия при открытии попапа
     document.addEventListener("keydown", this._handleEscClose); // <=== только cсылку передаю ==
   }
 

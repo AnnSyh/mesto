@@ -11,7 +11,6 @@ import { UserInfo } from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
 
 import "../pages/index.css";
-import { Popup } from "../components/Popup.js";
 
 let user;
 let avatar;
@@ -23,6 +22,26 @@ const curentPopupImg = curentPopup.querySelector(".popup__img");
 const curentPopupCaption = curentPopup.querySelector(".popup__caption");
 const cardsListContainer = document.querySelector(".list-template-place");
 const cardTemplate = document.querySelector(".card-template");
+// Находим поля формы в DOM
+const nameInput = document.querySelector(".popup__input_user-title");
+const avatarInput = document.querySelector(".popup__input_avatar-img");
+const jobInput = document.querySelector(".popup__input_user-subtitle");
+// находим кнопки кот вызывают всплытие/закрытие окна-редактирования
+const profileBtnEdit = document.querySelector(".btn-user-edit");
+const profileAvatarEdit = document.querySelector(".btn-avatar-edit");
+// находим кнопки кот вызывают всплытие/закрытие окна-добавления карточки
+const profileBtnAdd = document.querySelector(".profile__btn_user-add");
+// Находим сам попап
+const popupEditProfileSelector = document.querySelector(".edit-profile__popup");
+const popupEditProfileAvatar = document.querySelector(".new-avatar__popup");
+const popupAddPlaceSelector = document.querySelector(".add-plaсe__popup");
+const editProfileBtn = popupEditProfileSelector.querySelector(".popup__btn");
+const editAvatarBtn = popupEditProfileAvatar.querySelector(".popup__btn");
+const editPlaceBtn = popupAddPlaceSelector.querySelector(".popup__btn");
+//кнопка окна подтверждения
+const confirmBtn = document.querySelector(".confirmation-btn");
+const submitConfirmationBtn = document.querySelector( ".confirmation .popup__btn");
+
 const api = new Api({
   url: "https://mesto.nomoreparties.co/v1/cohort-34",
   headers: {
@@ -30,6 +49,7 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
+
 //создаем инструкции для списка
 const createCard = (...args) =>
   new Card(
@@ -42,6 +62,7 @@ const createCard = (...args) =>
     api
   );
 
+//рендерим новую карточку
 function renderer(item) {
   // debugger
   //проверка пользователя
@@ -51,7 +72,6 @@ function renderer(item) {
   this.addItem(newCardInitial);
   return newCardInitial;
 }
-//  /создаем список
 
 //создаем пустой список в который далее будем вставлять карточки
 const cardList = new Section({ data: [], renderer }, cardsListContainer);
@@ -62,7 +82,6 @@ const currentUser = new UserInfo("profile__name", "profile__job");
 // api.getInitialCards()  - запрос к серверу получаю начальный набор карточек с сервера
 // api.getUser()          - запрос к серверу получаю нач данные для профайла пользователя
 //обьеденяю запрос  данных профиля и получения карточек
-
 Promise.all([api.getInitialCards(), api.getUser()])
   .then(([CardsData, userData]) => {
 
@@ -76,11 +95,9 @@ Promise.all([api.getInitialCards(), api.getUser()])
   .catch((err) => console.log(`WASTED - ${err}`));
 
 
-//Валидация форм
+//--------------Валидация форм---------------
 // Находим формы в DOM
-const formEditProfile = document.querySelector(
-  ".edit-profile__popup .popup__form"
-);
+const formEditProfile = document.querySelector( ".edit-profile__popup .popup__form");
 const formAddPlace = document.querySelector(".add-plaсe__popup .popup__form");
 
 const editFormValidator = new FormValidator(configData, formEditProfile);
@@ -89,41 +106,15 @@ const cardFormValidator = new FormValidator(configData, formAddPlace);
 editFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 
-// -----------------------------------------------------------
-// Находим поля формы в DOM
-const nameInput = document.querySelector(".popup__input_user-title");
-const avatarInput = document.querySelector(".popup__input_avatar-img");
-const jobInput = document.querySelector(".popup__input_user-subtitle");
-const placeNameInput = document.querySelector(".popup__input_plaсe-title");
-const placeImgInput = document.querySelector(".popup__input_plaсe-img");
 
-// находим кнопки кот вызывают всплытие/закрытие окна-редактирования
-const profileBtnEdit = document.querySelector(".btn-user-edit");
-const profileAvatarEdit = document.querySelector(".btn-avatar-edit");
-// находим кнопки кот вызывают всплытие/закрытие окна-добавления карточки
-const profileBtnAdd = document.querySelector(".profile__btn_user-add");
-// Находим сам попап
-const popupEditProfileSelector = document.querySelector(".edit-profile__popup");
-const popupEditProfileAvatar = document.querySelector(".new-avatar__popup");
-const popupAddPlaceSelector = document.querySelector(".add-plaсe__popup");
-
-const editProfileBtn = popupEditProfileAvatar.querySelector(".popup__btn");
-
-
-//кнопка окна подтверждения
-const confirmBtn = document.querySelector(".confirmation-btn");
-
-
-
-
-//открытие попапа с предупреждением через новый класс PopupConfirmForm
+// -------------------- задаем попапы 5 шт------------------------
+// 1) попап с предупреждением
 const popupConfirmation = new PopupConfirmForm(
   curentPopupConfirmation,
   openConfirm,
   closeConfirm
 ); // <==  создаем эл-т класса Popup
 popupConfirmation.setEventListeners(); //установка поведения при клике на X и на overlay
-
 function openConfirm(evt) {
   popupConfirmation.openPopup(); // <==  открываем попап ==
 }
@@ -131,17 +122,40 @@ function closeConfirm(evt) {
   popupConfirmation.closePopup(); // <==  закрываем попап ==
 }
 
-//открытие попапа с картинкой для карточки (мягкое связывание)
+// 2) попап с картинкой для карточки
 const popupImage = new PopupWithImage(
   curentPopup,
   curentPopupCaption,
   curentPopupImg
 ); // <==  создаем эл-т класса PopupWithImage ==
 popupImage.setEventListeners(); //установка поведения при клике на X и на overlay
-
 function handleCardClick(text, link) {
   popupImage.openPopup(text, link); // <==  открываем попап ==
 }
+
+// 3) попап для добавления нового места
+const newCardPopup = new PopupWithForm(
+  popupAddPlaceSelector,
+  hanldeAddPlaceFormSubmit
+); // <==  создаем эл-т класса PopupWithForm ==
+newCardPopup.setEventListeners(); //установка поведения при клике на X и на overlay
+
+// 4) попап для добавления изменения данных  юзера
+const userInfoPopup = new PopupWithForm(
+  popupEditProfileSelector,
+  handleProfileFormSubmit
+); // <==  создаем эл-т класса PopupWithForm ==
+userInfoPopup.setEventListeners(); //установка поведения при клике на X и на overlay
+
+// 5) открываем попап для изменения аватара пользователя
+const userAvatarPopup = new PopupWithForm(
+  popupEditProfileAvatar,
+  handleAvatarFormSubmit
+); // <==  создаем эл-т класса PopupWithForm ==
+userAvatarPopup.setEventListeners(); //установка поведения при клике на X и на overlay
+
+// -------------------- /попапы 5 шт------------------------
+
 
 //подтверждение удаления
 function handleConfirmDelete() {
@@ -159,18 +173,6 @@ function handleConfirmDelete() {
       .finally(() => (confirmBtn.textContent = "Да"));
   };
 }
-
-const userInfoPopup = new PopupWithForm(
-  popupEditProfileSelector,
-  handleProfileFormSubmit
-); // <==  создаем эл-т класса PopupWithForm ==
-userInfoPopup.setEventListeners(); //установка поведения при клике на X и на overlay
-
-const userAvatarPopup = new PopupWithForm(
-  popupEditProfileAvatar,
-  handleAvatarFormSubmit
-); // <==  создаем эл-т класса PopupWithForm ==
-userAvatarPopup.setEventListeners(); //установка поведения при клике на X и на overlay
 
 //открываем попап для редактирования  аватара
 //надо сделать проверку пользователя - редактировать может только авторизированный пользователь ???
@@ -194,8 +196,9 @@ function openPopupProfileEdit() {
   editFormValidator.toggleButtonState(); // проверить состояние кнопки при открытии формы
 }
 
-
+//открываем попап для добавления новой карточки
 function openPopupProfileAdd() {
+  console.log('openPopupProfileAdd()');
   cardFormValidator.resetValidation(); // <== очищаем поля формы и дизеблим кнопку сабмита перед открытием
   newCardPopup.openPopup(); // <==  открываем попап ==
 }
@@ -204,12 +207,9 @@ function openPopupProfileAdd() {
 // она никуда отправляться не будет
 function hanldeConfirmFormSubmit(evt) {
   evt.preventDefault();
-  const submitConfirmationBtn = document.querySelector(
-    ".confirmation .popup__btn"
-  );
   submitConfirmationBtn.addEventListener(
-    "click"
-    // console.log("click confirmation .popup__btn")
+    "click",
+    console.log("click confirmation .popup__btn")
   );
 }
 
@@ -218,8 +218,7 @@ function handleAvatarFormSubmit(evt, avatar) {
   evt.preventDefault();
   //изменяем данные текущего юзера в соот с данными забитыми в форму
   //отправляем новые данные пользователя на сервер
-  editProfileBtn.textContent =
-    "Сохраняется...";
+  editAvatarBtn.textContent = "Сохраняется...";
   api
     .postAvatar(avatar)
     .then((data) => {
@@ -229,18 +228,16 @@ function handleAvatarFormSubmit(evt, avatar) {
     .catch((err) => console.log(`WASTED - ${err}`))
     .finally(
       () =>
-        (editProfileBtn.textContent =
-          "Сохранить")
+        (editAvatarBtn.textContent = "Сохранить")
     );
 }
 
+//сабмитим форму с данными пользователя
 function handleProfileFormSubmit(evt, { title, subtitle }) {
   //изменяем данные текущего юзера в соот с данными забитыми в форму
   currentUser.setUserInfo({ name: title, about: subtitle });
-
   //отправляем новые данные пользователя на сервер
-  popupEditProfileSelector.querySelector(".popup__btn").textContent =
-    "Сохраняется...";
+  editProfileBtn.textContent = "Сохраняется...";
   api
     .postUser({ name: title, about: subtitle })
     .then((data) => {
@@ -250,23 +247,15 @@ function handleProfileFormSubmit(evt, { title, subtitle }) {
     .catch((err) => console.log(`WASTED - ${err}`))
     .finally(
       () =>
-        (popupEditProfileSelector.querySelector(".popup__btn").textContent =
-          "Сохранить")
+        (editProfileBtn.textContent = "Сохранить")
     );
 }
 
-
-//открываем попап для добавления нового места
-const newCardPopup = new PopupWithForm(
-  popupAddPlaceSelector,
-  hanldeAddPlaceFormSubmit
-); // <==  создаем эл-т класса PopupWithForm ==
-newCardPopup.setEventListeners(); //установка поведения при клике на X и на overlay
-
+//сабмитим форму с данными новой создаваймой карточки
 function hanldeAddPlaceFormSubmit(evt,values) {
   //создаем нов карточку в соот с данными взятыми из БД (забитыми в форму)
   //отправляем данные новой карточки на сервер
-  popupAddPlaceSelector.querySelector(".popup__btn").textContent = "Сохраняется...";
+  editPlaceBtn.textContent = "Сохраняется...";
   api
     .postCreateCard(values)
     .then((data) => {
@@ -277,7 +266,7 @@ function hanldeAddPlaceFormSubmit(evt,values) {
     })
     .catch((err) => console.log(`WASTED - ${err}`))
     .finally(
-      () => (popupAddPlaceSelector.querySelector(".popup__btn").textContent = "Сохранить")
+      () => (editPlaceBtn.textContent = "Сохранить")
     );
 }
 
